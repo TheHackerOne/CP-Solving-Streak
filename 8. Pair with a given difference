@@ -1,4 +1,3 @@
-
 // Three Methods to solve
 // 1. brute force approach T -> O(n^2), S -> O(1)
 // 2. using hashmaps T -> O(n), S -> O(n)
@@ -7,6 +6,7 @@
 
 #include <iostream>
 #include <bits/stdc++.h>
+#include <algorithm>
 using namespace std;
 
 int n, difference;
@@ -27,7 +27,23 @@ int* bruteForce(int x[]){
     return a;
 }
 
-// Find pair with a give difference method -1
+// Find pair with a give difference method -2
+void hashmapMethod(int x[]){
+    unordered_map<int, int> umap;
+    int ans1, ans2;
+    
+    for(int i=0;i<n;i++)
+        umap[x[i]] = i;
+    
+    for(int i=0;i<n;i++){
+        int h = difference + x[i];
+        if(umap[h] != 0){
+            ans1 = i;
+            ans2 = umap[h];
+        }
+    }
+    cout<<ans1<<" "<<ans2<<"\n";
+}
 
 
 int main(){
@@ -38,7 +54,13 @@ int main(){
     }
     
     int *g = bruteForce(a);
-    cout<<a[g[0]]<<" "<<a[g[1]];
+    cout<<a[g[0]]<<" "<<a[g[1]]<<"\n";
+    
+    hashmapMethod(a);
     
     return 0;
 }
+
+TEST CASE:
+6 78
+5 20 3 2 50 80
