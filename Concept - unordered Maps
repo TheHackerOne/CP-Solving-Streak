@@ -5,12 +5,22 @@ using namespace std;
 int main() {
 	unordered_map<int, string> unmap;
 	
+	// inserting a key value pair
 	unmap.insert(make_pair(2, "yash chaudhary"));
 	unmap[1] = "yathaarth suri";
-	
+
+	// displaying unordered map
 	for(auto it = unmap.begin();it != unmap.end();it++){
 	    cout<<it->first<<"  "<<it->second<<"\n";
 	}
+	
+	// If key not found in map iterator to end is returned 
+    if (unmap.find(2) == unmap.end()) 
+        cout << 2 << " not found\n\n"; 
+  
+    // If key found then iterator to that key is returned 
+    else
+        cout << "Found " << 2 << "\n\n"; 
 	
 	return 0;
 }
