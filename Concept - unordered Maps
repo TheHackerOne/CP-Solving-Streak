@@ -1,0 +1,16 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	unordered_map<int, string> unmap;
+	
+	unmap.insert(make_pair(2, "yash chaudhary"));
+	unmap[1] = "yathaarth suri";
+	
+	for(auto it = unmap.begin();it != unmap.end();it++){
+	    cout<<it->first<<"  "<<it->second<<"\n";
+	}
+	
+	return 0;
+}
