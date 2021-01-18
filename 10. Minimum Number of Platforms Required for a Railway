@@ -1,0 +1,42 @@
+https://www.geeksforgeeks.org/minimum-number-platforms-required-railwaybus-station/
+
+
+#include <iostream>
+#include <bits/stdc++.h>
+#include <algorithm>
+using namespace std;
+
+// #define INT_MAX 2147483648
+
+int n;
+
+void maximumPlatforms(int x[], int y[]){
+    sort(x, x+n);
+    sort(y, y+n);
+    int i=1, j=0, max_platforms = 1, needed_platforms = 1;
+    while(i<n && j<n){
+        if(x[i] <= y[j]){
+            max_platforms++;
+            i++;
+        } else if( x[i] > y[j] ){
+            max_platforms--;
+            j++;
+        }
+        if(needed_platforms < max_platforms)
+            needed_platforms = max_platforms;
+    }
+    cout<<needed_platforms;
+}
+
+int main(){
+    cin>>n;
+    int a[n], b[n];
+    for(int i=0;i<n;i++)
+        cin>>a[i];
+    for(int i=0;i<n;i++)
+        cin>>b[i];
+    
+    maximumPlatforms(a, b);
+    
+    return 0;
+}
