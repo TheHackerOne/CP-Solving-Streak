@@ -1,1 +1,38 @@
 
+#include<iostream>
+#include<map>
+#include<bits/stdc++.h>
+#include<algorithm>
+using namespace std;
+
+// can't have same key values(unique keys required)
+// maps keep keys in sorted order
+// maps make BST on the keys
+// it takes log(n) time for insertion and deletion operation [ height of BST ] 
+int main() {
+	map<int, int> mp;
+	
+	// Inserting in a map
+	//mp.insert(4,5); // will cause error
+	mp.insert({4,5});
+	mp.insert(pair<int, int>(40,54));
+	mp[3] = 96;
+	
+	// display map content
+	for(auto it = mp.begin(); it != mp.end(); it++){
+	    cout<<"first -> "<<it->first<<"  ";
+	    cout<<"second -> "<<it->second;
+	    cout<<"\n";
+	}
+	
+	// erase an element
+	mp.erase(3);
+	
+	for(auto it = mp.begin(); it != mp.end(); it++){
+	    cout<<"first -> "<<it->first<<"  ";
+	    cout<<"second -> "<<it->second;
+	    cout<<"\n";
+	}
+	
+	return 0;
+}
