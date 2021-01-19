@@ -1,0 +1,55 @@
+
+#include <iostream>
+#include <bits/stdc++.h>
+#include <algorithm>
+using namespace std;
+
+
+int n;
+
+void WaterTrapped(int x[]){
+    int left_high[n], right_high[n], net_water[n-2], ans = 0;
+    left_high[0] = x[0], right_high[n-1] = x[n-1], left_high[n-1] = right_high[0] = 0;
+    for(int i=1;i<n-1;i++){
+        if(x[i] >= left_high[i-1]){
+            left_high[i] = x[i];
+        } else {
+            left_high[i] = left_high[i-1];
+        }
+    }
+    for(int i=n-2;i>=1;i--){
+        if(x[i] >= right_high[i+1]){
+            right_high[i] = x[i];
+        } else {
+            right_high[i] = right_high[i+1];
+        }
+    }
+    for(int i=0;i<n;i++){
+        cout<<left_high[i]<<" ";
+    }
+    cout<<"\n";
+    for(int i=0;i<n;i++){
+        cout<<right_high[i]<<" ";
+    }
+    cout<<"\n";
+    for(int i=0;i<n-2;i++){
+        net_water[i] = min(right_high[i+1], left_high[i+1]);
+        ans += net_water[i] - x[i+1];
+    }
+    cout<<ans;
+}
+
+int main(){
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++)
+        cin>>a[i];
+    
+    WaterTrapped(a);
+    
+    return 0;
+}
+
+TEST CASE:
+12
+0 1 0 2 1 0 1 3 2 1 2 1
