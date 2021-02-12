@@ -12,20 +12,17 @@ void Minimum_Cost(vector<int> arr){
         minheap.push(arr[i]);
     }
     int sum = 0;
-    while(!minheap.empty()){
+    while(minheap.size() >= 2){
         int first = minheap.top();
         minheap.pop();
-        int second;
-        if(minheap.size() > 0){
-            second = minheap.top();
-            minheap.pop();  
-        }
+        int second = minheap.top();
+        minheap.pop();
         int newsum = first + second;
         sum += newsum;
         minheap.push(newsum);
     }
     
-    cout<<"Total Cost = "<<sum;
+    cout<<"Total Cost = "<<sum + minheap.top();
 }
 
 int main(){
