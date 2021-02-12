@@ -16,7 +16,7 @@ void Frequency_sort(int *arr){
         maxheap.push({ second, first });
     }
     
-    for(int i=0;i<maxheap.size();i++){
+    while(!maxheap.empty()){
         int element = maxheap.top().second;
         for(int j=0;j<maxheap.top().first;j++)
             cout<<element<<" ";
