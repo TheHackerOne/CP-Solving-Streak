@@ -1,0 +1,44 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int n;
+
+void Minimum_Cost(vector<int> arr){
+    
+    priority_queue<int, vector<int>, greater<int>> minheap;
+    
+    for(int i=0;i<n;i++){
+        minheap.push(arr[i]);
+    }
+    int sum = 0;
+    while(!minheap.empty()){
+        int first = minheap.top();
+        minheap.pop();
+        int second;
+        if(minheap.size() > 0){
+            second = minheap.top();
+            minheap.pop();  
+        }
+        int newsum = first + second;
+        sum += newsum;
+        minheap.push(newsum);
+    }
+    
+    cout<<"Total Cost = "<<sum;
+}
+
+int main(){
+    
+    cin>>n;
+    vector<int> a;
+    for(int i=0;i<n;i++){
+        int h;
+        cin>>h;
+        a.push_back(h);
+    }
+    
+    Minimum_Cost(a);
+    
+    return 0;
+}
