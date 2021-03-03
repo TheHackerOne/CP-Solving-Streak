@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int knapsack(int w[], int v[], int W, int n){
+    if(W==0 || n==0)
+        return 0;
+    
+    if(w[n]>W)
+        return knapsack(w, v, W, n-1);
+        
+    if(w[n]<=W) n]+knapsack(w, v, W-w[n], n-1), knapsack(w, v, W, n-1))
+}
+
+int main() {
+	int n, W;
+	cin>>n>>W;
+	int w[n], v[n];
+	
+	for(int i=0;i<n;i++)
+	    cin>>w[i];
+	for(int i=0;i<n;i++)
+	    cin>>v[i];
+	    
+	    cout<<knapsack(w, v, W, n);
+	
+	return 0;
+}
