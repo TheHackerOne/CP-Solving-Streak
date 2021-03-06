@@ -8,7 +8,7 @@ int knapsack(int w[], int v[], int W, int n){
     if(w[n]>W)
         return knapsack(w, v, W, n-1);
         
-    if(w[n]<=W) n]+knapsack(w, v, W-w[n], n-1), knapsack(w, v, W, n-1))
+    if(w[n]<=W) v[n]+knapsack(w, v, W-w[n], n-1), knapsack(w, v, W, n-1))
 }
 
 int main() {
