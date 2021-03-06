@@ -1,0 +1,31 @@
+// Equal Sum Partition
+
+#include <iostream>
+using namespace std;
+
+bool equalSumPartition(int a[], int half_sum, int n){
+    if(S==0)
+        return true;
+    if(n==0)
+        return false;
+    
+    if(a[n-1]>W)
+        return knapsack(a, S, n-1);
+        
+    if(w[n]<=W) knapsack(a, S-a[n-1], n-1) || knapsack(a, S, n-1))
+}
+
+int main() {
+	int n, S, sum = 0;
+	cin>>n>>S;
+	int a[n];
+	
+	for{(int i=0;i<n;i++){
+	    cin>>a[i];
+	    sum += a[i];   
+	}
+	    
+	cout<<equalSumPartition(a, sum/2, n);
+	
+	return 0;
+}
