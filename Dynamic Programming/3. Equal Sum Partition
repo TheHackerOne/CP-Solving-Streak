@@ -24,8 +24,10 @@ int main() {
 	    cin>>a[i];
 	    sum += a[i];   
 	}
-	    
-	cout<<equalSumPartition(a, sum/2, n);
+	if(sum%2 != 0)
+	    cout<<"false";
+	else
+	    cout<<equalSumPartition(a, sum/2, n);
 	
 	return 0;
 }
