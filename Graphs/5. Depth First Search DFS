@@ -2,8 +2,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-//Single Source Shortest Path
-
 template<typename T>
 class Graph{
     
