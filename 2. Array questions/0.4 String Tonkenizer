@@ -1,0 +1,52 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+char *strtokenizer(char str[], char deLim){
+    static char *input1 = NULL;
+    if(str!=NULL){
+        input1 = str;
+    }
+    if(input1 == NULL)
+        return NULL;
+    char *output = new char[strlen(input1)+1]; 
+
+    int i = 0;
+    while(input1[i]!='\0'){
+        if(input1[i]!=deLim){
+            output[i] = input1[i];
+        }else{
+            output[i] = '\0';
+            input1 = input1 + i + 1;
+            return output;
+        }
+        i++;
+    }   
+    output[i] = '\0';
+    input1 = NULL;
+    return output;
+}
+
+int main(){
+
+
+    char a[] = "hi, i, am, yash, chaudhary";
+
+    // String Tokenizer Function
+    
+    char *ptr1 = strtokenizer(a, ',');
+    while(ptr1!=NULL){
+        cout<<ptr1<<endl;
+        ptr1 = strtokenizer(NULL, ',');
+    }
+
+    // String Tokenizer
+
+    char *ptr = strtok(a, ",");
+    while(ptr!=NULL){
+        cout<<ptr<<endl;
+        ptr = strtok(NULL, ",");
+    }
+
+    return 0;
+}
