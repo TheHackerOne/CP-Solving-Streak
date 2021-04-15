@@ -1,0 +1,72 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int maxSumSubarrayKadaneAlgo(int h[], int size){
+    int currentSum = 0;
+    int maxSum = 0;
+    for(int i=0; i<size; i++){
+        currentSum += h[i];
+        if(currentSum < 0){
+            currentSum = 0;
+        }
+        maxSum = max(maxSum, currentSum);
+    }
+    return maxSum;
+}
+
+int maxSumSubarrayPreComputed(int h[], int size){
+    int preCompute[size];
+    vector<int> sum;
+    int s = 0; 
+    for(int i=0;i<size;i++){
+        s += h[i];
+        preCompute[i] = s;
+    }
+
+    for(int i=0;i<size;i++){
+        for(int j=i;j<size;j++){
+            int k;
+            if(i == 0){
+                k = preCompute[j];
+            } else{
+                k = preCompute[j] - preCompute[i-1];
+            }
+            cout<<k<<" ";
+            sum.push_back(s);
+        }
+    }
+    cout<<endl;
+
+    sort(sum.begin(), sum.end());
+    return sum.back();
+}
+
+int maxSumSubarrayBruteForce(int h[], int size){
+
+    vector<int> sum;
+    int u = 0; 
+
+    for(int i=0;i<size;i++){
+        for(int j=i;j<size;j++){
+            int s = 0;
+            for(int k=i;k<=j;k++)
+                s += h[k];
+            cout<<s<<" ";
+            sum.push_back(s);
+        }
+    }
+    cout<<endl;
+
+    sort(sum.begin(), sum.end());
+    return sum.back();
+}
+
+int main(){
+    int a[] = {1, 7, 3, 4, 12, 8, 15, 5};
+
+    cout<<maxSumSubarrayBruteForce(a, 8)<<endl; // O(n^3)
+    cout<<maxSumSubarrayPreComputed(a, 8)<<endl; // O(n^2)
+    cout<<maxSumSubarrayKadaneAlgo(a, 8)<<endl; // O(n)
+
+}
