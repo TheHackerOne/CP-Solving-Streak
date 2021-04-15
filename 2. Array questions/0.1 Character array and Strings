@@ -1,0 +1,36 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    char a[] = {'a', 'b', 'd', 'r', 'w'};
+    // It doesn't have any null character at the end, thats why garbage value may appear at the end
+    cout<<a<<endl;
+    char b[] = "yash chaudhary";
+    // this type of initialization automatically end with a null character
+    cout<<b<<endl;
+
+    char c[120];
+    cin>>c; // string must not include any spaces
+    cout<<c<<endl;
+
+    char d[120];
+    cin.ignore();
+    cin.getline(d, 120); // string can have spaces in between
+    cout<<d<<endl;
+
+    string e = "yash chaudhary is here";
+    cout<<e<<endl;
+
+    string f;
+    cin>>f; // Can't take a sentence
+    cout<<f<<endl;
+
+    string g;
+    cin.ignore();
+    getline(cin, g); // can take a whole sentence 
+    cout<<g<<endl;
+
+
+    return 0;
+}
