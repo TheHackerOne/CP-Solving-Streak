@@ -1,55 +1,54 @@
-
 #include <iostream>
 #include <bits/stdc++.h>
-#include <algorithm>
 using namespace std;
 
-
-int n;
-
-void WaterTrapped(int x[]){
-    int left_high[n], right_high[n], net_water[n-2], ans = 0;
-    left_high[0] = x[0], right_high[n-1] = x[n-1], left_high[n-1] = right_high[0] = 0;
-    for(int i=1;i<n-1;i++){
-        if(x[i] >= left_high[i-1]){
-            left_high[i] = x[i];
-        } else {
-            left_high[i] = left_high[i-1];
-        }
-    }
-    for(int i=n-2;i>=1;i--){
-        if(x[i] >= right_high[i+1]){
-            right_high[i] = x[i];
-        } else {
-            right_high[i] = right_high[i+1];
-        }
-    }
-    for(int i=0;i<n;i++){
-        cout<<left_high[i]<<" ";
-    }
-    cout<<"\n";
-    for(int i=0;i<n;i++){
-        cout<<right_high[i]<<" ";
-    }
-    cout<<"\n";
-    for(int i=0;i<n-2;i++){
-        net_water[i] = min(right_high[i+1], left_high[i+1]);
-        ans += net_water[i] - x[i+1];
-    }
-    cout<<ans;
-}
-
 int main(){
-    cin>>n;
-    int a[n];
-    for(int i=0;i<n;i++)
-        cin>>a[i];
-    
-    WaterTrapped(a);
-    
-    return 0;
-}
+    int a[] = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+    int n = 12;
+    cout<<"            ";
+    for(int i=0;i<12;i++){
+        cout<<a[i]<<" ";
+    }
+    cout<<endl;
 
-TEST CASE:
-12
-0 1 0 2 1 0 1 3 2 1 2 1
+    int leftHigh[12], rightHigh[12];
+    int maxLeft = a[0];
+    int maxRight = a[11];
+    for(int i=0;i<12;i++){
+        if(a[i] > maxLeft){
+            maxLeft = a[i];
+            leftHigh[i] = maxLeft;
+        }else{
+            leftHigh[i] = maxLeft;
+        }
+    }
+    for(int i=11;i>=0;i--){
+        if(a[i] > maxRight){
+            maxRight = a[i];
+            rightHigh[i] = maxRight;
+        }else{
+            rightHigh[i] = maxRight;
+        }
+    }
+    cout<<"LEFT HIGH   ";
+    for(int i=0;i<12;i++){
+        cout<<leftHigh[i]<<" ";
+    }
+    cout<<endl;
+    cout<<"RIGHT HIGH  ";
+    for(int i=0;i<12;i++){
+        cout<<rightHigh[i]<<" ";
+    }
+    cout<<endl;
+
+    cout<<"UNITS WATER ";
+    int sum = 0;
+    for(int i=0;i<12;i++){
+        int h = min(leftHigh[i], rightHigh[i]) - a[i];
+        sum += h;
+        cout<<h<<" ";
+    }
+    cout<<endl;
+    cout<<sum<<" units of water will be trapped !!"
+
+}
