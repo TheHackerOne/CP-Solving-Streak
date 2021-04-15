@@ -34,3 +34,20 @@ int main(){
 
     return 0;
 }
+
+INPUT
+
+sukanya
+yathaarth suri cheems
+testing
+testing the string object 2
+
+OUTPUT
+
+abdrw
+yash chaudhary
+sukanya
+yathaarth suri cheems
+yash chaudhary is here
+testing
+testing the string object 2
