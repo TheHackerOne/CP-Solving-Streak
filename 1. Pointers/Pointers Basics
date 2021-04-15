@@ -1,18 +1,37 @@
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
-int main() {
-    int a = 50;
-    int * n = &a;
-    int ** m = &n;
 
-    cout<<a<<endl; // 50
-    cout<<&a<<endl; // address of a 
-    cout<<n<<endl; // address of a
-    cout<<&n<<endl; // address of pointer 1
-    cout<<*n<<endl; //  50
-    cout<<m<<endl; // address of pointer 1
-    cout<<*m<<endl; // address of a
+void passByPointer(int *n, int *m){
+    int t = *n;
+    *n = *m;
+    *m = t;
+}
+
+void passByValue(int n, int m){
+    int t = n;
+    n = m;
+    m = t;
+}
+
+void passByReference(int &a, int &b){
+    int t = a;
+    a = b;
+    b = t;
+}
+
+int main() {
+    // int a = 50;
+    // int * n = &a;
+    // int ** m = &n;
+
+    // cout<<a<<endl; // 50
+    // cout<<&a<<endl; // address of a 
+    // cout<<n<<endl; // address of a
+    // cout<<&n<<endl; // address of pointer 1
+    // cout<<*n<<endl; //  50
+    // cout<<m<<endl; // address of pointer 1
+    // cout<<*m<<endl; // address of a
 
     // Dynamic Memory Allocation
 
@@ -31,5 +50,21 @@ int main() {
     cout<<endl<<"Size of array = "<<sizeof(g)/sizeof(g[0]);
     cout<<endl<<"Size of array = "<<sizeof(d)/sizeof(d[0]);
 
+    int n = 9, m = 6;
+
+    // Pass By pointer
+    cout<<endl<<n<<" "<<m<<endl;
+    passByPointer(&n, &m);
+    cout<<n<<" "<<m<<endl;
+
+    // Pass by Value
+    cout<<n<<" "<<m<<endl;
+    passByValue(n, m);
+    cout<<n<<" "<<m<<endl;
+
+    // Pass by Reference
+    cout<<n<<" "<<m<<endl;
+    passByReference(n, m);
+    cout<<n<<" "<<m<<endl;
     return 0;
 }
