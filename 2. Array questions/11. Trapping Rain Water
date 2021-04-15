@@ -49,6 +49,6 @@ int main(){
         cout<<h<<" ";
     }
     cout<<endl;
-    cout<<sum<<" units of water will be trapped !!"
+    cout<<sum<<" units of water will be trapped !!";
 
 }
