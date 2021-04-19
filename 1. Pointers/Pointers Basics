@@ -66,5 +66,13 @@ int main() {
     cout<<n<<" "<<m<<endl;
     passByReference(n, m);
     cout<<n<<" "<<m<<endl;
+    
+    // always initialize a pointer with some address or 0(NULL pointer) or its harmful
+    int *p;
+    cout<<*p<<endl;
+    (*p)++;
+    
+    //increment and decrement in pointers only makes sense in case of arrays in which each memory block is next to each other
+    
     return 0;
 }
