@@ -2,6 +2,20 @@
 using namespace std;
 
 int main() {
+
+    //generally all variables are created in the stack section/static section because they are resolved at the compile time
+    // but we can algo create variables in the HEAP section/ dynamic section if we don't know the size of the array or variable at the compile time, in HEAP section memory
+    // can be allocated at the run time
+    
+    // STATIC -> memory is released after the scope ends
+    // DYNAMIC -> memory must be released manually
+    
+    int *p = new int;
+    delete p;
+    
+    int *p = new int[40];
+    delete [] p;
+
     // dynamic memory allocation for a variable
     int *p = new int;
     *p = 10;
