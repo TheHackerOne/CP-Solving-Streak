@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+// This function uses Default arguments, meaning if you don't pass values of n, o and p
+// it'll not give an error because then the compiler will take default values of those variables
+// and use them for calculating the sum
+
+// default arguments must always be at the right most part of the argument list or it'll create ambiguity
+int sumVar(int m, int n = 0, int o = 0, int p = 0){ 
+    return m + n + o + p;
+}
+
+// inline functions are used when the line of code is small(1- 2 lines)
+// inline functions replace the position of function call with the code written in the function
+// functions provide better readability of code but cost some performance becuase the function has to jump
+// from the main() function to the called function, but this performance issue can be solved by
+// inline functions which are resolved at the compile time
+// so at the runtime, there is actually no other function, just the function call is replaced by the
+// code written in the function
+
+// READABLE AND NO PERFORMANCE HIT
+inline int max(int m, int n){
+    return (m > n) ? m : n ;
+}
+
+int main() {
+    int m, n, o, p;
+    cin>>m>>n>>o>>p;
+
+    cout<<sumVar(m)<<endl;
+    cout<<sumVar(m, n)<<endl;
+    cout<<sumVar(m, n, o)<<endl;
+    cout<<sumVar(m, n, o, p)<<endl;
+
+    cout<<max(m, n);
+
+    return 0;    
+}
