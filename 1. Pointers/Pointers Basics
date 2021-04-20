@@ -74,18 +74,7 @@ int main() {
     
     //increment and decrement in pointers only makes sense in case of arrays in which each memory block is next to each other
     
-    //generally all variables are created in the stack section/static section because they are resolved at the compile time
-    // but we can algo create variables in the HEAP section/ dynamic section if we don't know the size of the array or variable at the compile time, in HEAP section memory
-    // can be allocated at the run time
     
-    // STATIC -> memory is released after the scope ends
-    // DYNAMIC -> memory must be released manually
-    
-    int *p = new int;
-    delete p;
-    
-    int *p = new int[40];
-    delete [] p;
     
     return 0;
 }
