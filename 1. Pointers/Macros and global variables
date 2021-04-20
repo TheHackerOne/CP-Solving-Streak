@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+#define PI 3.14625 // macros or Preprocessor Directive
+// proccesed before the compile time by replacing all PI with 3.14625
+// Why didn't we use a variable PI = 3.14625 ?
+// because anyone can change the value of that variable in the program
+// even if const is used, another problem that arises is the memory allocation or
+// increasing space complexity
+
+int a = 10; // GLOBAL VARIABLE
+// using global variables is a bad practice because it creates confusion and its value can be changed from anywhere in the program
+
+void f1(){
+    a = a + 1;
+}
+
+void f2(){
+    a = a + 2;
+}
+
+int main() {
+    cout<<a<<endl;
+    f1();
+    cout<<a<<endl;
+    f2();
+    cout<<a<<endl;
+
+    int r;
+    cin>>r;
+    cout<<PI*r*r;
+
+    return 0;
+}
