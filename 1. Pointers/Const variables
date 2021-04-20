@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    // NORMAL VARIABLE AND NORMAL POINTER
+    int i = 10;
+    int *p = &i;
+
+    cout<<i<<endl; // 10
+    cout<<p<<endl; // address if i
+    cout<<*p<<endl; // 10
+
+    // const variable is a read-only memory
+
+    // CONST VARIABLE AND NORMAL POINTER
+    const int j = 10; // creates an integer read-only memory
+    const int *p1 = &i;
+    // (*p1)++; gives ERROR
+    cout<<p1<<endl;
+    // j = j + 1; gives ERROR
+    p1 = p1 + 1; 
+    cout<<p1<<endl;
+
+    // CONST VARIABLE AND NORMAL POINTER
+    const int k = 10;
+    // int *p2 = &k; gives ERROR
+
+
+    // NORMAL VARIABLE AND CONST POINTER
+    int l = 50;
+    int *const p2 = &i;
+    cout<<*p2<<endl;
+    (*p2)++;
+    cout<<*p2<<endl;
+    // p2 = p2 + 1; gives ERROR
+
+    // CONST VARIABLE AND CONST POINTER
+    const int m =20;
+    const int *const p3 = &m;
+    // p3 = p3 + 1; gives ERROR
+    // (*p3)++; gives ERROR
+
+
+    return 0;
+}
