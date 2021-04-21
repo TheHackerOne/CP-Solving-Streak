@@ -1,0 +1,39 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+void swap(int &a, int &b){
+    int t = a;
+    a = b;
+    b = t;
+}
+
+int main() {
+    // Selection Sort
+
+    int n;
+    cin>>n;
+
+    int arr[n];
+
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+
+    for(int i=0;i<n-1;i++){
+        int minEle = INT_MAX, minEleIndex;
+        for(int j=i;j<n;j++){
+            if(arr[j] < minEle){
+                minEle = arr[j];
+                minEleIndex = j;
+            }
+        }
+        swap(arr[i], arr[minEleIndex]);
+    }
+
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }
+
+    return 0;
+}
