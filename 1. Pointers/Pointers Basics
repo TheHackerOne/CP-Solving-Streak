@@ -2,6 +2,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+ when we create a variable say int i = 10;s
+ first a memory is allocated to i in main memory
+ after assigning the memory, i along with its info like address of i, type of i 
+ will be stores in the symbol table (made during compile time)
+
+ Pointer Airthematic only makes sense in case of arrays
+ ex : p = p + 1 ;
+
+ int a[10];
+ a[i] = *(a + i);
+ a points to the first element of array(stores the address)
+
+ int *p = a;
+ - p is a pointer that is pointing to a[0] and p has its own memory space somewhere
+ - a is also pointing to a[0] but a does not have any other memory
+ - cout << a << " " << &a << endl; gives the same result
+ - cout << p << " " << &p << endl; gives different result
+
+ printing int and char array act little differently
+ int a[2] = {4, 1}
+ cout << a << endl ; prints the address of a
+ char b[] = "abcd";
+ cout << b << endl ; instead of printing the address, it prints the whole string
+ until it finds the null character
+ char *c = b;
+ cout << c << endl; prints whole string instead of address
+
+ when we pass an array to a function, it gets passed as a pointer and not whole array
+ we can also pass a part of an array to a function like sum(a + 3);
+ this will pass array to the funciton from index 3 onwards
+
+ it is possible to store int addres in character pointer or vice versa 
+ but it can only be done using explicit typecasting
+*/
+
 void passByPointer(int *n, int *m){
     int t = *n;
     *n = *m;
@@ -66,15 +102,5 @@ int main() {
     cout<<n<<" "<<m<<endl;
     passByReference(n, m);
     cout<<n<<" "<<m<<endl;
-    
-    // always initialize a pointer with some address or 0(NULL pointer) or its harmful
-    int *p;
-    cout<<*p<<endl;
-    (*p)++;
-    
-    //increment and decrement in pointers only makes sense in case of arrays in which each memory block is next to each other
-    
-    
-    
     return 0;
 }
