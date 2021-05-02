@@ -1,0 +1,39 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int arr[2];
+int *uniqueNumbers(int a[], int size){
+    int sum = 0;
+    for(int i=0;i<size;i++)
+        sum = sum^a[i];
+    
+    int i = 0, res = sum;
+    while(res>0){
+        if(res&1)
+            break;
+        res = res>>1;   
+        i++;
+    }
+    int s = 0;
+    int bitmask = 1<<i;
+    for(int i=0;i<size;i++){
+        if((a[i]&bitmask) != 0){
+            s = s^a[i];
+        }            
+    }
+    arr[0] = s;
+    arr[1] = sum^s;
+    return arr;
+}
+
+int main(){
+
+    int a[] = {1, 1, 2, 2, 4, 6, 5, 5, 7, 7};
+
+    int *ans = uniqueNumbers(a, 10);
+    for(int i=0;i<2;i++)
+        cout<<ans[i]<<" ";
+
+    return 0;
+}

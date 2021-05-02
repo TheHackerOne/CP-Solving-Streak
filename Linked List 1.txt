@@ -1,0 +1,113 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node *next;
+
+    Node(){
+        cout<<"ERROR : DATA parameter must be passed to the constructor";
+        exit(1);
+    }
+
+    Node(int data){
+        this -> data = data;
+        this -> next = NULL;
+    }
+
+};
+
+// 3 Cases
+// 1. if the position lies somewhere in between the Linked List
+// 2. if the position is 1 (first element)
+// 3. if the position exceeds the length of the Linked List
+Node *InsertNodeAtPosition(Node *head, int data, int position){
+    Node *temp = head;
+    Node *newNode = new Node(data);
+    if(position == 1){
+        newNode -> next = temp;
+        temp = newNode;
+        return temp;
+    }
+    int count = 0;
+    while(temp != NULL && count < position-2){
+        temp = temp -> next;
+        count++;
+    }
+    if(temp != NULL){
+        newNode -> next = temp -> next;
+        temp -> next = newNode;        
+    }
+    return head;  
+}
+
+// 3 Cases
+// 1. if the position lies somewhere in between the Linked List
+// 2. if the position is 1 (first element)
+// 3. if the position exceeds the length of the Linked List
+Node *DeleteNodeFromPosition(Node *head, int position){
+    Node *temp = head;
+    Node *temp1 = NULL;
+    int count = 0;
+    if(position == 1){
+        head = temp -> next;
+        delete temp;
+        return head;
+    }
+    while(temp != NULL && count < position-2){
+        temp = temp -> next;
+        count++;
+    }
+    if(temp != NULL){
+        temp1 = temp -> next;
+        temp -> next = temp1 -> next;
+        delete temp1;
+    }
+    return head;
+}
+
+void PrintAll(Node *head){
+    while(head != NULL){
+        cout<<head -> data<<" ";
+        head = head -> next;
+    }
+}
+
+Node *InsertNode(){
+    int data;
+    cin>>data;
+    Node* head = NULL;
+    Node *temp = NULL;
+    while(data != -1){
+        Node *newNode = new Node(data); // Dynamically allocated in heap
+        if(head == NULL){
+            head = newNode;
+            temp = head;
+        }else{
+            temp -> next = newNode;
+            temp = temp -> next;
+        }
+        cin>>data;
+    }
+    return head;
+}
+
+int main() {
+    Node *head = InsertNode();
+    PrintAll(head);
+
+    cout<<endl;
+    head = InsertNodeAtPosition(head, 33, 1);
+    PrintAll(head);
+
+    cout<<endl;
+    head = DeleteNodeFromPosition(head, 3);
+    PrintAll(head);
+
+    cout<<endl;
+    head = DeleteNodeFromPosition(head, 1);
+    PrintAll(head);
+
+    return 0;
+}
