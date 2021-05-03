@@ -1,0 +1,118 @@
+#include <iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node *next;
+
+    Node(){
+        cout<<"ERROR : Data Parameter is NOT Present";
+        exit(1);
+    }
+
+    Node(int data){
+        this -> data = data;
+        this -> next = NULL;
+    }
+};
+
+void midelement(Node *head){
+    Node *slow = head;
+    Node *fast = head;
+    while(fast -> next != NULL && fast -> next -> next != NULL){
+        slow = slow -> next;
+        fast = fast -> next -> next;
+    }
+    cout<<endl<<"Mid Element -> "<<slow -> data<<endl;
+}
+
+void printAll(Node *head){
+    while(head != NULL){
+        cout<<head -> data<<" ";
+        head = head -> next;
+    }
+}
+
+Node *mergeTwoSortedArray(Node *head1, Node *head2){
+    Node *newHead = NULL;
+    Node *newTail = NULL;
+    Node *h1 = head1;
+    Node *h2 = head2;
+    if(h1 -> data < h2 -> data){
+        newHead = h1;
+        newTail = h1;
+        h1 = h1 -> next;
+    }else{
+        newHead = h2;
+        newTail = h2;
+        h2 = h2 -> next;
+    }  
+
+    while(h1 != NULL && h2 != NULL){
+        if(h2 -> data < h1 -> data){
+            newTail -> next = h2;
+            newTail = h2;
+            h2 = h2 -> next;
+        }else{
+            newTail -> next = h1;
+            newTail = h1;
+            h1 = h1 -> next;
+        }
+    }
+    if(h1 != NULL){
+        newTail -> next = h1;
+    }
+    if(h2 != NULL){
+        newTail -> next = h2;
+    }
+
+    return newHead;
+}
+
+Node *insertNode(){
+    int data;
+    cin>>data;
+    Node *head = NULL;
+    Node *temp = NULL;
+    while(data != -1){
+        Node *newNode = new Node(data);
+        if(head == NULL){
+            head = newNode;
+            temp = head;
+        }else{
+            temp -> next = newNode;
+            temp = temp -> next;
+        }
+        cin>>data;
+    }
+    return head;
+}
+
+int main() {
+    Node *head = insertNode();
+
+    printAll(head);
+
+    midelement(head);
+
+
+    Node *head1 = insertNode();
+    Node *head2 = insertNode();
+
+    cout<<"Sorted List 1 -> ";
+    printAll(head1);
+    cout<<endl;
+
+    cout<<"Sorted List 2 -> ";
+    printAll(head2);
+    cout<<endl;
+
+    cout<<"Merged Sorted Linked List -> ";
+    Node *newHead = mergeTwoSortedArray(head1, head2);
+    printAll(newHead);
+
+    return 0;
+}
