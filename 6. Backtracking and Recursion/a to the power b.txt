@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int aPowerb(int a, int b){
+    if(b==0)
+        return 1;
+    int smallAns = aPowerb(a, b/2);
+    smallAns *= smallAns;
+    if(b&1)
+        return a*smallAns;
+    else
+        return smallAns;    
+}
+
+int main() {
+    int a, b;
+    cin>>a>>b;
+
+    cout<<aPowerb(a, b);
+}

@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+#define ll long long
+
+int fibonaaci(int n){
+    if(n==1)
+        return 0;
+    if(n==2)
+        return 1;
+    
+    int fib = fibonaaci(n-1) + fibonaaci(n-2);
+    return fib;
+}
+
+ll factorial(int n){
+    if(n==0)
+        return 1;
+    ll int fib = n*factorial(n-1);
+    return fib;
+}
+
+int main() {
+    int n;
+    cin>>n;
+    cout<<factorial(n)<<endl;
+    cout<<fibonaaci(n)<<endl;
+}

@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+void towerOfHanoi(int disks, char src, char des, char hel){
+    if(disks == 0)  
+        return;
+    towerOfHanoi(disks-1, src, hel, des);
+    cout<<"Move "<<disks<<" disk from "<<src<<" to "<<des<<endl;
+    towerOfHanoi(disks-1, hel, des, src);
+
+}
+
+int main() {
+    // Tower of Hanoi
+    int n;
+    cin>>n;
+
+    char s = 'A', d = 'C', h = 'B';
+
+    towerOfHanoi(n, s, d, h);  
+
+}

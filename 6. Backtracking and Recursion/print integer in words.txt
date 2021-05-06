@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+string arr[] = {
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine"
+};
+
+void printNumber(int n){
+    if(n == 0)
+        return;
+    int number = n % 10;
+    printNumber(n/10);
+    cout<<arr[number]<<" ";     
+}
+
+int main() {
+    int n;
+    cin>>n;
+
+    printNumber(n);
+}

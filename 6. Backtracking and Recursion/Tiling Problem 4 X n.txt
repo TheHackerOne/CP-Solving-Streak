@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+long long TilingProblem(int n){
+    if(n == 1 || n == 2 || n == 3)
+        return 1;
+    if(n == 4)  
+        return 2;
+     return TilingProblem(n-1) + TilingProblem(n-4);              
+}
+
+int main() {
+    int n;
+    cin>>n;
+
+    cout<<TilingProblem(n);
+}

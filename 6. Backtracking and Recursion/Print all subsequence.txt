@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+void printSubsequence(char *inp, char *out, int i, int j){
+    if(inp[i] == '\0'){
+        out[j] = '\0';
+        cout<<out<<", ";
+        return;
+    }
+
+    out[j] = inp[i];
+    printSubsequence(inp, out, i+1, j+1);
+
+    printSubsequence(inp, out, i+1, j);
+}
+
+int main() {
+    char a[] = "abc";
+    int n = sizeof(a)/sizeof(a[0]);
+    char inp[10], out[10];
+    printSubsequence(a, out, 0, 0);
+    return 0;
+}

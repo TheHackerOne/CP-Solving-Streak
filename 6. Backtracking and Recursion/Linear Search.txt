@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int linearSearch(int *a, int element, int n){
+    if(n == 0)
+        return -1;
+    else if (a[0] == element)
+        return n;
+    else    
+        return linearSearch(a+1, element, n-1);    
+}
+
+int main() {
+    // Linear Search recursion
+
+    int a[] = {3, 1, 6, 7, 4, 9};
+    int element;
+    cin>>element;
+
+    int ans = linearSearch(a, element, 6);
+    if(ans == -1)
+        cout<<"element not found"<<endl;
+     else   
+        cout<<"element found at position "<<6-ans<<endl;   
+
+}
