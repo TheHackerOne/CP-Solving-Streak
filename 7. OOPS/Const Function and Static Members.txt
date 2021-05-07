@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+
+class student{
+    int age;
+    int rollNumber;
+    static int totalStudentsPrivate;
+
+    public:
+    static int totalStudentsPublic;
+
+    student(){
+        totalStudentsPublic++;
+        totalStudentsPrivate++;
+    }
+
+    student(int age, int rollNumber){
+        totalStudentsPrivate++;
+        totalStudentsPublic++;
+        this -> age = age;
+        this -> rollNumber = rollNumber;
+    }
+
+    static void getPrivateStudent(){
+        cout<<"Accessing private static member using static function without an object "<<totalStudentsPrivate<<endl;
+    }
+
+    void getInfo () const{
+        cout<<"Age : "<<age<<endl;
+        cout<<"roll Number : "<<rollNumber<<endl;
+        cout<<"Total Students : "<<totalStudentsPublic<<endl;
+    }
+
+    void setAge(int age){
+        this -> age = age;
+    }
+    
+    void setRoll(int rollNumber){
+        this -> rollNumber = rollNumber;
+    }
+
+};
+
+// Correct way to initialise a static class variable using scope resolution operator
+int student::totalStudentsPublic = 0;
+int student::totalStudentsPrivate = 0;
+
+// Constant objects can call only constant functions
+// constant objects values cannot be changed once they are initialised, that is why
+// we cannot call any function on that object because it may try to change some values
+
+int main() {
+    student s1(20, 12371);
+    s1.getInfo();
+
+    const student s2;
+    s2.getInfo();
+
+    // GOOD PRACTICE
+    cout<<"Accessing Total students without an object "<<student::totalStudentsPublic<<endl;
+    // BAD PRACTICE
+    cout<<"Accessing Total students with an object "<<s2.totalStudentsPublic<<endl;
+
+    // cout<<student::totalStudentsPrivate<<endl; GIVES ERROR
+    student::getPrivateStudent();
+
+}

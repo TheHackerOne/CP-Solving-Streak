@@ -1,0 +1,146 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+class Fraction{
+    int numerator;
+    int denominator;
+
+    public:
+
+    Fraction(int numerator, int denominator){
+        this -> numerator = numerator;
+        this -> denominator = denominator;
+    }
+
+    void display(){
+        cout<<this -> numerator<<" / "<<denominator<<endl;
+    }
+    
+    void simplify(){
+        int gcd = 1;
+        int m = min(numerator, denominator);
+        for(int i=2;i<=m;i++){
+            if(numerator % i == 0 && denominator % i == 0){
+                gcd = i;
+            }
+        }
+        numerator /= gcd;
+        denominator /= gcd;
+    }
+
+    void add(Fraction const &f){
+        numerator = (numerator*f.denominator) + (f.numerator*denominator);
+        denominator = denominator * f.denominator;
+        simplify();
+    }
+
+    void multiply(Fraction const &f){
+        numerator = numerator * f.numerator;
+        denominator = denominator * f.denominator;
+        simplify();
+    }
+
+    Fraction operator+(Fraction const &f) const {
+        int num = (numerator*f.denominator) + (f.numerator*denominator);
+        int den = denominator * f.denominator;
+        Fraction fnew(num, den);
+        fnew.simplify();
+        return fnew;
+    }
+
+    Fraction operator*(Fraction const &f) const {
+        int num = numerator * f.numerator;
+        int den = denominator * f.denominator;
+        Fraction fnew(num, den);
+        fnew.simplify();
+        return fnew;
+    }
+
+    bool operator==(Fraction const &f) const {
+        return (numerator == f.numerator && denominator == f.denominator);
+    }
+
+    // Pre Increment operator
+    Fraction& operator++(){
+        this -> numerator = this -> numerator + this -> denominator;
+        simplify();
+        return *this;
+    }
+
+    // Post increment Operator
+    Fraction operator++(int){
+        Fraction fnew(numerator, denominator);
+        numerator = numerator + denominator;
+        simplify();
+        fnew.simplify();
+        return fnew;
+    }
+
+    Fraction& operator+=(Fraction const &f){
+        numerator = (numerator*f.denominator) + (f.numerator*denominator);
+        denominator = denominator * f.denominator;
+        simplify();
+        return *this;
+    }
+
+};
+
+int main() {
+    Fraction f1(5, 6);
+    f1.display();
+
+    Fraction f2(4, 6);
+    f2.display();
+    cout<<endl;
+
+    // ADD function
+    f2.add(f1);
+    f1.display();
+    f2.display();
+    cout<<endl;
+
+    // MULTIPLY function
+    f1.multiply(f2);
+    f1.display();
+    f2.display();
+    cout<<endl;
+
+    // + operator overloaded
+    Fraction f3 = f1 + f2;
+    f3.display();
+    cout<<endl;
+
+    // * operator overloaded
+    Fraction f4 = f1 * f2;
+    f4.display();
+    cout<<endl;
+
+    Fraction f5(15, 8);
+
+    // == operator overloaded
+    if(f4 == f5)
+        cout<<"They are equal"<<endl;
+    else
+        cout<<"They are not equal"<<endl;
+
+    // Pre increment operator overloaded
+    Fraction f6(1, 1);
+    ++f6;
+    f6.display();    
+
+    Fraction f7 = ++(++f6);
+    f6.display();
+    f7.display();  
+
+    // Post increment overloaded
+    Fraction f8 = f7++;
+    f7.display();
+    f8.display(); 
+    cout<<endl;
+
+    (f8 += f7) += f7;
+    f8.display();
+    f7.display();
+    
+    return 0;
+}

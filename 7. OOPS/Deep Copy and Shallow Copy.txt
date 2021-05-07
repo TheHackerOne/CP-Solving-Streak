@@ -1,0 +1,55 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class Student{
+    int age;
+    char *name;
+    public:
+
+    Student(){
+        char name[] = "yash";
+        this -> age = 45;
+        this -> name = name;
+    }
+
+    Student(int age, char *name){
+        // This is SHALLOW COPY
+        // this -> age = age;
+        // this -> name = name; 
+
+        // This is DEEP COPY
+        this -> age = age;
+        this -> name = new char[strlen(name) + 1];
+        strcpy(this -> name, name);
+    }
+
+    // COPY CONSTRUCTOR
+    Student(Student const &s){
+        this -> age = s.age;
+        // this -> name = s.name; SHALLOW COPY
+        this -> name = new char[strlen(s.name) + 1];
+        strcpy(this -> name, s.name);
+    }
+
+    void display(){
+        cout<<age<<endl;
+        cout<<name<<endl;
+    }
+};
+
+int main() {
+    char name[] = "abcd";
+    Student s1(23, name);
+    s1.display();
+
+    name[0] = 'p';
+    Student s2(43, name);
+    s1.display();
+    s2.display();
+
+    Student s3 = s1;
+    s3.display();
+    
+    return 0;
+}

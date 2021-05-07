@@ -1,0 +1,108 @@
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class LinkedListNode{
+    public:
+    int data;
+    LinkedListNode *next;
+
+    LinkedListNode(int data){
+        this -> data = data;
+        this -> next = NULL;
+    }
+};
+
+class BinaryTreeNode{
+    public:
+    int data;
+    BinaryTreeNode *left;
+    BinaryTreeNode *right;
+
+    BinaryTreeNode(int data){
+        this -> data = data;
+        left = NULL;
+        right = NULL;
+    }
+
+    ~BinaryTreeNode(){
+        delete left;
+        delete right;
+    }
+};
+
+BinaryTreeNode *TakeInput(){
+    int data;
+    cin>>data;
+    BinaryTreeNode *root = new BinaryTreeNode(data);
+    queue<BinaryTreeNode *> pendingNodes;
+    pendingNodes.push(root);
+    while(!pendingNodes.empty()){
+        BinaryTreeNode *front = pendingNodes.front();
+        pendingNodes.pop();
+        int left, right;
+        cout<<"Enter left child of "<<front -> data<<endl;
+        cin>>left;
+        if(left != -1){
+            BinaryTreeNode *newNode = new BinaryTreeNode(left);
+            pendingNodes.push(newNode);
+            front -> left = newNode;
+        }
+        cout<<"Enter right child of "<<front -> data<<endl;
+        cin>>right;
+        if(right != -1){
+            BinaryTreeNode *newNode = new BinaryTreeNode(right);
+            pendingNodes.push(newNode);
+            front -> right = newNode;
+        }
+    }
+    return root;
+}
+
+// first is head, second is tail
+pair<LinkedListNode *, LinkedListNode *> BSTtoLinkedList(BinaryTreeNode *root){
+    if(root == NULL){
+        pair<LinkedListNode *, LinkedListNode *> p;
+        p.first = NULL;
+        p.second = NULL;
+        return p;
+    }
+    LinkedListNode *newNode = new LinkedListNode(root -> data);
+    // cout<<newNode -> data<<endl;
+    pair<LinkedListNode *, LinkedListNode *> leftAns = BSTtoLinkedList(root -> left);
+    pair<LinkedListNode *, LinkedListNode *> rightAns = BSTtoLinkedList(root -> right);   
+
+    
+    
+    pair<LinkedListNode *, LinkedListNode *> p;
+    if(leftAns.first == NULL){
+        p.first = newNode;
+    }
+    else{
+        leftAns.second -> next = newNode;
+        p.first = leftAns.first;
+    }    
+    if(rightAns.first == NULL){
+        p.second = newNode;
+        newNode -> next = rightAns.first;
+    }
+    else{
+        newNode -> next = rightAns.first;
+        p.second = rightAns.second;
+    }        
+    return p;
+}
+
+int main() {
+    BinaryTreeNode *root = TakeInput();
+    pair<LinkedListNode *, LinkedListNode *> LL = BSTtoLinkedList(root);
+    while(LL.first != NULL){
+        cout<<LL.first -> data<<" ";
+        LL.first = LL.first -> next;
+    }
+
+    return 0;
+}
+//INPUT
+// 11 8 15 6 10 12 17 -1 -1 -1 -1 -1 13 -1 -1

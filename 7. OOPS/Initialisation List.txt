@@ -1,0 +1,36 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+// Const and Reference variables must be initialised at the time of declaration
+// But in a class it is not possible to initialise them at the time of declaration
+// because we have to pass the values for them later only
+
+// but there is a way around this, and it is known as INITIALISATION LIST
+
+class Student{
+
+    int age;
+    const int rollNumber;
+    int &x;
+    
+    public:
+    // They are assigned at the time of memory occupation/ declaration only 
+    Student(int age, int r) : age(age), rollNumber(r), x(this -> age){
+        
+    }
+
+    void display(){
+        cout<<"age -> "<<age<<endl;
+        cout<<"roll number -> "<<rollNumber<<endl;
+        cout<<"x -> "<<x<<endl;
+    }
+    
+};
+
+int main() {
+    Student s1(23, 101);
+    s1.display();
+    
+    return 0;
+}
