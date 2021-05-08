@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void InsertAtEnd(stack<int> &s, int size, int value) {
+	if (size == 0) {
+		s.push(value);
+		return;
+	}
+	int v = s.top();
+	s.pop();
+	InsertAtEnd(s, size - 1, value);
+	s.push(v);
+}
+
+void ReverseStackUsingRecursion(stack<int> &s, int size) {
+	if (size == 1)
+		return;
+	int value = s.top();
+	s.pop();
+	ReverseStackUsingRecursion(s, size - 1);
+	InsertAtEnd(s, size - 1, value);
+}
+
+
+void printStack(stack<int> s) {
+	while (s.size() != 0) {
+		cout << s.top() << " ";
+		s.pop();
+	}
+	cout << endl;
+}
+
+int main() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+
+
+	stack<int> s;
+	s.push(6);
+	s.push(5);
+	s.push(4);
+	s.push(3);
+	s.push(2);
+	s.push(1);
+
+	printStack(s);
+
+	ReverseStackUsingRecursion(s, s.size());
+
+	printStack(s);
+
+	return 0;
+}
