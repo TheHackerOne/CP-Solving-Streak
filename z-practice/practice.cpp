@@ -1,29 +1,64 @@
 #include<bits/stdc++.h>
 using namespace std;
-const int N = 1e5 + 7;
-int prime[N];
 
-void primeNumbers(int n) {
-	prime[1] = 0;
-	for (int i = 2; i <= n; i++) {
-		for (int j = 2; j <= n / i; j++) {
-			int x = i * j;
-			prime[x] = 0;
+class BinaryTreeNode {
+
+public:
+	int data;
+	BinaryTreeNode *left;
+	BinaryTreeNode *right;
+
+	BinaryTreeNode(int data) {
+		this -> data = data;
+		left = NULL;
+		right = NULL;
+	}
+
+	~BinaryTreeNode() {
+		delete left;
+		delete right;
+	}
+};
+
+BinaryTreeNode *TakeInput() {
+	int data;
+	cin >> data;
+	BinaryTreeNode *root = new BinaryTreeNode(data);
+	queue<BinaryTreeNode *> pendingNodes;
+	pendingNodes.push(root);
+	while (!pendingNodes.empty()) {
+		BinaryTreeNode *front = pendingNodes.front();
+		pendingNodes.pop();
+		int left, right;
+		cout << "Enter left child of " << front -> data << endl;
+		cin >> left;
+		if (left != -1) {
+			BinaryTreeNode *newNode = new BinaryTreeNode(left);
+			front -> left = newNode;
+			pendingNodes.push(newNode);
+		}
+		cout << "Enter right child of " << front -> data << endl;
+		cin >> right;
+		if (right != -1) {
+			BinaryTreeNode *newNode = new BinaryTreeNode(right);
+			front -> right = newNode;
+			pendingNodes.push(newNode);
 		}
 	}
+	return root;
+}
+
+void PrintBinaryTree(BinaryTreeNode *root) {
+	if (root == NULL)
+		return;
+	cout << root -> data;
+	PrintBinaryTree(root -> left);
+	PrintBinaryTree(root -> right);
 }
 
 int main() {
-	int n;
-	cin >> n;
-	memset(prime, -1, sizeof(prime));
-
-	primeNumbers(n);
-
-	for (int i = 1; i <= n; i++) {
-		if (prime[i] == -1)
-			cout << i << ", ";
-	}
+	BinaryTreeNode *root = TakeInput();
+	PrintBinaryTree(root);
 
 	return 0;
 }
