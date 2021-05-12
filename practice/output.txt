@@ -9,3 +9,8 @@ Enter right child of 4
 Enter left child of 5
 Enter right child of 5
 12435
+1 : L 2 R 3 
+2 : R 4 
+3 : R 5 
+4 : 
+5 : 
