@@ -4,7 +4,7 @@ const int N = 1e3 + 5;
 int dp[N][N];
 int dpTable[N][N];
 
-bool dpSubset(int *a, int size, int sum) {
+bool dpEqualSum(int *a, int size, int sum) {
 	//initialization
 	for (int i = 0; i <= size; i++) {
 		for (int j = 0; j <= sum; j++) {
@@ -21,43 +21,53 @@ bool dpSubset(int *a, int size, int sum) {
 	return dpTable[size][sum];
 }
 
-bool memoizedSubsetSum(int *a, int size, int sum) {
+bool memoizedEqualSum(int *a, int size, int sum) {
 	if (sum == 0) return true;
 	if (size == 0) return false;
 	if (dp[size][sum] != -1)
 		return dp[size][sum];
 	if (a[size - 1] <= sum) {
-		return dp[size][sum] = memoizedSubsetSum(a, size - 1, sum - a[size - 1]) || memoizedSubsetSum(a, size - 1, sum);
+		return dp[size][sum] = memoizedEqualSum(a, size - 1, sum - a[size - 1]) || memoizedEqualSum(a, size - 1, sum);
 	} else {
-		return dp[size][sum] = memoizedSubsetSum(a, size - 1, sum);
+		return dp[size][sum] = memoizedEqualSum(a, size - 1, sum);
 	}
 }
 
-bool subsetSumRecursion(int *a, int size, int sum) {
+bool equalSumPartition(int *a, int size, int sum) {
 	if ((size == 0 && sum == 0) || (size != 0 && sum == 0)) return true;
 	if (size == 0) return false;
 
 	if (a[size - 1] <= sum) {
-		return subsetSumRecursion(a, size - 1, sum - a[size - 1]) || subsetSumRecursion(a, size - 1, sum);
+		return equalSumPartition(a, size - 1, sum - a[size - 1]) || equalSumPartition(a, size - 1, sum);
 	} else {
-		return subsetSumRecursion(a, size - 1, sum);
+		return equalSumPartition(a, size - 1, sum);
 	}
 }
 
 int main() {
 
-	int n, S;
-	cin >> n >> S;
+	int n, S = 0;
+	cin >> n ;
 	int a[n];
 	memset(dp, -1, sizeof(dp));
 	memset(dpTable, -1, sizeof(dp));
 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++) {
 		cin >> a[i];
+		S += a[i];
+	}
 
-	cout << subsetSumRecursion(a, n, S) << endl;
-	cout << memoizedSubsetSum(a, n, S) << endl;
-	cout << dpSubset(a, n, S) << endl;
+	cout << S << endl;
+	if ((S ^ 1) == 0) {
+		cout << 0 << endl;
+		cout << 0 << endl;
+		cout << 0 << endl;
+	} else {
+		cout << equalSumPartition(a, n, S / 2) << endl;
+		cout << memoizedEqualSum(a, n, S / 2) << endl;
+		cout << dpEqualSum(a, n, S / 2) << endl;
+	}
+
 
 	return 0;
 }
