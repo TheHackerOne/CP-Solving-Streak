@@ -56,26 +56,11 @@ int NumberOfNodes(TreeNode *root) {
 	return ans;
 }
 
-void PrintTreeClean(TreeNode *root) {
-	queue<TreeNode *> pendingNodes;
-	pendingNodes.push(root);
-	while (!pendingNodes.empty()) {
-		TreeNode *front = pendingNodes.front();
-		pendingNodes.pop();
-		cout << front -> data << " : ";
-		for (int i = 0; i < front -> children.size(); i++) {
-			cout << front -> children[i] -> data;
-			pendingNodes.push(front -> children[i]);
-		}
-		cout << endl;
-	}
-}
-
 int main() {
 
 	TreeNode *root = TakeInput();
-	PrintTreeClean(root);
-	cout << "Number of nodes = " << NumberOfNodes(root) << endl;
+	printTree(root);
+	cout << endl << "Number of nodes = " << NumberOfNodes(root) << endl;
 	delete root;
 
 	return 0;

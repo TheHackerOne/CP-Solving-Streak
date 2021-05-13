@@ -1,160 +1,140 @@
-#include <iostream>
-#include <bits/stdc++.h>
-
+#include<bits/stdc++.h>
 using namespace std;
 
-class BinaryTreeNode{
-    public:
+class BinaryTreeNode {
+public:
     int data;
     BinaryTreeNode *left;
     BinaryTreeNode *right;
 
-    BinaryTreeNode(int data){
+    BinaryTreeNode(int data) {
         this -> data = data;
         left = NULL;
         right = NULL;
     }
 
-    ~BinaryTreeNode(){
+    ~BinaryTreeNode() {
         delete left;
         delete right;
     }
 };
 
-class BST{
+class BST {
     BinaryTreeNode *root;
 
-    public:
-    BST(){
+public:
+
+    BST() {
         root = NULL;
     }
 
-    private:
+    ~BST() {
+        delete root;
+    }
 
-    BinaryTreeNode *deleteData(int data, BinaryTreeNode *root){
-        if(root == NULL)
-            return NULL;
-        
-        if(data < root -> data){
-            BinaryTreeNode *left = deleteData(data, root -> left);
-            root -> left = left;
-        } else if (data > root -> data) {
-            BinaryTreeNode *right = deleteData(data, root -> right);
-            root -> right = right;            
-        } else {
-            if(root -> left == NULL && root -> right == NULL){
-                delete root;
-                return NULL;
-            } else if(root -> left == NULL && root -> right != NULL){
-                BinaryTreeNode *temp = root -> right;
-                root -> right = NULL;
-                delete root;
-                return temp ;
-            } else if (root -> left != NULL && root -> right == NULL){
-                BinaryTreeNode *temp = root -> left;
-                root -> left = NULL;
-                delete root;
-                return temp ;
-            } else{
-                BinaryTreeNode *minNode = root -> right;
+private:
 
-                while(minNode -> left != NULL){
-                    minNode = minNode -> left;
-                }
-                root -> data = minNode -> data;
-                root -> right = deleteData(minNode -> data , root -> right);
-                return root;
-            }
+    bool hasData(BinaryTreeNode *root , int data) {
+        if (root == NULL)  return false;
+        if (root -> data == data)  return true;
+        if (data < root -> data) return hasData(root -> left, data);
+        else return hasData(root -> right, data);
+    }
+
+    BinaryTreeNode *insertDataHelper(BinaryTreeNode *root, int data) {
+        if (root == NULL) {
+            BinaryTreeNode *newNode = new BinaryTreeNode(data);
+            return newNode;
         }
+        if (data < root -> data) {
+            root -> left = insertDataHelper(root -> left, data);
+        } else {
+            root -> right = insertDataHelper(root -> right, data);
+        }
+
         return root;
     }
 
-    public:
-
-    void deleteData(int data){
-        root = deleteData(data, root);
-    }
-
-    private:
-
-    BinaryTreeNode *insertData(int data, BinaryTreeNode *root){
-        if(root == NULL){
-            BinaryTreeNode *newNode = new BinaryTreeNode(data);
-            return newNode;  
-        }
-        if(data < root -> data){
-            BinaryTreeNode *left = insertData(data, root -> left);
-            root -> left = left;
+    BinaryTreeNode *deleteDataHelper(BinaryTreeNode *root, int data) {
+        if (root == NULL)
+            return NULL;
+        if (data < root -> data) {
+            root -> left = deleteDataHelper(root -> left, data);
+            return root;
+        } else if (data > root -> data) {
+            root -> right = deleteDataHelper(root -> right, data);
+            return root;
         } else {
-            BinaryTreeNode *right = insertData(data, root -> right);
-            root -> right = right;
+            if (root -> left == NULL && root -> right == NULL) {
+                delete root;
+                return NULL;
+            } else if (root -> left == NULL) {
+                BinaryTreeNode *node = root -> right;
+                root -> right = NULL;
+                delete root;
+                return node;
+            } else if (root -> right == NULL) {
+                BinaryTreeNode *node = root -> left;
+                root -> left = NULL;
+                delete root;
+                return node;
+            } else {
+                BinaryTreeNode *temp = root -> right;
+                while (temp -> left != NULL) {
+                    temp = temp -> left;
+                }
+                root -> data = temp -> data;
+                root -> right = deleteDataHelper(root -> right, temp -> data);
+                return root;
+            }
         }
-        return root;     
     }
 
-    public:
-
-    void insertData(int data){
-        root = insertData(data, root);
-    }
-
-    private:
-
-    bool hasData(BinaryTreeNode *root, int data){
-        if(root == NULL)
-            return false;
-        if(root -> data == data)
-            return true;
-        else if(data < root -> data)       
-            return hasData(root -> left, data);
-        else      
-            return hasData(root -> right, data);
-    }
-
-    private:
-
-    void printTree(BinaryTreeNode *root){
-        if(root == NULL)
+    void printTree(BinaryTreeNode *root) {
+        if (root == NULL)
             return;
-        cout<<root -> data<<" : ";
-        if(root -> left != NULL){
-            cout<<"L "<<root -> left -> data<<" ";
+        cout << root -> data << " : ";
+        if (root -> left != NULL) {
+            cout << "L " << root -> left -> data << " ";
+        } if (root -> right != NULL) {
+            cout << "R " << root -> right -> data ;
         }
-        if(root -> right != NULL){
-            cout<<"R "<<root -> right -> data<<" ";
-        }
-        cout<<endl;
-        printTree(root -> left);    
-        printTree(root -> right);    
+        cout << endl;
+        printTree(root -> left);
+        printTree(root -> right);
     }
 
-    public:
+public:
 
-    void printTree(){
-        printTree(root);
-    }
-
-    bool hasData(int data){
+    bool hasData(int data) {
         return hasData(root, data);
     }
 
+    void insert(int data) {
+        this -> root = insertDataHelper(root, data);
+    }
+
+    void deleteData(int data) {
+        this -> root = deleteDataHelper(root, data);
+    }
+
+    void printTree() {
+        printTree(root);
+    }
 };
 
 int main() {
     BST b;
-    b.insertData(10);
-    b.insertData(5);
-    b.insertData(20);
-    b.insertData(7);
-    b.insertData(3);
-    b.insertData(15);
-
+    b.insert(10);
+    b.insert(5);
+    b.insert(20);
+    b.insert(7);
+    b.insert(3);
+    b.insert(15);
     b.printTree();
-    cout<<endl;
-
     b.deleteData(10);
     b.deleteData(100);
-
+    cout << endl;
     b.printTree();
 
     return 0;
