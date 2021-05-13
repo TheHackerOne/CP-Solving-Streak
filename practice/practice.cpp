@@ -1,75 +1,63 @@
 #include<bits/stdc++.h>
 using namespace std;
-const int N = 1e3 + 2;
+const int N = 1e3 + 5;
 int dp[N][N];
 int dpTable[N][N];
 
-int dpKnapsack(int *w, int *v, int size, int Capacity) {
-	// initialization
+bool dpSubset(int *a, int size, int sum) {
+	//initialization
 	for (int i = 0; i <= size; i++) {
-		for (int j = 0; j <= Capacity; j++) {
-			if (i == 0 || j == 0) {
-				dp[i][j] = 0;
-			}
+		for (int j = 0; j <= sum; j++) {
+			if (j == 0) dpTable[i][j] = 1;
+			else if (i == 0) dpTable[i][j] = 0;
 		}
 	}
-
-	// bottom up
 	for (int i = 1; i <= size; i++) {
-		for (int j = 1; j <= Capacity; j++) {
-			if (w[i - 1] <= j)
-				dp[i][j] = max(dp[i - 1][j], v[i - 1] + dp[i - 1][j - w[i - 1]]);
-			else
-				dp[i][j] = dp[i - 1][j];
+		for (int j = 1; j <= sum; j++) {
+			if (a[i - 1] <= j) dpTable[i][j] = dpTable[i - 1][j] || dpTable[i - 1][j - a[i - 1]];
+			else dpTable[i][j] = dpTable[i - 1][j];
 		}
 	}
-	return dp[size][Capacity];
+	return dpTable[size][sum];
 }
 
-// top down
-int memoizedKnapsack(int *w, int *v, int size, int Capacity) {
-	if (size == 0 || Capacity == 0) {
-		return 0;
-	}
-	if (dp[size][Capacity] != -1) {
-		return dp[size][Capacity];
-	}
-	if (w[size - 1] <= Capacity) {
-		return dp[size][Capacity] = max(v[size - 1] + memoizedKnapsack(w, v, size - 1, Capacity - w[size - 1]),
-		                                memoizedKnapsack(w, v, size - 1, Capacity));
+bool memoizedSubsetSum(int *a, int size, int sum) {
+	if (sum == 0) return true;
+	if (size == 0) return false;
+	if (dp[size][sum] != -1)
+		return dp[size][sum];
+	if (a[size - 1] <= sum) {
+		return dp[size][sum] = memoizedSubsetSum(a, size - 1, sum - a[size - 1]) || memoizedSubsetSum(a, size - 1, sum);
 	} else {
-		return dp[size][Capacity] = memoizedKnapsack(w, v, size - 1, Capacity);
+		return dp[size][sum] = memoizedSubsetSum(a, size - 1, sum);
 	}
 }
 
-int RecursiveKnapsack(int *w, int *v, int size, int Capacity) {
-	//base case
-	if (size == 0 || Capacity == 0)
-		return 0;
+bool subsetSumRecursion(int *a, int size, int sum) {
+	if ((size == 0 && sum == 0) || (size != 0 && sum == 0)) return true;
+	if (size == 0) return false;
 
-	//hypothesis and induction
-	int maxProfit = INT_MIN;
-	if (w[size - 1] <= Capacity) {
-		maxProfit = max(v[size - 1] + RecursiveKnapsack(w, v, size - 1, Capacity - w[size - 1]),
-		                RecursiveKnapsack(w, v, size - 1, Capacity));
+	if (a[size - 1] <= sum) {
+		return subsetSumRecursion(a, size - 1, sum - a[size - 1]) || subsetSumRecursion(a, size - 1, sum);
 	} else {
-		maxProfit = RecursiveKnapsack(w, v, size - 1, Capacity);
+		return subsetSumRecursion(a, size - 1, sum);
 	}
-	return maxProfit;
 }
 
 int main() {
-	int n, Capacity;
-	cin >> n >> Capacity;
+
+	int n, S;
+	cin >> n >> S;
+	int a[n];
 	memset(dp, -1, sizeof(dp));
-	int weight[n], value[n];
+	memset(dpTable, -1, sizeof(dp));
+
 	for (int i = 0; i < n; i++)
-		cin >> weight[i];
-	for (int i = 0; i < n; i++)
-		cin >> value[i];
-	cout << RecursiveKnapsack(weight, value, n, Capacity) << endl;
-	cout << memoizedKnapsack(weight, value, n, Capacity) << endl;
-	cout << dpKnapsack(weight, value, n, Capacity) << endl;
+		cin >> a[i];
+
+	cout << subsetSumRecursion(a, n, S) << endl;
+	cout << memoizedSubsetSum(a, n, S) << endl;
+	cout << dpSubset(a, n, S) << endl;
 
 	return 0;
 }
