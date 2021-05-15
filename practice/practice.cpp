@@ -1,23 +1,25 @@
 #include<bits/stdc++.h>
 using namespace std;
 const int N = 1e3 + 2;
-int visited[N];
+// int visited[N];
 int visitedNodes[N];
-int color[N];
+int parent[N];
 vector<int> a[N];
-bool isBipartite(int src, int c) {
+
+
+bool cycleDetection(int src) {
 	visitedNodes[src] = 1;
-	color[src] = c;
 	for (int i : a[src]) {
 		if (!visitedNodes[i]) {
-			if (!isBipartite(i, c ^ 1))
-				return false;
+			parent[i] = src;
+			if (cycleDetection(i))
+				return true;
 		} else {
-			if (color[i] == color[src])
-				return false;
+			if (i != parent[src])
+				return true;
 		}
 	}
-	return true;
+	return false;
 }
 
 int main() {
@@ -30,7 +32,7 @@ int main() {
 		a[m].push_back(n);
 	}
 
-	cout << isBipartite(1, 1);
+	cout << cycleDetection(1);
 	cout << endl;
 
 	return 0;
