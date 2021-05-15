@@ -1,0 +1,1 @@
+a graph will be a tree if it has only one connected component and no of edges = nodes - 1

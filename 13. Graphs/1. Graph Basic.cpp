@@ -2,22 +2,27 @@
 using namespace std;
 const int N = 1e3 + 2;
 int visited[N];
-int visitedNodes[N];
-int color[N];
+int visited1[N];
 vector<int> a[N];
-bool isBipartite(int src, int c) {
-	visitedNodes[src] = 1;
-	color[src] = c;
+
+void DFS(int src) {
+	cout << src << " ";
+	visited[src] = 1;
 	for (int i : a[src]) {
-		if (!visitedNodes[i]) {
-			if (!isBipartite(i, c ^ 1))
-				return false;
-		} else {
-			if (color[i] == color[src])
-				return false;
-		}
+		if (visited[i] == 0)
+			DFS(i);
 	}
-	return true;
+}
+
+void print(int src) {
+	cout << src << " : ";
+	visited1[src] = 1;
+	for (int i : a[src])
+		cout << i << " ";
+	cout << endl;
+	for (int i : a[src])
+		if (visited1[i] == 0)
+			print(i);
 }
 
 int main() {
@@ -30,8 +35,9 @@ int main() {
 		a[m].push_back(n);
 	}
 
-	cout << isBipartite(1, 1);
+	DFS(1);
 	cout << endl;
+	print(1);
 
 	return 0;
 }

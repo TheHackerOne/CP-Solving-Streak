@@ -1,10 +1,15 @@
 #include<bits/stdc++.h>
 using namespace std;
 const int N = 1e3 + 2;
-int visited[N];
+// int visited[N];
 int visitedNodes[N];
 int color[N];
 vector<int> a[N];
+
+// if graph has a cycle of odd length - NOT A BIPARTITE GRAPH
+// if graph has a cycle of even length - A BIPARTITE GRAPH
+
+
 bool isBipartite(int src, int c) {
 	visitedNodes[src] = 1;
 	color[src] = c;
