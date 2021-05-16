@@ -3,7 +3,7 @@ using namespace std;
 const int N = 1e3 + 2;
 int dp[N][N];
 int dpTable[N][N];
-// Rod cutting problem
+
 int dpPro(int *l, int size, int S) {
     for (int j = 1; j <= size; j++) {
         for (int i = 1; i <= S; i++) {
