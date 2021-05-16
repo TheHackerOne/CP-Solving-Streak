@@ -3,32 +3,32 @@ using namespace std;
 const int N = 1e3 + 2;
 int dp[N][N];
 int dpTable[N][N];
-// Unbounded Knapsack
-int dpPro(int *w, int *v, int size, int S) {
+// Rod cutting problem
+int dpPro(int *l, int *p, int size, int S) {
 	for (int j = 1; j <= size; j++) {
 		for (int i = 1; i <= S; i++) {
-			if (w[j - 1] <= S) dpTable[j][i] = max(dpTable[j - 1][i], v[size - 1] + dpTable[j][i - w[j - 1]]);
+			if (l[j - 1] <= S) dpTable[j][i] = max(dpTable[j - 1][i], p[size - 1] + dpTable[j][i - l[j - 1]]);
 			else dpTable[j][i] = dpTable[j - 1][i];
 		}
 	}
 	return dp[size][S];
 }
 
-int memoized(int *w, int *v, int size, int S) {
+int memoized(int *l, int *p, int size, int S) {
 	if (S == 0 || size == 0) return 0;
 	if (dp[size][S] != -1) return dp[size][S];
-	if (w[size - 1] <= S) {
-		return dp[size][S] = max(memoized(w, v, size - 1, S), v[size - 1] + memoized(w, v, size, S - w[size - 1]));
+	if (l[size - 1] <= S) {
+		return dp[size][S] = max(memoized(l, p, size - 1, S), p[size - 1] + memoized(l, p, size, S - l[size - 1]));
 	}
-	return dp[size][S] = memoized(w, v, size - 1, S);
+	return dp[size][S] = memoized(l, p, size - 1, S);
 }
 
-int UKnapsackRecursion(int *weight, int *value, int size, int S) {
+int rodCuttingProblem(int *length, int *price, int size, int S) {
 	if (S == 0 || size == 0) return 0;
-	if (weight[size - 1] <= S) {
-		return max(UKnapsackRecursion(weight, value, size - 1, S), value[size - 1] + UKnapsackRecursion(weight, value, size, S - weight[size - 1]));
+	if (length[size - 1] <= S) {
+		return max(rodCuttingProblem(length, price, size - 1, S), price[size - 1] + rodCuttingProblem(length, price, size, S - length[size - 1]));
 	}
-	return UKnapsackRecursion(weight, value, size - 1, S);
+	return rodCuttingProblem(length, price, size - 1, S);
 }
 
 
@@ -38,17 +38,17 @@ int main() {
 	memset(dp, -1, sizeof dp);
 	memset(dpTable, 0, sizeof dpTable);
 
-	int weight[n], value[n];
+	int length[n], price[n];
 	for (int i = 0; i < n; i++) {
-		cin >> weight[i];
+		cin >> length[i];
 	}
 	for (int i = 0; i < n; i++) {
-		cin >> value[i];
+		cin >> price[i];
 	}
 
-	cout << UKnapsackRecursion(weight, value, n, S) << endl;
-	cout << memoized(weight, value, n, S) << endl;
-	cout << dpPro(weight, value, n, S) << endl;
+	cout << rodCuttingProblem(length, price, n, S) << endl;
+	cout << memoized(length, price, n, S) << endl;
+	cout << dpPro(length, price, n, S) << endl;
 
 	return 0;
 }
