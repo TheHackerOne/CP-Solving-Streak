@@ -1,0 +1,22 @@
+employees{
+	padding: 0 40px;
+background-color: lightgray;
+width: 100vw;
+}
+heading{
+color: red;
+font-size: 30px;
+background-color: blue;
+height: 70px;
+}
+heading, name, empid, dept, deptid, salary, username{
+display: table;
+}
+name{
+font-size: 22px;
+font-weight: bold;
+}
+empid, dept, deptid, salary, username{
+color: purple;
+font-size: 18px;
+}

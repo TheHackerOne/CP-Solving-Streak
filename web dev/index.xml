@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="style.css"?>
+<employees>
+<heading>Displaying XML using CSS StyleSheet</heading>
+<employee>
+<name>Name: Suresh </name>
+<empid>Employee ID:01029</empid>
+<dept>Department: Accountant</dept>
+<deptid>Department ID: 010</deptid>
+<salary> Salary: Rs. 55000</salary>
+<username>Username: harsh01029</username>
+</employee>
+<break>.</break>
+
+<employee>
+<name>Name: Ramesh</name>
+<empid>Employee ID:01121</empid>
+<dept>Department: crypto trader</dept>
+<deptid>Department ID: 011</deptid>
+<salary> Salary: Rs. 67000</salary>
+<username>Username: nonu01121</username>
+</employee>
+<break>.</break>
+
+<employee>
+<name>Name: Arjun</name>
+<empid>Employee ID:01235</empid>
+<dept>Department: Insurance</dept>
+<deptid>Department ID: 012</deptid>
+<salary> Salary: Rs. 70000</salary>
+<username>Username: arjun01235</username>
+</employee>
+<break>.</break>
+
+<employee>
+<name>Name: Kartik</name>
+<empid>Employee ID:00949</empid>
+<dept>Department: Accounts</dept>
+<deptid>Department ID: 009</deptid>
+<salary> Salary: Rs. 75000</salary>
+<username>Username: kartik00949</username>
+</employee>
+<break>.</break>
+
+</employees>
