@@ -35,6 +35,33 @@ Node *reverseLL(Node *head) {
     return d;
 }
 
+
+Node *midElement(Node *head) {
+    Node *slow = head;
+    Node *fast = head;
+    while (fast -> next != NULL && fast -> next -> next != NULL) {
+        fast = fast -> next -> next;
+        slow = slow -> next;
+    }
+    return slow;
+}
+
+
+bool isPalindrome(Node *head) {
+    Node *mid = midElement(head);
+    mid -> next = reverseLL(mid -> next);
+    Node *secondHalf = mid -> next;
+    while (secondHalf != NULL) {
+        if (head->data == secondHalf->data) {
+            head = head -> next;
+            secondHalf = secondHalf -> next;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main() {
     int n;
     cin >> n;
@@ -53,10 +80,11 @@ int main() {
             temp = temp -> next;
         }
     }
-    printLL(head);
-    cout << endl;
-    Node *newHead = reverseLL(head);
-    printLL(newHead);
+
+    if (isPalindrome(head))
+        cout << "Given Linked List is a Palindrome " << endl;
+    else
+        cout << "Given Linked List is not a Palindrome" << endl;
 
     return 0;
 }

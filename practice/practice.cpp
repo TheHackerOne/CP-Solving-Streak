@@ -24,15 +24,15 @@ void printLL(Node *head) {
 }
 
 Node *reverseLL(Node *head) {
-    Node *dummy = NULL;
+    Node *d = NULL;
+    Node *next = NULL;
     while (head != NULL) {
-        Node *next = head -> next;
-        head -> next = dummy;
-        dummy = head;
+        next = head -> next;
+        head -> next = d;
+        d = head;
         head = next;
     }
-
-    return dummy;
+    return d;
 }
 
 int main() {
@@ -55,8 +55,8 @@ int main() {
     }
     printLL(head);
     cout << endl;
-    Node *reverseHead = reverseLL(head);
-    printLL(reverseHead);
+    Node *newHead = reverseLL(head);
+    printLL(newHead);
 
     return 0;
 }
