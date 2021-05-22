@@ -16,6 +16,30 @@ public:
     }
 };
 
+Node *reverseLL(Node *head) {
+    Node *prev = NULL;
+    Node *curr = head;
+    Node *forw = NULL;
+    while (curr != NULL) {
+        cout << "hello" << endl;
+        forw = curr -> next;
+        curr -> next = prev;
+        prev = curr;
+        curr = forw;
+    }
+    return prev;
+}
+
+Node *midElement(Node *head) {
+    Node *slow = head;
+    Node *fast = head;
+    while (fast->next != NULL && fast->next->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
 void printLL(Node *head) {
     while (head != NULL) {
         cout << head -> data << " ";
@@ -23,21 +47,10 @@ void printLL(Node *head) {
     }
 }
 
-Node *reverseLL(Node *head) {
-    Node *d = NULL;
-    Node *next = NULL;
-    while (head != NULL) {
-        next = head -> next;
-        head -> next = d;
-        d = head;
-        head = next;
-    }
-    return d;
-}
-
 int main() {
     int n;
     cin >> n;
+
     Node *head = NULL;
     Node *temp = NULL;
 
@@ -47,16 +60,18 @@ int main() {
         Node *newNode = new Node(data);
         if (head == NULL) {
             head = newNode;
-            temp = newNode;
+            temp = head;
         } else {
             temp -> next = newNode;
             temp = temp -> next;
         }
     }
+
     printLL(head);
-    cout << endl;
-    Node *newHead = reverseLL(head);
-    printLL(newHead);
+    Node *mid = midElement(head);
+    cout << endl << "Mid element = " << mid->data << endl;
+    Node *nHead = reverseLL(head);
+    printLL(nHead);
 
     return 0;
 }
