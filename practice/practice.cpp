@@ -21,7 +21,6 @@ Node *reverseLL(Node *head) {
     Node *curr = head;
     Node *forw = NULL;
     while (curr != NULL) {
-        cout << "hello" << endl;
         forw = curr -> next;
         curr -> next = prev;
         prev = curr;
@@ -47,6 +46,43 @@ void printLL(Node *head) {
     }
 }
 
+void fold(Node *head) {
+    Node *mid = midElement(head);
+    Node *nHead = reverseLL(mid -> next);
+    mid -> next = NULL;
+
+    Node *h1 = head;
+    Node *h2 = nHead;
+    Node *f1 = NULL;
+    Node *f2 = NULL;
+
+    while (h2 != NULL) {
+        f1 = h1 -> next;
+        f2 = h2 -> next;
+        h1 -> next = h2;
+        h2 -> next = f1;
+        h1 = f1;
+        h2 = f2;
+    }
+}
+
+void unfold(Node *head) {
+    Node *h1 = head;
+    Node *h2 = head -> next;
+    Node *p1 = head;
+    Node *p2 = head -> next;
+    while (p2 != NULL && p2 -> next != NULL) {
+        Node *f = p2 -> next;
+        p1 -> next = f;
+        p2 -> next = f -> next;
+        p1 = f;
+        p2 = f -> next;
+    }
+    p1 -> next = NULL;
+    Node *nHead = reverseLL(h2);
+    p1 -> next = nHead;
+}
+
 int main() {
     int n;
     cin >> n;
@@ -66,12 +102,18 @@ int main() {
             temp = temp -> next;
         }
     }
-
+    cout << "Initial LL -> ";
     printLL(head);
-    Node *mid = midElement(head);
-    cout << endl << "Mid element = " << mid->data << endl;
-    Node *nHead = reverseLL(head);
-    printLL(nHead);
+    cout << endl;
+    fold(head);
+    cout << "LL after folding -> ";
+    printLL(head);
+    unfold(head);
+    cout << endl;
+    cout << "LL after unfolding -> ";
+    printLL(head);
+
+    delete head;
 
     return 0;
 }
