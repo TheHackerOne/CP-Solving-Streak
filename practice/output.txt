@@ -1,3 +1,3 @@
-Initial LL -> 1 2 3 4 5 3 8 
-LL after folding -> 1 8 2 3 3 5 4 
-LL after unfolding -> 1 2 3 4 5 3 8 
+1 4 6 12 16 21 
+-1 0 7 8 14 18 
+-1 0 1 4 6 7 8 12 14 16 18 21 
