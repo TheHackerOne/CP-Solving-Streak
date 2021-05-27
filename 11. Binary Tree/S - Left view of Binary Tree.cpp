@@ -76,7 +76,7 @@ void PrintLevelOrder(BinaryTreeNode *root) {
     }
 }
 
-void printRightView(BinaryTreeNode *root) {
+void printLeftView(BinaryTreeNode *root) {
     queue<BinaryTreeNode *> pendingNodes;
     pendingNodes.push(root);
     while (!pendingNodes.empty()) {
@@ -85,8 +85,8 @@ void printRightView(BinaryTreeNode *root) {
         while (size--) {
             BinaryTreeNode *curr = pendingNodes.front();
             pendingNodes.pop();
-            if (curr -> right != NULL) pendingNodes.push(curr -> right);
             if (curr -> left != NULL) pendingNodes.push(curr -> left);
+            if (curr -> right != NULL) pendingNodes.push(curr -> right);
         }
     }
 }
@@ -95,8 +95,8 @@ int main() {
     BinaryTreeNode *root = TakeInput();
     // PrintLevelOrder(root);
     cout << endl;
-    cout << "Right View of Binary tree" << endl;
-    printRightView(root);
+    cout << "Left View of Binary tree" << endl;
+    printLeftView(root);
 
     return 0;
 }

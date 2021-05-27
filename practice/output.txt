@@ -1,2 +1,9 @@
 Enter root data
-3
+
+Right View of Binary tree
+7
+12
+13
+11
+10
+15
