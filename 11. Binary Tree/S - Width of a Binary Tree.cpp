@@ -77,9 +77,6 @@ void widthOfBT(BinaryTreeNode *root, int hl) {
     widthOfBT(root -> right, hl + 1);
 }
 
-map<int, vector<int>> mp;
-
-
 int main() {
     BinaryTreeNode *root = TakeInput();
     widthOfBT(root, 0);

@@ -129,3 +129,102 @@ Node *mergeSort(Node *head) {
     Node *l2 = mergeSort(nHead);
     return mergeTwoSortedLL(l1, l2);
 }
+
+// Path sum
+
+int pathSum(BinaryTreeNode *root, int currSum, int targetSum) {
+     if (root == NULL) return 0;
+    int count = 0;
+    currSum += root -> val;
+    if (freq[currSum - targetSum])
+        count+=freq[currSum - targetSum];
+    freq[currSum]++;
+    int p1 = pathSum(root -> left, currSum, targetSum);
+    int p2 = pathSum(root -> right, currSum, targetSum);
+    freq[currSum]--;
+    return p1 + p2 + count;
+}
+
+// print Left View
+
+void printLeftView(BinaryTreeNode *root) {
+    queue<BinaryTreeNode *> q;
+    q.push(root);
+    while (!q.empty()) {
+        int size = q.size();
+        cout << q.front() -> data << endl;
+        while (size--) {
+            BinaryTreeNode *curr = q.front();
+            q.pop();
+            if (curr -> left != NULL) {
+                q.push(curr -> left);
+            }
+            if (curr -> right != NULL) {
+                q.push(curr -> right);
+            }
+        }
+    }
+}
+
+//print right view 
+
+void printLeftView(BinaryTreeNode *root) {
+    queue<BinaryTreeNode *> q;
+    q.push(root);
+    while (!q.empty()) {
+        int size = q.size();
+        cout << q.front() -> data << endl;
+        while (size--) {
+            BinaryTreeNode *curr = q.front();
+            q.pop();
+            if (curr -> right != NULL) {
+                q.push(curr -> right);
+            }
+            if (curr -> left != NULL) {
+                q.push(curr -> left);
+            }
+        }
+    }
+}
+
+// Width of binary tree
+
+int mm[2] = {0, 0};
+
+void widthOfBT(BinaryTreeNode *root, int hl) {
+    if (root == NULL) return;
+
+    mm[0] = min(mm[0], hl);
+    mm[1] = max(mm[1], hl);
+    widthOfBT(root -> left, hl - 1);
+    widthOfBT(root -> right, hl + 1);
+}
+
+// vertical Order of binary tree
+
+void verticalOrderTraversal(BinaryTreeNode *root, int hl) {
+    queue<pair<BinaryTreeNode *, int>> q;
+    q.push({ root, hl });
+    while (!q.empty()) {
+        int size = q.size();
+        while (size--) {
+            pair<BinaryTreeNode *, int> curr = q.front();
+            q.pop();
+            int hl = curr.second;
+            mp[hl].push_back(curr.first -> data);
+            if (curr.first -> left != NULL) {
+                q.push({ curr.first -> left, hl - 1 });
+            }
+            if (curr.first -> right != NULL) {
+                q.push({ curr.first -> right, hl + 1 });
+            }
+        }
+    }
+}
+
+for (auto list : mp) {
+        cout << list.first << " : ";
+        for (int l : list.second)
+            cout << l << " ";
+        cout << endl;
+    }

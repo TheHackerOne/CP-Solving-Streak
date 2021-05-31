@@ -79,12 +79,37 @@ void widthOfBT(BinaryTreeNode *root, int hl) {
 
 map<int, vector<int>> mp;
 
+void verticalOrderTraversal(BinaryTreeNode *root, int hl) {
+    queue<pair<BinaryTreeNode *, int>> q;
+    q.push({ root, hl });
+    while (!q.empty()) {
+        int size = q.size();
+        while (size--) {
+            pair<BinaryTreeNode *, int> curr = q.front();
+            q.pop();
+            int hl = curr.second;
+            mp[hl].push_back(curr.first -> data);
+            if (curr.first -> left != NULL) {
+                q.push({ curr.first -> left, hl - 1 });
+            }
+            if (curr.first -> right != NULL) {
+                q.push({ curr.first -> right, hl + 1 });
+            }
+        }
+    }
+}
 
 int main() {
     BinaryTreeNode *root = TakeInput();
     widthOfBT(root, 0);
     int width = mm[1] - mm[0] + 1;
-    cout << "width = " << width;
+    verticalOrderTraversal(root, abs(mm[0]));
+    for (auto list : mp) {
+        cout << list.first << " : ";
+        for (int l : list.second)
+            cout << l << " ";
+        cout << endl;
+    }
 
     return 0;
 }

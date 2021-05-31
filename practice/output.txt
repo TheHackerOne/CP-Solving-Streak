@@ -16,4 +16,4 @@ Enter the left child of -2
 Enter the right child of -2
 Enter the left child of 1
 Enter the right child of 1
-no of halo paths = 3
+width = 6
