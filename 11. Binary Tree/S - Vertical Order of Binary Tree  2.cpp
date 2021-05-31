@@ -77,18 +77,19 @@ void widthOfBT(BinaryTreeNode *root, int hl) {
     widthOfBT(root -> right, hl + 1);
 }
 
-map<int, vector<int>> mp;
+map<int, multiset<pair<int, int>>> mp;
 
 void verticalOrderTraversal(BinaryTreeNode *root, int hl) {
     queue<pair<BinaryTreeNode *, int>> q;
     q.push({ root, hl });
+    int level = 1;
     while (!q.empty()) {
         int size = q.size();
         while (size--) {
             pair<BinaryTreeNode *, int> curr = q.front();
             q.pop();
             int hl = curr.second;
-            mp[hl].push_back(curr.first -> data);
+            mp[hl].insert({ level, curr.first -> data });
             if (curr.first -> left != NULL) {
                 q.push({ curr.first -> left, hl - 1 });
             }
@@ -96,6 +97,7 @@ void verticalOrderTraversal(BinaryTreeNode *root, int hl) {
                 q.push({ curr.first -> right, hl + 1 });
             }
         }
+        level++;
     }
 }
 
@@ -106,8 +108,8 @@ int main() {
     verticalOrderTraversal(root, abs(mm[0]));
     for (auto list : mp) {
         cout << list.first << " : ";
-        for (int l : list.second)
-            cout << l << " ";
+        for (auto l : list.second)
+            cout << l.second << " ";
         cout << endl;
     }
 

@@ -1,19 +1,13 @@
-Enter the left child of 10
-Enter the right child of 10
-Enter the left child of 5
-Enter the right child of 5
-Enter the left child of -3
-Enter the right child of -3
-Enter the left child of 3
-Enter the right child of 3
-Enter the left child of 2
-Enter the right child of 2
-Enter the left child of 11
-Enter the right child of 11
-Enter the left child of 3
-Enter the right child of 3
-Enter the left child of -2
-Enter the right child of -2
 Enter the left child of 1
 Enter the right child of 1
-width = 6
+Enter the left child of 2
+Enter the right child of 2
+Enter the left child of 3
+Enter the right child of 3
+Enter the left child of 5
+Enter the right child of 5
+Enter the left child of 4
+Enter the right child of 4
+0 : 2 
+1 : 1 5 4 
+2 : 3 
