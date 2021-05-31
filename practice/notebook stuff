@@ -9,3 +9,123 @@ int midElement(Node *head) {
     }
     return slow -> data;
 }
+
+// Reverse of a linked list
+
+Node *reverseLL(Node *head) {
+    Node *prev = NULL;
+    Node *curr = head;
+    Node *forw = NULL;
+    while (curr != NULL) {
+        forw = curr -> next;
+        curr -> next = prev;
+        prev = curr;
+        curr = forw;
+    }
+    return prev;
+}
+
+// is Palindrome
+
+bool isPalindrome(Node *head) {
+    Node *mid = midElement(head);
+    Node *nHead = reverseLL(mid -> next);
+    mid -> next = NULL;
+    while (nHead != NULL) {
+        if (head -> data != nHead -> data) {
+            return false;
+        }
+        nHead = nHead -> next;
+        head = head -> next;
+    }
+    return true;
+}
+
+// fold a LL
+
+Node *foldLL(Node *head) {
+    Node *mid = midElement(head);
+    Node *newHead = reverseLL(mid -> next);
+    mid -> next = NULL;
+    Node *h1 = head;
+    Node *h2 = newHead;
+    Node *forw1 = NULL;
+    Node *forw2 = NULL;
+    while (h2 != NULL) {
+        forw1 = h1 -> next;
+        forw2 = h2 -> next;
+        h1 -> next = h2;
+        h2 -> next = forw1;
+        h1 = forw1;
+        h2 = forw2;
+    }
+    return head;
+}
+
+//unfold a LL
+
+Node *unfoldLL(Node *head) {
+    Node *h1 = head;
+    Node *h2 = head -> next;
+    Node *nHead = h2;
+    Node *forw = NULL;
+    while (h2 != NULL && h2 -> next != NULL) {
+        forw = h2 -> next;
+        h1 -> next = forw;
+        h2 -> next = forw -> next;
+        h1 = forw;
+        h2 = forw -> next;
+    }
+    h1 -> next = NULL;
+    nHead = reverseLL(nHead);
+    h1 -> next = nHead;
+    return head;
+}
+
+// merge 2 sorted LL
+
+Node *mergeTwoSortedLL(Node *head1, Node *head2) {
+    Node *dummy = new Node(-1);
+    Node *h1 = head1;
+    Node *h2 = head2;
+    Node *prev = dummy;
+    while (h1 != NULL && h2 != NULL) {
+        if (h1 -> data < h2 -> data) {
+            prev -> next = h1;
+            prev = h1;
+            h1 = h1 -> next;
+        } else {
+            prev -> next = h2;
+            prev = h2;
+            h2 = h2 -> next;
+        }
+    }
+    prev -> next = h1 != NULL ? h1 : h2;
+    return dummy -> next;
+}
+
+// merge k sorted linked list
+
+Node *mergeKsortedLL(vector<Node *> lists, int s, int e) {
+    if (s >= e)
+        return lists[s];
+    int mid = (s + e) / 2;
+    Node *list1 = mergeKsortedLL(lists, s, mid);
+    Node *list2 = mergeKsortedLL(lists, mid + 1, e);
+    Node *nHead = mergeTwoSortedLL(list1, list2);
+    return nHead;
+}
+
+// mergesort
+
+Node *mergeSort(Node *head) {
+    if (head == NULL || head -> next == NULL) return head;
+
+    Node *mid = midElement(head);
+    Node *nHead = mid -> next;
+    mid -> next = NULL;
+
+    Node *l1 = mergeSort(head);
+    Node *l2 = mergeSort(nHead);
+    return mergeTwoSortedLL(l1, l2);
+}

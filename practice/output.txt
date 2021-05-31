@@ -1,2 +1,19 @@
-3 5 7 11 19 23 29 31 
-Mid element = 11
+Enter the left child of 10
+Enter the right child of 10
+Enter the left child of 5
+Enter the right child of 5
+Enter the left child of -3
+Enter the right child of -3
+Enter the left child of 3
+Enter the right child of 3
+Enter the left child of 2
+Enter the right child of 2
+Enter the left child of 11
+Enter the right child of 11
+Enter the left child of 3
+Enter the right child of 3
+Enter the left child of -2
+Enter the right child of -2
+Enter the left child of 1
+Enter the right child of 1
+no of halo paths = 3
