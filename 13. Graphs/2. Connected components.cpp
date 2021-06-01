@@ -1,42 +1,61 @@
 #include<bits/stdc++.h>
 using namespace std;
-const int N = 1e3 + 2;
-int visited[N];
-int visitedNodes[N];
-vector<int> a[N];
 
-void DFS(int src) {
-	// cout << src << " ";
-	visited[src] = 1;
-	for (int i : a[src]) {
-		if (visited[i] == 0)
-			DFS(i);
-	}
-}
+class Solution {
 
-int numberOfConnectedComponents(int nodes) {
-	int count = 0;
-	for (int i = 1; i <= nodes; i++) {
-		if (visited[i] == 0) {
-			DFS(i);
-			count++;
+public:
+	void printGraph(vector<int> adjList[], int V) {
+		for (int i = 0; i < V; i++) {
+			cout << i << " : ";
+			for (int j : adjList[i])
+				cout << j << " ";
+			cout << endl;
 		}
 	}
-	return count;
-}
 
-int main() {
-	int nodes, edges;
-	cin >> nodes >> edges;
-	for (int i = 0; i < edges; i++) {
-		int n, m;
-		cin >> n >> m;
-		a[n].push_back(m);
-		a[m].push_back(n);
+	void bfs(vector<int> adjList[], int src, int *visited) {
+		queue<int> q;
+		q.push(src);
+		visited[src] = 1;
+		while (!q.empty()) {
+			int curr = q.front();
+			q.pop();
+			for (int child : adjList[curr]) {
+				if (!visited[child]) {
+					visited[child] = 1;
+					q.push(child);
+				}
+			}
+		}
 	}
 
-	cout << numberOfConnectedComponents(nodes);
-	cout << endl;
+	int connectedComponents(vector<int> adjList[], int V) {
+		int visited[V] = {0};
+		int count = 0;
+		for (int i = 0; i < V; i++) {
+			if (!visited[i]) {
+				bfs(adjList, i, visited);
+				count++;
+			}
+		}
+		return count;
+	}
+};
+
+int main() {
+	int V, E;
+	cin >> V >> E;
+	vector<int> adjList[V];
+	for (int i = 0; i < E; i++) {
+		int a, b;
+		cin >> a >> b;
+		adjList[a].push_back(b);
+		adjList[b].push_back(a);
+	}
+
+	Solution obj;
+	obj.printGraph(adjList, V);
+	cout << "No of connected Components - " << obj.connectedComponents(adjList, V);
 
 	return 0;
 }
