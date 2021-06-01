@@ -1,43 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
-const int N = 1e3 + 2;
-int visited[N];
-int visited1[N];
-vector<int> a[N];
 
-void DFS(int src) {
-	cout << src << " ";
-	visited[src] = 1;
-	for (int i : a[src]) {
-		if (visited[i] == 0)
-			DFS(i);
+class Solution {
+private:
+	void dfsHelper(vector<int> adjList[], int src, vector<int> &visited) {
+		cout << src << " ";
+		visited[src] = 1;
+		for (int child : adjList[src]) {
+			if (!visited[child])
+				dfsHelper(adjList, child, visited);
+		}
 	}
-}
 
-void print(int src) {
-	cout << src << " : ";
-	visited1[src] = 1;
-	for (int i : a[src])
-		cout << i << " ";
-	cout << endl;
-	for (int i : a[src])
-		if (visited1[i] == 0)
-			print(i);
-}
+public:
+	void printGraph(vector<int> adjList[], int V) {
+		for (int i = 0; i < V; i++) {
+			cout << i << " : ";
+			for (int j : adjList[i])
+				cout << j << " ";
+			cout << endl;
+		}
+	}
+
+	void dfs(vector<int> adjList[], int V) {
+		vector<int> visited(V, 0);
+		dfsHelper(adjList, 0, visited);
+	}
+};
 
 int main() {
-	int nodes, edges;
-	cin >> nodes >> edges;
-	for (int i = 0; i < edges; i++) {
-		int n, m;
-		cin >> n >> m;
-		a[n].push_back(m);
-		a[m].push_back(n);
+	int V, E;
+	cin >> V >> E;
+	vector<int> adjList[V];
+	for (int i = 0; i < E; i++) {
+		int a, b;
+		cin >> a >> b;
+		adjList[a].push_back(b);
+		adjList[b].push_back(a);
 	}
 
-	DFS(1);
-	cout << endl;
-	print(1);
+	Solution obj;
+	obj.printGraph(adjList, V);
+	obj.dfs(adjList, V );
 
 	return 0;
 }
