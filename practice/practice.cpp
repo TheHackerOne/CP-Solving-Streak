@@ -2,15 +2,6 @@
 using namespace std;
 
 class Solution {
-private:
-    void dfsHelper(vector<int> adjList[], int src, vector<int> &visited) {
-        cout << src << " ";
-        visited[src] = 1;
-        for (int child : adjList[src]) {
-            if (!visited[child])
-                dfsHelper(adjList, child, visited);
-        }
-    }
 
 public:
     void printGraph(vector<int> adjList[], int V) {
@@ -22,9 +13,22 @@ public:
         }
     }
 
-    void dfs(vector<int> adjList[], int V) {
-        vector<int> visited(V, 0);
-        dfsHelper(adjList, 0, visited);
+    void bfs(vector<int> adjList[], int src, int V) {
+        queue<int> q;
+        int visited[V] = {0};
+        q.push(src);
+        visited[src] = 1;
+        while (!q.empty()) {
+            int curr = q.front();
+            q.pop();
+            cout << curr << " ";
+            for (int child : adjList[curr]) {
+                if (!visited[child]) {
+                    visited[child] = 1;
+                    q.push(child);
+                }
+            }
+        }
     }
 };
 
@@ -41,7 +45,7 @@ int main() {
 
     Solution obj;
     obj.printGraph(adjList, V);
-    obj.dfs(adjList, V );
+    obj.bfs(adjList, 0, V);
 
     return 0;
 }
