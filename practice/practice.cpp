@@ -13,15 +13,13 @@ public:
         }
     }
 
-    void bfs(vector<int> adjList[], int src, int V) {
+    void bfs(vector<int> adjList[], int src, int *visited) {
         queue<int> q;
-        int visited[V] = {0};
         q.push(src);
         visited[src] = 1;
         while (!q.empty()) {
             int curr = q.front();
             q.pop();
-            cout << curr << " ";
             for (int child : adjList[curr]) {
                 if (!visited[child]) {
                     visited[child] = 1;
@@ -29,6 +27,18 @@ public:
                 }
             }
         }
+    }
+
+    int connectedComponents(vector<int> adjList[], int V) {
+        int visited[V] = {0};
+        int count = 0;
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                bfs(adjList, i, visited);
+                count++;
+            }
+        }
+        return count;
     }
 };
 
@@ -45,7 +55,7 @@ int main() {
 
     Solution obj;
     obj.printGraph(adjList, V);
-    obj.bfs(adjList, 0, V);
+    cout << "No of connected Components - " << obj.connectedComponents(adjList, V);
 
     return 0;
 }
