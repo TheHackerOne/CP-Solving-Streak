@@ -73,6 +73,7 @@ int main() {
         cin >> arr[i];
     }
 
+    // Always keep the tree size 4*n so that it can take care of worst cases
     int tree[2 * n];
     buildTree(arr, tree, 1, 0, n - 1);
 
