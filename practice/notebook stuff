@@ -288,3 +288,37 @@ void bottomViewOfBT(BinaryTreeNode *root, int hl) {
 
 // top View of binary tree
 
+
+
+
+
+
+
+// DFS
+void DFS(int src, vector<int> adjList[]) {
+    visited[src] = 1;
+    cout << src << " ";
+    for (int child : adjList[src]) {
+        if (!visited[child]) {
+            DFS(child, adjList);
+        }
+    }
+}
+
+// BFS
+void BFS(int src, vector<int> adjList[]) {
+    queue<int> q;
+    q.push(src);
+    visited[src] = 1;
+    while (!q.empty()) {
+        int curr = q.front();
+        q.pop();
+        cout << curr << " ";
+        for (int child : adjList[curr]) {
+            if (!visited[child]) {
+                visited[child] = 1;
+                q.push(child);
+            }
+        }
+    }
+}
