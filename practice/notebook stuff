@@ -322,3 +322,41 @@ void BFS(int src, vector<int> adjList[]) {
         }
     }
 }
+
+// cycle detection in an undirected graph using DFS
+
+bool isCycle(int src, int parent, vector<int> adjList[]) {
+    visited[src] = 1;
+    for (int child : adjList[src]) {
+        if (!visited[child]) {
+            if (isCycle(child, src, adjList))
+                return true;
+        } else if (child != parent)
+            return true;
+
+    }
+    return false;
+}
+
+//cycle detection in a graph using BFS
+
+bool isCycle(int src, vector<int> adjList[]) {
+    queue<int> q;
+    q.push(src);
+    visited[src] = 1;
+    parent[src] = -1;
+    while (!q.empty()) {
+        int curr = q.front();
+        q.pop();
+        for (int child : adjList[curr]) {
+            if (!visited[child]) {
+                parent[child] = curr;
+                visited[child] = 1;
+                q.push(child);
+            } else if (child != parent[curr]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

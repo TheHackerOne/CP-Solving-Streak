@@ -2,45 +2,28 @@
 using namespace std;
 
 int *visited;
+int *parent;
 
-bool DFS(int src, int parent, vector<int> adjList[]) {
-    visited[src] = 1;
-    for (int child : adjList[src]) {
-        if (!visited[child]) {
-            if (DFS(child, src, adjList))
-                return true;
-        } else if (child != parent)
-            return true;
 
-    }
-    return false;
-}
-
-void DFS(int src, vector<int> adjList[]) {
-    visited[src] = 1;
-    cout << src << " ";
-    for (int child : adjList[src]) {
-        if (!visited[child]) {
-            DFS(child, adjList);
-        }
-    }
-}
-
-void BFS(int src, vector<int> adjList[]) {
+bool isCycle(int src, vector<int> adjList[]) {
     queue<int> q;
     q.push(src);
     visited[src] = 1;
+    parent[src] = -1;
     while (!q.empty()) {
         int curr = q.front();
         q.pop();
-        cout << curr << " ";
         for (int child : adjList[curr]) {
             if (!visited[child]) {
+                parent[child] = curr;
                 visited[child] = 1;
                 q.push(child);
+            } else if (child != parent[curr]) {
+                return true;
             }
         }
     }
+    return false;
 }
 
 int main() {
@@ -48,8 +31,9 @@ int main() {
     cin >> n >> m;
 
     visited = new int[n + 1];
+    parent = new int[n + 1];
     for (int i = 1; i <= n; i++)
-        visited[i] = 0;
+        visited[i] = 0, parent[i] = 0;
 
     vector<int> adjList[n + 1];
     for (int i = 0; i < m; i++) {
@@ -59,12 +43,10 @@ int main() {
         adjList[b].push_back(a);
     }
 
-    BFS(1, adjList);
-
-    // if (DFS(1, -1, adjList))
-    //     cout << "Graph contains a cycle" << endl;
-    // else
-    //     cout << "Graph does not contain a cycle" << endl;
+    if (isCycle(1, adjList))
+        cout << "Graph contains a cycle" << endl;
+    else
+        cout << "Graph does not contain a cycle" << endl;
 
 
     return 0;
