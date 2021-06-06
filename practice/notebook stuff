@@ -360,3 +360,43 @@ bool isCycle(int src, vector<int> adjList[]) {
     }
     return false;
 }
+
+// given graph is Bipratite or not using Dfs
+
+graph is bipartite if it is possible to divide vertices into 2 mutually exclusive and mutually
+exhaustive sets, such that all edges are acroess sets
+
+bool isBipartite(int src, int col , vector<int> adjList[]) {
+    color[src] = col;
+    for (int child : adjList[src]) {
+        if (color[child] == -1) {
+            if (!isBipartite(child, !color[src], adjList))
+                return false;
+        } else if (color[child] == color[src]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// given graph is Bipartite or not using Bfs
+
+bool isBipartite(int src, int col , vector<int> adjList[]) {
+    queue<int> q;
+    color[src] = col;
+    q.push(src);
+    while (!q.empty()) {
+        int curr = q.front();
+        q.pop();
+        int col = color[curr];
+        for (int child : adjList[curr]) {
+            if (color[child] == -1) {
+                color[child] = !col;
+                q.push(child);
+            } else if (color[child] == color[curr]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}

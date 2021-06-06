@@ -1,39 +1,35 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int *visited;
-int *parent;
+int *color;
 
-
-bool isCycle(int src, vector<int> adjList[]) {
+bool isBipartite(int src, int col , vector<int> adjList[]) {
     queue<int> q;
+    color[src] = col;
     q.push(src);
-    visited[src] = 1;
-    parent[src] = -1;
     while (!q.empty()) {
         int curr = q.front();
         q.pop();
+        int col = color[curr];
         for (int child : adjList[curr]) {
-            if (!visited[child]) {
-                parent[child] = curr;
-                visited[child] = 1;
+            if (color[child] == -1) {
+                color[child] = !col;
                 q.push(child);
-            } else if (child != parent[curr]) {
-                return true;
+            } else if (color[child] == color[curr]) {
+                return false;
             }
         }
     }
-    return false;
+    return true;
 }
 
 int main() {
     int n, m;
     cin >> n >> m;
 
-    visited = new int[n + 1];
-    parent = new int[n + 1];
+    color = new int[n + 1];
     for (int i = 1; i <= n; i++)
-        visited[i] = 0, parent[i] = 0;
+        color[i] = -1;
 
     vector<int> adjList[n + 1];
     for (int i = 0; i < m; i++) {
@@ -43,10 +39,10 @@ int main() {
         adjList[b].push_back(a);
     }
 
-    if (isCycle(1, adjList))
-        cout << "Graph contains a cycle" << endl;
+    if (isBipartite(1, 0, adjList))
+        cout << "Graph is Bipartite" << endl;
     else
-        cout << "Graph does not contain a cycle" << endl;
+        cout << "Graph is not Bipartite" << endl;
 
 
     return 0;

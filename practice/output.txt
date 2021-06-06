@@ -1,1 +1,1 @@
-Graph does not contain a cycle
+Graph is not Bipartite
