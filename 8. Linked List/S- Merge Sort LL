@@ -1,0 +1,11 @@
+Node *mergeSort(Node *head) {
+    if (head == NULL || head -> next == NULL) return head;
+
+    Node *mid = midElement(head);
+    Node *nHead = mid -> next;
+    mid -> next = NULL;
+
+    Node *l1 = mergeSort(head);
+    Node *l2 = mergeSort(nHead);
+    return mergeTwoSortedLL(l1, l2);
+}
