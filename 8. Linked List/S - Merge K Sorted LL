@@ -1,0 +1,9 @@
+Node *mergeKsortedLL(vector<Node *> lists, int s, int e) {
+    if (s >= e)
+        return lists[s];
+    int mid = (s + e) / 2;
+    Node *list1 = mergeKsortedLL(lists, s, mid);
+    Node *list2 = mergeKsortedLL(lists, mid + 1, e);
+    Node *nHead = mergeTwoSortedLL(list1, list2);
+    return nHead;
+}

@@ -365,6 +365,8 @@ bool isCycle(int src, vector<int> adjList[]) {
 
 graph is bipartite if it is possible to divide vertices into 2 mutually exclusive and mutually
 exhaustive sets, such that all edges are acroess sets
+odd cycle graph is not bipartite
+even cycle graph is bipartite
 
 bool isBipartite(int src, int col , vector<int> adjList[]) {
     color[src] = col;
@@ -399,4 +401,99 @@ bool isBipartite(int src, int col , vector<int> adjList[]) {
         }
     }
     return true;
+}
+
+// If a directed graph contains a cycle or not Dfs
+
+bool isCycle(int src, vector<int> adjList[]){
+    visited[src] = 1;
+    dfsVisited[src] = 1;
+    for(int child: adjList[src]){
+        if(!visited[child]){
+            if(isCycle(child, adjList)){
+                return true;
+            }
+        }else if(dfsVisited[child] == 1){
+            return true;
+        }
+    }
+    dfsVisited[src] = 0;
+    return false;
+}
+
+// toposort (DAG only) DFS
+
+linear ordering of vertices such that if there is an edge u -> v, u appears before v in the ordering 
+
+void topo(int src, vector<int> &visited, stack<int> &s, vector<int> adjList[]) {
+    visited[src] = 1;
+    for (int child : adjList[src]) {
+        if (!visited[child])
+            topo(child, visited, s, adjList);
+    }
+    s.push(src);
+}
+
+void toposort(int nodes, vector<int> adjList[]) {
+    stack<int> s;
+    vector<int> visited(nodes + 1, 0);
+    for (int i = 1; i <= nodes; i++) {
+        if (!visited[i])
+            topo(i, visited, s , adjList);
+    }
+
+    vector<int> toposort;
+    while (!s.empty()) {
+        toposort.push_back(s.top());
+        s.pop();
+    }
+    for (int i : toposort)
+        cout << i << " ";
+}
+
+// toposort BfS ( Kahn's algorithm )
+
+void toposort(int nodes, vector<int> adjList[]) {
+    vector<int> indegree(nodes + 1, 0);
+    for (int i = 1; i <= nodes; i++) {
+        for (int j : adjList[i]) {
+            indegree[j]++;
+        }
+    }
+    queue<int> q;
+    for (int i = 1; i <= nodes; i++)
+        if (indegree[i] == 0)
+            q.push(i);
+    vector<int> topo;
+    while (!q.empty()) {
+        int curr = q.front();
+        q.pop();
+        topo.push_back(curr);
+        for (int child : adjList[curr]) {
+            indegree[child]--;
+            if (indegree[child] == 0)
+                q.push(child);
+        }
+    }
+
+    for (int i : topo)
+        cout << i << " ";
+}
+
+// Shortest Distance from a single node
+
+void shortestDist(int src, vector<int> adjList[]) {
+    queue<int> q;
+    q.push(src);
+    Dist[src] = 0;
+    while (!q.empty()) {
+        int curr = q.front();
+        q.pop();
+        for (int child : adjList[curr]) {
+            if (Dist[curr] + 1 < Dist[child]) {
+                Dist[child] = Dist[curr] + 1;
+                q.push(child);
+            }
+        }
+    }
 }
