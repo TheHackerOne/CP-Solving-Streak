@@ -30,27 +30,59 @@ int countNode(Node *head) {
     return count;
 }
 
-Node *segregateEvenOdd(Node *head)
-{
-    Node *oh = new Node(-1);
-    Node *eh = new Node(-1);
-    Node *po = oh;
-    Node *pe = eh;
-    Node *curr = head;
-    while (curr != NULL) {
-        if (curr -> data % 2 == 0) {
-            pe -> next = curr;
-            pe = curr;
-        } else {
-            po -> next = curr;
-            po = curr;
-        }
-        curr = curr -> next;
-    }
-    po -> next = nullptr;
-    pe -> next = oh -> next;
 
-    return eh -> next;
+int countNodes(Node *head) {
+    Node *thead = head;
+    int count = 0;
+    while (thead != nullptr) {
+        thead = thead -> next;
+        count++;
+    }
+    return count;
+}
+
+Node *oh = nullptr, *ot = nullptr;
+Node *th = nullptr, *tt = nullptr;
+
+void addfirst(Node *node) {
+    if (th == nullptr) {
+        th = node;
+        tt = node;
+    } else {
+        node -> next = th;
+        th = node;
+    }
+}
+
+Node *reverseInKGroup(Node *head, int k)
+{
+    if (head == nullptr || head -> next == nullptr || k == 0)
+        return head;
+    int length = countNodes(head);
+    Node *curr = head;
+    Node *forw = nullptr;
+
+    while (length >= k) {
+        int n = k;
+        while (n--) {
+            forw = curr -> next;
+            curr -> next = nullptr;
+            addfirst(curr);
+            curr = forw;
+        }
+        if (oh == nullptr) {
+            oh = th;
+            ot = tt;
+        } else {
+            ot -> next = th;
+            ot = tt;
+        }
+        tt = nullptr;
+        th = nullptr;
+        length -= k;
+    }
+    ot -> next = curr;
+    return oh;
 }
 
 int main() {
@@ -72,6 +104,6 @@ int main() {
     }
     printLL(head);
     cout << endl;
-    Node *nHead = segregateEvenOdd(head);
+    Node *nHead = reverseInKGroup(head, 2);
     printLL(nHead);
 }
