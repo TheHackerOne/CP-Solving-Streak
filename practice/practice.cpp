@@ -31,18 +31,23 @@ void addLast(Node *node) {
 }
 
 Node* deleteDuplicates(Node* head) {
-    Node *dummy = new Node(INT_MIN);
-    oh = dummy;
-    ot = dummy;
-    Node *curr = head;
-    Node *forw = nullptr;
-    while (curr != nullptr) {
-        forw = curr -> next;
-        if (curr -> data != ot -> data) {
-            curr -> next = nullptr;
-            addLast(curr);
+    if (head == nullptr || head -> next == nullptr) return head;
+    Node *dummy = new Node(-500);
+    Node *itr = dummy;
+    itr -> next = head;
+    Node *forw = head -> next;
+    while (forw != nullptr) {
+        bool flag = false;
+        while (forw != nullptr && itr -> next -> data == forw -> data) {
+            flag = true;
+            forw = forw -> next;
         }
-        curr = forw;
+        if (flag == true) {
+            itr -> next = forw;
+        } else {
+            itr = itr -> next;
+        }
+        if (forw != nullptr) forw = forw -> next;
     }
     return dummy -> next;
 }
