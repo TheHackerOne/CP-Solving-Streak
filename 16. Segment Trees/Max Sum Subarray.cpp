@@ -36,9 +36,53 @@ void updateTree(int *arr, Node *tree, int treeNode, int start, int end, int idx,
     int Rsum = tree[2 * treeNode + 1].sum;
 
     tree[treeNode].maxSum = max(Lmax, max(Rmax, max(LBS + RBP, max(Lsum + RBP, Rsum + LBS))));
-    tree[treeNode].sum = tree[2 * treeNode].sum + tree[2 * treeNode + 1].sum;
+    tree[treeNode].sum = Lsum + Rsum;
     tree[treeNode].BPrefixSum = max(LBP, Lsum + RBP);
     tree[treeNode].BSuffixSum = max(RBS, Rsum + LBS);
+
+}
+
+Node query(int *arr, Node *tree, int treeNode, int start, int end, int left, int right) {
+    if (left > end || right < start) {
+        Node n;
+        n.sum = INT_MIN;
+        n.maxSum = INT_MIN;
+        n.BPrefixSum = INT_MIN;
+        n.BSuffixSum = INT_MIN;
+        return n;
+    }
+
+    if (left <= start && right >= end) {
+        return tree[treeNode];
+    }
+
+    int mid = (start + end) / 2;
+    Node leftAns = query(arr, tree, 2 * treeNode, start, mid, left, right);
+    Node rightAns = query(arr, tree, 2 * treeNode + 1, mid + 1, end, left, right);
+
+    Node res;
+
+    int Lmax = leftAns.maxSum;
+    int Rmax = rightAns.maxSum;
+    int LBS = leftAns.BSuffixSum;
+    int LBP = leftAns.BPrefixSum;
+    int RBP = rightAns.BPrefixSum;
+    int RBS = rightAns.BSuffixSum;
+    int Lsum = leftAns.sum;
+    int Rsum = rightAns.sum;
+
+    if (leftAns.sum == INT_MIN) {
+        res = rightAns;
+    } else if (rightAns.sum == INT_MIN) {
+        res = leftAns;
+    } else {
+        res.maxSum = max(Lmax, max(Rmax, max(LBS + RBP, max(Lsum + RBP, Rsum + LBS))));
+        res.sum = Lsum + Rsum;
+        res.BPrefixSum = max(LBP, Lsum + RBP);
+        res.BSuffixSum = max(RBS, Rsum + LBS);
+    }
+
+    return res;
 
 }
 
@@ -64,7 +108,7 @@ void buildTree(int *arr, Node *tree, int treeNode, int start, int end) {
     int Rsum = tree[2 * treeNode + 1].sum;
 
     tree[treeNode].maxSum = max(Lmax, max(Rmax, max(LBS + RBP, max(Lsum + RBP, Rsum + LBS))));
-    tree[treeNode].sum = tree[2 * treeNode].sum + tree[2 * treeNode + 1].sum;
+    tree[treeNode].sum = Lsum + Rsum;
     tree[treeNode].BPrefixSum = max(LBP, Lsum + RBP);
     tree[treeNode].BSuffixSum = max(RBS, Rsum + LBS);
 }
@@ -91,14 +135,22 @@ int main() {
     // Build Tree
     buildTree(arr, tree, 1, 0, n - 1);
 
-    printTree(tree, n);
+    // printTree(tree, n);
 
     // Update Tree
     int idx = 2;
     int val = -5;
     updateTree(arr, tree, 1, 0, n - 1, idx, val);
 
-    printTree(tree, n);
+    // printTree(tree, n);
+
+    Node ans = query(arr, tree, 1, 0, n - 1, 1, 2);
+
+    cout << "Sum : " << ans.sum << endl;
+    cout << "maxSum : " << ans.maxSum << endl;
+    cout << "PrefixSum : " << ans.BPrefixSum << endl;
+    cout << "SuffixSum : " << ans.BSuffixSum << endl;
+    cout << endl;
 
 
     return 0;
