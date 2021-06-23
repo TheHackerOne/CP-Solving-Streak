@@ -97,7 +97,7 @@ int main() {
     int idx = 2;
     int val = -5;
     updateTree(arr, tree, 1, 0, n - 1, idx, val);
-    cout << "hello" << endl;
+
     printTree(tree, n);
 
 
