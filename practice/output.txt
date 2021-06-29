@@ -1,5 +1,26 @@
-Sum : -1
-maxSum : 4
-PrefixSum : 4
-SuffixSum : -1
-
+Segment tree
+1
+6
+1
+1
+3
+-2
+4
+0
+0
+0
+0
+0
+Lazy tree
+0
+0
+0
+5
+5
+3
+3
+0
+0
+0
+0
+0
