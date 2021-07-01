@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+//Time Complexity - O(N log log N)
 const long long int N = 1e8 + 1;
 bool arr[N];
 
