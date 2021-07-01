@@ -1,63 +1,139 @@
+// #include<bits/stdc++.h>
+// using namespace std;
+
+// // Sum of Squares Lazy Propogation
+// // Updation type-1 increment all elements in range L to R with value v
+// // a^2 = (a + v)^2 = a^2 + b^v + 2*a*v
+// // Updation type-2 replace all elements with value v
+// // a^2 = v^2
+// class treeNode {
+// public:
+// 	int sum;
+// 	int sumOfSquares;
+// };
+
+// class lazyNode {
+// public:
+// 	int flag;
+// 	int value;
+// };
+
+// updateSegmentTreeLazy(int *tree, int *lazy, int treeNode, int l, int h, int s, int e, int val, int type) {
+// 	if (l > h) return;
+
+// 	if (lazy[treeNode].value != 0) {
+// 		if (lazy[treeNode].flag == 1) {
+// 			tree[treeNode] += (pow(lazy[treeNode].value, 2) * (h - l + 1)) + (2 * lazy[treeNode].value * tree[treeNode].sum);
+// 		} else {
+// 			tree[treeNode]  = pow(lazy[treeNode].value, 2) * (h - l + 1);
+// 		}
+// 		lazy[2 * treeNode].flag = lazy[treeNode].flag;
+// 		lazy[2 * treeNode].value = lazy[treeNode].value;
+// 		lazy[2 * treeNode + 1].flag = lazy[treeNode].flag;
+// 		lazy[2 * treeNode + 1].value = lazy[treeNode].value;
+// 		lazy[treeNode].value = 0;
+// 		lazy[treeNode].flag = 0;
+// 	}
+
+// 	// for completely outside
+// 	if(s > h || e < l) return;
+
+// 	// completely inside
+// 	if(s <= l && e >= h){
+// 		if(type == 1){
+// 			tree[treeNode] += (pow(val, 2) * (h - l + 1)) + (2*val*tree[treeNode].sum);
+// 		}else{
+// 			tree[treeNode] = pow(val, 2) * (h - l + 1);
+// 		}
+// 		if(l != h){
+// 			lazy[2*treeNode].flag = type;
+// 			lazy[2*treeNode].value = val;
+// 			lazy[2*treeNode+1].flag = type;
+// 			lazy[2*treeNode+1].value = val;
+// 		}
+// 	}
+
+// 	// partially inside
+// 	int mid = (s + e)/2;
+// 	updateSegmentTreeLazy(tree, lazy, 2*treeNode, l, mid, s, e, val, type);
+// 	updateSegmentTreeLazy(tree, lazy, 2*treeNode+1, mid+1, h, s, e, val, type);
+// 	tree[treeNode].sum = tree[2*treeNode].sum + tree[2*treeNode+1].sum;
+// 	tree[treeNode].sumOfSquares = tree[2*treeNode].sumOfSquares + tree[2*treeNode+1].sumOfSquares;
+// }
+
+// void buildTree(int *arr, int *tree, int treeNode, int s, int e) {
+// 	if (s == e) {
+// 		tree[treeNode].sum = arr[s];
+// 		tree[treeNode].sumOfSquares = pow(arr[s], 2);
+// 		return;
+// 	}
+
+// 	int mid = (s + e) / 2;
+// 	buildTree(arr, tree, 2 * treeNode, s, mid);
+// 	buildTree(arr, tree, 2 * treeNode + 1, mid + 1, e);
+// 	tree[treeNode].sum = tree[2 * treeNode].sum + tree[2 * treeNode + 1].sum;
+// 	tree[treeNode].sumOfSquares = tree[2 * treeNode].sumOfSquares + tree[2 * treeNode + 1].sumOfSquares;
+// }
+
+// int main() {
+// 	int n;
+// 	cin >> n;
+
+// 	int arr[n];
+// 	for (int i = 0; i < n; i++) arr[i];
+
+// 	treeNode tree[4 * n];
+// 	lazyNode lazy[4 * n];
+
+// 	for (int i = 1; i <= 3 * n; i++) lazy[i] = 0;
+
+// 	buildTree(arr, tree, 1, 0, n - 1);
+// 	updateSegmentTreeLazy(tree, lazy, 1, 0, n - 1, 0, 2, 5, 1);
+
+// 	return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 
-void buildTree(int *arr, int *tree, int treeNode, int s, int e) {
-	if (s == e) {
-		tree[treeNode] = arr[s];
-		return;
-	}
-	int mid = (s + e) / 2;
-	buildTree(arr, tree, 2 * treeNode, s, mid);
-	buildTree(arr, tree, 2 * treeNode + 1, mid + 1, e);
-	tree[treeNode] = min(tree[2 * treeNode], tree[2 * treeNode + 1]);
-}
-
-void updateSegmentTreeLazy(int *tree, int *lazy, int currPos, int l, int h, int s, int e, int inc) {
-	if (l > h) return;
-	if (lazy[currPos] != 0) {
-		tree[currPos] += lazy[currPos];
-		if (l != h) {
-			lazy[2 * currPos] += lazy[currPos];
-			lazy[2 * currPos + 1] += lazy[currPos];
+void BFS(vector<int> adjList[], int src, int *visited, int n, int c, int t) {
+	int totalTime = 0;
+	int distance[n + 1];
+	queue<int> q;
+	q.push(src);
+	visited[src] = 1;
+	distance[src] = 0;
+	int flag = false;
+	while (!q.empty()) {
+		int curr = q.front();
+		q.pop();
+		for (auto i : adjList[curr]) {
+			if (!visited[i]) {
+				visited[i] = 1;
+				q.push(i);
+				distance[i] = distance[curr] + 1;
+			}
 		}
-		lazy[currPos] = 0;
 	}
+	int totalDist = distance[n] * c;
 
-	// for completely outside
-	if (s > h || e < l) return;
-
-	// for completely inside
-	if (s <= l && e >= h) {
-		tree[currPos] += inc;
-		if (l != h) {
-			lazy[2 * currPos] += inc;
-			lazy[2 * currPos + 1] += inc;
-		}
-		return;
-	}
-
-	// for partial overlap
-	int mid = (l + h) / 2;
-	updateSegmentTreeLazy(tree, lazy, 2 * currPos, l, mid, s, e, inc);
-	updateSegmentTreeLazy(tree, lazy, 2 * currPos + 1, mid + 1, h, s, e, inc);
-	tree[currPos] = min(tree[2 * currPos], tree[2 * currPos + 1]);
+	cout << totalDist + (totalDist / (2 * t))*t << endl;
 }
 
 int main() {
-	int arr[] = {1, 3, -2, 4};
-	int tree[13], lazy[13];
+	int n, m, t, c;
+	cin >> n >> m >> t >> c;
+	vector<int> adjList[n + 1];
+	int visited[n + 1];
+	for (int i = 0; i <= n; i++) visited[i] = 0;
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		adjList[a].push_back(b);
+		adjList[b].push_back(a);
+	}
 
-	for (int i = 0; i < 13; i++) tree[i] = 0, lazy[i] = 0;
-
-	buildTree(arr, tree, 1, 0, 3);
-
-	updateSegmentTreeLazy(tree, lazy, 1, 0, 3, 0, 3, 3);
-	updateSegmentTreeLazy(tree, lazy, 1, 0, 3, 0, 1, 2);
-
-	cout << "Segment tree" << endl;
-	for (int i = 1; i <= 12; i++) cout << tree[i] << endl;
-	cout << "Lazy tree" << endl;
-	for (int i = 1; i <= 12; i++) cout << lazy[i] << endl;
+	BFS(adjList, 1, visited, n, c, t);
 
 	return 0;
 }
