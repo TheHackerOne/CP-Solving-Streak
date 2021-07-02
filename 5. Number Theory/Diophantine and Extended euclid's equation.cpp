@@ -9,12 +9,18 @@ using namespace std;
 // Extended Euclid's equation says that if ax + by = gcd(a, b), find value of x and y
 // and from Dio equations we know that the solution of the equation will exist and those solutions will be integers
 
-// ax + by = gcd(a, b) ------- 1
-// gcd(a, b) = gcd(b, a % b)
-// bx1 + (a % b)y1 = gcd(b, a % b) ------- 2
-// Comparing 1 and 2, we get
-// x = y1
-// y = x1 - (a/b) * y1
+//Diophantine
+// ax + by = c;
+// gcd(a, b) divides c then only integeral solutions of this linear equation exists
+// Extended Euclid's says that if ax + by = c and gcd(a, b) = c then
+// ax + by = gcd(a, b)
+// bx1 + (a % b)y1 = gcd(b, a % b)
+// ax + by = bx1 + (a % b)y1
+// ax + by = bx1 + (a - b*(a/b))y1
+// ax + by = bx1 + ay1 - b*(a/b)y1
+// ax + by = b(x1 - (a/b)*y1) + ay1
+// comparing coefficients of a and b, we get
+//---------- x = y1 & y = x1 - (a/b)*y1 ----------
 
 
 class Triplet {
