@@ -1,60 +1,70 @@
+// #include<bits/stdc++.h>
+// using namespace std;
+
+// // Euler's Totient says that
+// // theta(n) gives number of "m"(co-primes) such that 1 <= m < n and gcd(n, m) = 1
+// // PROPERTY
+// // theta(a*b) = theta(a) * theta(b), iff gcd(a, b) = 1
+// // N = p1^a * p2^b * ..... * pn^k
+// // theta(N) = theta(p1^a * p2^b * ..... * pn^k) = theta(p1^a) * theta(p2^b) * ... * theta(pn^k) --------- 1
+// // theta(p1^a) = p1^a(total elements) - p1^(a-1)(elements which are not co-prime to p1^a)
+// // theta(p1^a) = p1^a - p1^(a-1) = (p1^a)*(1 - 1/a) --------------- 2
+// // using 2 in 1, we get
+// // EULER TOTIENT FINAL FORMULA
+// // theta(N) = N * (1 - 1/p1) * (1 - 1/p2) * ...... * (1 - 1/pk)
+
+
+// void eulerTotient(int n){
+//   int phi[n+1];
+//   for(int i=1;i<=n;i++)
+//     phi[i] = i;
+
+//   for(int i=2;i<=n;i++){
+//     if(phi[i] == i){
+//       phi[i] = i - 1;
+//       for(int j=2*i;j<=n;j+=i){
+//         phi[j] = (phi[j]*(i-1))/i;
+//       }
+//     }
+//   }
+// }
+
+// int main() {
+//   int n;
+//   cin>>n;
+
+//   eulerTotient(n);
+
+//   return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
-// Divisors of Factorial
-// No. of divisors of ( n! )
-// We know that for any number N, we have
-// N = p1^a * p2^b * ... * pn^k
-// No. of Divisors = (a+1) * (b+1) * ... * (k+1)
+// Modular Exponentiation
+// (a^b % c)
 
-#define MOD 1000000007
-#define ll long long
-#define pb push_back
+int modeExpo(int a, int b, int c) {
+  if (a == 0) return 0;
+  if (b == 0) return 1;
 
-int prime[100009];
-vector<int> primes;
-
-void sieve() {
-  for (int i = 0; i <= 1e5 + 9 - 1; i++)
-    prime[i] = 1;
-  prime[0] = prime[1] = 1;
-
-  for (int i = 2; i * i < 1e5 + 9; i++) {
-    if (prime[i]) {
-      for (int j = i * i; j < 1e5 + 9; j += i)
-        prime[j] = 0;
-    }
+  long ans;
+  if (b % 2 == 0) {
+    long smallAns = modeExpo(a, b / 2, c);
+    ans = (smallAns * smallAns) % c;
+  } else {
+    long smallAns = modeExpo(a, b - 1, c);
+    ans = a % c;
+    ans = (ans * smallAns) % c;
   }
-
-  for (int i = 0; i < 1e5 + 9; i++)
-    if (prime[i])
-      primes.pb(i);
-}
-
-int divisors(int n) {
-  ll divisorCount = 1;
-  for (int i = 2; primes[i] <= n; i++) {
-    ll count = 0;
-    int k = i;
-    while (n / k != 0) {
-      count = (count + n / k) % MOD;
-      k *= k;
-    }
-    divisorCount = ((divisorCount % MOD) * ((count + 1) % MOD)) % MOD;
-  }
-  return divisorCount;
+  return int((ans + c) % c); // for Negative Numbers
 }
 
 int main() {
-  sieve();
-  int t;
-  cin >> t;
-  while (t--) {
-    int n;
-    cin >> n;
-    cout << divisors(n) << endl;
-  }
-
+  int a, b, c;
+  cin >> a >> b >> c;
+  cout << modeExpo(a, b, c);
 
   return 0;
 }
