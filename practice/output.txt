@@ -1,10 +1,1 @@
-Euler Totient for 1 is 1
-Euler Totient for 2 is 1
-Euler Totient for 3 is 2
-Euler Totient for 4 is 2
-Euler Totient for 5 is 4
-Euler Totient for 6 is 2
-Euler Totient for 7 is 6
-Euler Totient for 8 is 4
-Euler Totient for 9 is 6
-Euler Totient for 10 is 4
+21
