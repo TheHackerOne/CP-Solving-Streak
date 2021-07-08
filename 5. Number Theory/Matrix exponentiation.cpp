@@ -6,6 +6,7 @@ using namespace std;
 // M^(k-1) * [initial state] = kth state variables
 // kth state matrix / initial matrix has all unknown variables
 // M is the matrix we have to find
+
 void multiply(int A[2][2], int M[2][2]) {
   int firstVal = A[0][0] * M[0][0] + A[0][1] * M[1][0];
   int secondVal = A[0][0] * M[0][1] + A[0][1] * M[1][1];
