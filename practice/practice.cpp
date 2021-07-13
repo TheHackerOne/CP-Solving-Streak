@@ -1,26 +1,27 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int subsetSum(int * arr, int n, int s) {
-  if (s == 0) return 1;
-  if (n == 0) return 0;
+void towerOfHanoi(int disks, char src, char dest, char hel) {
+  if (disks == 1) {
+    cout << "disk " << disks << " from " << src << " to " << dest << endl;
+    return;
+  }
+  towerOfHanoi(disks - 1, src, hel, dest);
 
-  if (arr[n - 1] > s)
-    return subsetSum(arr, n - 1, s);
-  else
-    return subsetSum(arr, n - 1, s) + subsetSum(arr, n - 1, s - arr[n - 1]);
+  cout << "disk " << disks << " from " << src << " to " << dest << endl;
+
+  towerOfHanoi(disks - 1, hel, dest, src);
 }
 
 int main() {
-  int n, s;
-  cin >> n >> s;
+  int disks;
+  cin >> disks;
 
-  int arr[n];
+  char s = 's';
+  char d = 'd';
+  char h = 'h';
 
-  for (int i = 0; i < n; i++) cin >> arr[i];
-
-  cout << subsetSum(arr, n , s);
-
+  towerOfHanoi(disks, s, d, h);
 
   return 0;
 }
