@@ -1,28 +1,26 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void printAllBalancedParanthesis(int open, int close, string output) {
-	if (open == 0 && close == 0) {
-		cout << output << endl;
-		return;
-	}
-	if (open != 0) {
-		string out1 = output, out2 = output;
-		out1.push_back('(');
-		printAllBalancedParanthesis(open - 1, close, out1);
-	}
-	if (close > open) {
-		string out2 = output;
-		out2.push_back(')');
-		printAllBalancedParanthesis(open, close - 1, out2);
-	}
+void printAll(int n, int oc, int cc, string output) {
+  if (oc == 0 && cc == 0) {
+    cout << output << endl;
+    return;
+  }
+  if (oc == cc ) {
+    printAll(n - 1, oc - 1, cc, output + "(");
+  }  if (oc < cc && oc > 0 ) {
+    printAll(n - 1, oc - 1, cc, output + "(");
+  }  if (oc < cc && cc > 0 ) {
+    printAll(n - 1, oc, cc - 1, output + ")");
+  }
 }
 
 int main() {
-	int n;
-	cin >> n;
-	string output = "";
-	printAllBalancedParanthesis(n, n, output);
+  int n;
+  string output;
+  cin >> n;
 
-	return 0;
+  printAll(2 * n, n, n, output);
+
+  return 0;
 }

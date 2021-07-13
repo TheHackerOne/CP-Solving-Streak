@@ -1,27 +1,26 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void towerOfHanoi(int disks, char src, char dest, char hel) {
-  if (disks == 1) {
-    cout << "disk " << disks << " from " << src << " to " << dest << endl;
+void printAll(int n, int oc, int cc, string output) {
+  if (oc == 0 && cc == 0) {
+    cout << output << endl;
     return;
   }
-  towerOfHanoi(disks - 1, src, hel, dest);
-
-  cout << "disk " << disks << " from " << src << " to " << dest << endl;
-
-  towerOfHanoi(disks - 1, hel, dest, src);
+  if (oc == cc ) {
+    printAll(n - 1, oc - 1, cc, output + "(");
+  }  if (oc < cc && oc > 0 ) {
+    printAll(n - 1, oc - 1, cc, output + "(");
+  }  if (oc < cc && cc > 0 ) {
+    printAll(n - 1, oc, cc - 1, output + ")");
+  }
 }
 
 int main() {
-  int disks;
-  cin >> disks;
+  int n;
+  string output;
+  cin >> n;
 
-  char s = 's';
-  char d = 'd';
-  char h = 'h';
-
-  towerOfHanoi(disks, s, d, h);
+  printAll(2 * n, n, n, output);
 
   return 0;
 }
