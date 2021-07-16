@@ -229,7 +229,7 @@ for (auto list : mp) {
         cout << endl;
 }
 
-// Vertical order of BInary tree 2
+// Vertical order of Binary tree 2
 
 map<int, multiset<pair<int, int>>> mp;
 
@@ -333,7 +333,6 @@ bool isCycle(int src, int parent, vector<int> adjList[]) {
                 return true;
         } else if (child != parent)
             return true;
-
     }
     return false;
 }
@@ -364,7 +363,7 @@ bool isCycle(int src, vector<int> adjList[]) {
 // given graph is Bipratite or not using Dfs
 
 graph is bipartite if it is possible to divide vertices into 2 mutually exclusive and mutually
-exhaustive sets, such that all edges are acroess sets
+exhaustive sets, such that all edges are across sets
 odd cycle graph is not bipartite
 even cycle graph is bipartite
 
