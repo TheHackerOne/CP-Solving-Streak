@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Find frequency of a given number using binary search in log n
+
 int upperBound(int *arr, int l, int h, int val) {
   int size = h - l;
   while (l <= h) {
