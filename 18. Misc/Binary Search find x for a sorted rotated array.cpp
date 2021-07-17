@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// you are given a sorted array (asc) which is rotated to the left x times, find x
+
 int findX(int *arr, int l, int h) {
   while (l <= h) {
     int mid = (l + h) / 2;
