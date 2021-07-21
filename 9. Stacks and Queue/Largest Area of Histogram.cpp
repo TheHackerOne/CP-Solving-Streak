@@ -49,36 +49,19 @@ public:
         return ans;
     }
 
-    int maximalRectangle(vector<vector<char>>& matrix) {
-        if (matrix.size() == 0  ) return 0;
-
-        int rows = matrix.size();
-        int cols = matrix[0].size();
-
-        int maxW = INT_MIN;
-
-        vector<int> curr(cols, 0);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < matrix[i].size(); j++) {
-                if (matrix[i][j] != '0')
-                    curr[j] += (matrix[i][j] - '0');
-                else curr[j] = 0;
-            }
-
-            vector<int> nsl = NSL(curr, cols);
-            vector<int> nsr = NSR(curr, cols);
-            vector<int> width;
-            for (int i = 0; i < cols; i++)
-                width.push_back(nsr[i] - nsl[i] - 1);
-
-
-            for (int i = 0; i < cols; i++)
-                maxW = max(maxW, width[i] * curr[i]);
-
+    int largestRectangleArea(vector<int>& heights) {
+        int size = heights.size();
+        vector<int> nsl = NSL(heights, size);
+        vector<int> nsr = NSR(heights, size);
+        vector<int> width;
+        for (int i = 0; i < size; i++) {
+            width.push_back(nsr[i] - nsl[i] - 1);
         }
 
+        int maxW = INT_MIN;
+        for (int i = 0; i < size; i++) {
+            maxW = max(maxW, width[i] * heights[i]);
+        }
         return maxW;
-
     }
 };

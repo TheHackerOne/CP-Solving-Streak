@@ -1,4 +1,5 @@
 class Solution {
+    // https://leetcode.com/problems/maximal-rectangle/submissions/
 public:
 
     vector<int> NSL(vector<int> &h, int n) {
