@@ -69,7 +69,7 @@ void PrintTreeClean(TreeNode *root) {
 }
 
 int maximum(TreeNode *root) {
-    if (root == NULL) return 0;
+    if (root == NULL) return INT_MIN;
 
     return max(root -> data, max(maximum(root -> left), maximum(root -> right)));
 }
