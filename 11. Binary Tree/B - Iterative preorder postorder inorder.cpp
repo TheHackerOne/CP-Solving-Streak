@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Iterative preorder postorder inorder
+
 class TreeNode {
 public:
     int data;
@@ -68,38 +70,42 @@ void PrintTreeClean(TreeNode *root) {
     }
 }
 
-void levelOrderTraversal(TreeNode *root, int k) {
-    queue < pair<TreeNode *, int>> q;
-    q.push({root, 0});
-    while (!q.empty()) {
-        int size = q.size();
-        pair<TreeNode *, int> curr = q.front();
-        int level = curr.second;
-
-        if (level == k) {
-            while (!q.empty()) {
-                cout << q.front().first -> data << " ";
-                q.pop();
-            }
-            break;
-        }
-
-        while (size-- && level != k) {
-            pair<TreeNode *, int> curr = q.front();
-            q.pop();
-            if (curr.first -> left != NULL)
-                q.push({curr.first -> left, level + 1});
-            if (curr.first -> right != NULL)
-                q.push({curr.first -> right, level + 1});
+void PrePostInorder(TreeNode *root) {
+    stack<pair<TreeNode*, int>> s;
+    s.push({root, 1});
+    string preorder = "";
+    string postorder = "";
+    string inorder = "";
+    while (!s.empty()) {
+        pair<TreeNode*, int> &si = s.top();
+        int currlevel = si.second;
+        TreeNode *currNode = si.first;
+        if (currlevel == 1) {
+            preorder = preorder + to_string(currNode -> data) + " ";
+            si.second += 1;
+            if (currNode -> left != NULL)
+                s.push({ currNode -> left, 1 });
+        } else if (currlevel == 2) {
+            inorder = inorder + to_string(currNode -> data) + " ";
+            si.second += 1;
+            if (currNode -> right != NULL)
+                s.push({ currNode -> right, 1 });
+        } else {
+            postorder = postorder + to_string(currNode -> data) + " ";
+            s.pop();
         }
     }
+
+    cout << "pre -> " << preorder << endl;
+    cout << "in -> " << inorder << endl;
+    cout << "post -> " << postorder << endl;
 }
 
 int main() {
     TreeNode *root = takeInput();
     // printTree(root);
     // PrintTreeClean(root);
-    levelOrderTraversal(root, 2);
+    PrePostInorder(root);
 
     return 0;
 }
