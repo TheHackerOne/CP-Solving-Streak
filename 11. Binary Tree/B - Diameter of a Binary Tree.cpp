@@ -68,27 +68,33 @@ void PrintTreeClean(TreeNode *root) {
     }
 }
 
-TreeNode *removeLeafNodes(TreeNode *root) {
-    if (root == NULL) return NULL;
+pair<int, int> diameterOfBTHelper(TreeNode *root) {
+    if (root == NULL) return { 0, 0 };
 
-    if (root -> left == NULL && root -> right == NULL) {
-        return NULL;
-    }
+    if (root -> left == NULL && root -> right == NULL) return { 0, 0 };
 
-    TreeNode *left = removeLeafNodes(root -> left);
-    TreeNode *right = removeLeafNodes(root -> right);
+    pair<int, int> leftAns = diameterOfBTHelper(root -> left);
+    pair<int, int> rightAns = diameterOfBTHelper(root -> right);
 
-    root -> left = left;
-    root -> right = right;
-    return root;
+    pair<int, int> ans;
+
+    int rootDiameter = (root -> left ? left.first + 1 : 0) + (root -> right ? rightAns.first + 1 : 0);
+    ans.first = max(leftAns.first, rightAns.first) + 1;
+    ans.second = max(rootDiameter , max(leftAns.second, rightAns.second));
+
+    return ans;
+}
+
+int diameterOfBT(TreeNode *root) {
+    // max height, diameter
+    pair<int, int> ans = diameterOfBTHelper(root);
+    return ans.second;
 }
 
 int main() {
     TreeNode *root = takeInput();
-    PrintTreeClean(root);
-    cout << endl;
-    TreeNode *root1 = removeLeafNodes(root);
-    PrintTreeClean(root);
+
+    cout << diameterOfBT(root);
 
     return 0;
 }
