@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int isBalancedHelper(TreeNode *root, bool &finalAns){
+        if(root == NULL) {
+            return -1;
+        }
+        
+        int left = isBalancedHelper(root -> left, finalAns);
+        int right = isBalancedHelper(root -> right, finalAns);
+        if(abs(left - right) > 1) finalAns = false;
+        
+        return max(left, right) + 1;
+    }
+    
+    bool isBalanced(TreeNode* root) {
+        bool finalAns = true;
+        int ans = isBalancedHelper(root, finalAns);     
+        return finalAns;        
+    }
+};
