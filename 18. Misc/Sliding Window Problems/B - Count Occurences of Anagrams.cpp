@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+
 int search(string pat, string txt) {
     unordered_map<char, int> mp;
     for (auto i : pat)
