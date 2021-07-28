@@ -9,7 +9,6 @@ vector<long long> printFirstNegativeInteger(vector<long long> A, long long int N
     int i = 0, j = 0;
     while (j < N) {
         if (A[j] < 0) q.push(A[j]);
-        cout << i << " " << j << endl;
 
         int windowSize = j - i + 1;
 
@@ -18,7 +17,6 @@ vector<long long> printFirstNegativeInteger(vector<long long> A, long long int N
         } else if ( windowSize == K) {
             if (q.empty()) ans.push_back(0);
             else {
-                cout << "hello" << endl;
                 ans.push_back(q.front());
                 if (A[i] == q.front())
                     q.pop();
