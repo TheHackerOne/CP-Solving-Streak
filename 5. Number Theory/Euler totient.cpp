@@ -13,6 +13,19 @@ using namespace std;
 // EULER TOTIENT FINAL FORMULA
 // theta(N) = N * (1 - 1/p1) * (1 - 1/p2) * ...... * (1 - 1/pk)
 
+int eulerTotientBasic(int n) {
+  int result = n;
+  for (int i = 2; i * i <= n; i++) {
+    if (n % i == 0) {
+      while (n % i == 0)
+        n /= i;
+      result = result - result / i;
+    }
+  }
+  if (n > 1)
+    result = result - result / n;
+  return result;
+}
 
 void eulerTotient(int n) {
   int phi[n + 1];

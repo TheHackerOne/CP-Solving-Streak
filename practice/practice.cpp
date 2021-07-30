@@ -1,40 +1,28 @@
 #include<bits/stdc++.h>
 using namespace std;
-int search(string pat, string txt) {
-    unordered_map<char, int> mp;
-    for (auto i : pat)
-        mp[i]++;
-
-    int i = 0, j = 0, count = mp.size(), ans = 0;
-    while (j < txt.length()) {
-        // calculation
-        if (mp.find(txt[j]) != mp.end()) {
-            mp[txt[j]]--;
-            if (mp[txt[j]] == 0) count--;
-        }
-        int eleCount = j - i + 1;
-        // first statement
-        if (eleCount < pat.length()) {
-            j++;
-        } else if (eleCount == pat.length()) {
-            if (count == 0)  ans++;
-            if (mp.find(txt[i]) != mp.end()) {
-                mp[txt[i]]++;
-                if (mp[txt[i]] == 1) count++;
-            }
-
-            i++;
-            j++;
-        }
-    }
-    return ans;
+bool comp ( pair<int, int>a, pair<int, int>b) {
+	return a.second > b.second;
 }
-
 int main() {
-    string txt, pat;
-    cin >> txt >> pat;
+	int N;
+	cin >> N;
+	unordered_map<int, int>ump;
+	for (int i = 0; i < N; i++) {
+		int item;
+		cin >> item;
+		ump[item]++;
+	}
 
-    cout << search(pat, txt);
+	vector<pair<int, int>>vec;
 
-    return 0;
+	for (auto x : ump)
+		vec.push_back({x.first, x.second});
+
+	sort(vec.begin(), vec.end(), comp);
+
+	for (auto x : vec) {
+		for (int i = 0; i < x.second; i++) {
+			cout << x.first << " ";
+		}
+	}
 }
