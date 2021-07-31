@@ -42,10 +42,10 @@ int multiplicativeModuloInverse(int a, int m) {
 }
 
 int main() {
-  int a, b;
-  cin >> a >> b;
+  int a, m;
+  cin >> a >> m;
 
-  int ans = multiplicativeModuloInverse(a, b);
+  int ans = multiplicativeModuloInverse(a, m);
   cout << ans << endl;
 
   return 0;
