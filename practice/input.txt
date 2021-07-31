@@ -1,5 +1,12 @@
-4
-1
-8
-7
-42
+11
+a
+ba
+ab
+bac
+ihfcbadeg
+z
+aa
+ca
+acb
+xyz
+ddcba
