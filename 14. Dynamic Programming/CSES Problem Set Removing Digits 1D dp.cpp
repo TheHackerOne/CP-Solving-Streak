@@ -66,6 +66,3 @@ int main() {
 
 	return 0;
 }
-
-
-// dp[i] = min(dp[i - c1], dp[i - c2], .......) + 1;
