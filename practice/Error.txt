@@ -1,6 +1,0 @@
-total 6
-count 2
-total 1
-count 1
-total 10
-count 1
