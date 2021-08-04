@@ -41,6 +41,11 @@ template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
+
+long long mod(long long x) { return ((x % MOD + MOD) % MOD); }
+long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
+long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
+
 int main() {
 #ifndef ONLINE_JUDGE
 	freopen("Error.txt", "w", stderr);
@@ -49,23 +54,21 @@ int main() {
 	ll t;
 	cin >> t;
 	while (t--) {
-		int n, a, b;
-		cin >> n >> a >> b;
-		string s;
-		cin >> s;
-		if (b >= 0) {
-			int length = s.length();
-			cout << (length * a) + (length * b) << endl;
-		} else {
-			int count = 1;
-			for (int i = 0; i < s.length() - 1; i++) {
-				if (s[i] != s[i + 1]) count++;
-			}
-			int x = s.length() * a;
-			int y = (count / 2 + 1) * b;
-			cout << x + y  << endl;
+		ll n;
+		cin >> n;
+		vector<ll> arr(n);
+		ll sum = 0 ;
+
+		for (ll i = 0; i < n; i++) {
+			cin >> arr[i];
+			sum += arr[i];
 		}
+		ll total = n;
+		ll set_one = sum - ((sum / n) * n);
+		ll set_two = total - set_one;
+		cout << set_one*set_two << endl;
 	}
+
 
 	return 0;
 }
