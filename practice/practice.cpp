@@ -54,19 +54,17 @@ int main() {
 	ll t;
 	cin >> t;
 	while (t--) {
-		ll n;
-		cin >> n;
-		vector<ll> arr(n);
-		ll sum = 0 ;
-
-		for (ll i = 0; i < n; i++) {
-			cin >> arr[i];
-			sum += arr[i];
+		ll a, b;
+		cin >> a >> b;
+		ll ans = abs(a - b);
+		if (a > b) swap(a, b);
+		if (ans == 0) {
+			cout << 0 << " " << 0 << endl;
+			continue;
 		}
-		ll total = n;
-		ll set_one = sum - ((sum / n) * n);
-		ll set_two = total - set_one;
-		cout << set_one*set_two << endl;
+		ll ans1 = a % ans;
+		ll ans2 = ans - (a % ans);
+		cout << ans << " " << min(ans1, ans2) << endl;
 	}
 
 
