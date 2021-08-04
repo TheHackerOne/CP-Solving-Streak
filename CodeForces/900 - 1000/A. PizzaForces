@@ -49,17 +49,13 @@ int main() {
 	ll t;
 	cin >> t;
 	while (t--) {
-		int n, a, b;
-		cin >> n >> a >> b;
-		string s;
-		cin >> s;
-		if (a == 0 && b == 0) {
-			cout << 0 << endl;
-		} else if ((a > 0 && b < 0) || (a < 0 && b < 0)) {
-			cout << (s.length()*a) + b << endl;
-		} else if ((a < 0 && b > 0) || (a > 0 && b > 0)) {
-			cout << -(s.length()*a) + (s.length()*b) << endl;
-		}
+		ll n;
+		cin >> n;
+		if (n % 2 != 0) n++;
+		if (n > 6)
+			cout << (n / 2) * 5 << endl;
+		if (n <= 6) cout << 15 << endl;
+
 	}
 
 	return 0;
