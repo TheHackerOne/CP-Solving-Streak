@@ -1,11 +1,7 @@
-5
-a
-a
-abcd
-bc
-hello
-codeforces
-hello
-helo
-dhjakjsnasjhfksafasd
-adjsnasjhfksvdafdser
+3
+6
+0 3 0 0 1 3
+10
+0 0 0 1 0 5 0 0 0 2
+3
+0 0 0
