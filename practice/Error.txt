@@ -1,0 +1,10 @@
+a a
+b a
+a abcd
+b bc
+a hello
+b codeforces
+a hello
+b helo
+a dhjakjsnasjhfksafasd
+b adjsnasjhfksvdafdser
