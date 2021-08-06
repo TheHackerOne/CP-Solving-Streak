@@ -46,55 +46,30 @@ long long mod(long long x) { return ((x % MOD + MOD) % MOD); }
 long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
 long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 
-void solve() {
-	ll t;
-	cin >> t;
-	while (t--) {
-		int n;
-		cin >> n;
-		vector<int> arr(n);
-		int mod;
-		map<int, int> mp;
-		for (int i = 0; i < n; i++) {
-			cin >> arr[i];
-			mod = arr[i] % 3;
-			mp[mod]++;
-		}
-		int ideal = n / 3;
-		int ans = 0;
-		debug(mp[0])
-		debug(mp[1])
-		debug(mp[2])
-		while ((mp[0] != mp[1]) || (mp[1] != mp[2])) {
-			debug(mp[0])
-			debug(mp[1])
-			debug(mp[2])
-			if (mp[0] > ideal) {
-				ans += (mp[0] - ideal);
-				mp[1] += (mp[0] - ideal);
-				mp[0] = ideal;
-			} if (mp[1] > ideal) {
-				ans += (mp[1] - ideal);
-				mp[2] += (mp[1] - ideal);
-				mp[1] = ideal;
-			} if (mp[2] > ideal) {
-				ans += (mp[2] - ideal);
-				mp[0] += (mp[2] - ideal);
-				mp[2] = ideal;
-			}
-		}
-
-		cout << ans << nline;
+bool solve() {
+	string s;
+	cin >> s;
+	vector<int> d(3);
+	int x = s[0] - 'A';
+	int y = s.back() - 'A';
+	if (x == y)
+		return false;
+	d[x] = 1; d[y] = -1;
+	if (count(s.begin(), s.end(), 'A' + x) == s.length() / 2)
+		d[3 ^ x ^ y] = -1;
+	else
+		d[3 ^ x ^ y] = 1;
+	int bal = 0;
+	for (char c : s) {
+		bal += d[c - 'A'];
+		if (bal < 0) return false;
 	}
+	return bal == 0;
 }
 
 int main() {
-#ifndef ONLINE_JUDGE
-	freopen("Error.txt", "w", stderr);
-#endif
-
-	fastio();
-	solve();
-
-	return 0;
+	int t; cin >> t;
+	while (t--) {
+		cout << (solve() ? "YES\n" : "NO\n");
+	}
 }
