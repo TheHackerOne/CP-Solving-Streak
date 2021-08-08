@@ -1,6 +1,3 @@
-NO
-YES
-NO
-YES
-YES
-NO
+baba
+aaaaaa
+-1
