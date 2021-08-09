@@ -47,36 +47,9 @@ long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
 long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 
 void solve() {
-	int n, q;
-	cin >> n >> q;
-	string s;
-	cin >> s;
-	for (int i = 0; i < q; i++) {
-		int a, b;
-		cin >> a >> b;
-		a--, b--;
-		int first = s[a];
-		int second = s[b];
-		bool flag1 = false, flag2 = false;
-		a--;
-		while (a >= 0) {
-			if (s[a] == first) {
-				flag1 = true;
-				break;
-			}
-			a--;
-		}
-		b++;
-		while (b < s.length()) {
-			if (s[b] == second) {
-				flag2 = true;
-				break;
-			}
-			b++;
-		}
-		if (flag1 || flag2) cout << "YES" << nline;
-		else cout << "NO" << nline;
-	}
+	int a, b, c, d;
+	cin >> a >> b >> c >> d;
+	cout << max(a + b, c + d) << nline;
 }
 
 int main() {
