@@ -1,5 +1,2 @@
-YES
-NO
-YES
-YES
-NO
+9
+98
