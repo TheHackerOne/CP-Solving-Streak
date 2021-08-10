@@ -1,8 +1,5 @@
 #include<bits/stdc++.h>
-// #include <ext/pb_ds/assoc_container.hpp> // Common file
-// #include <ext/pb_ds/tree_policy.hpp> // Including tree_order_statistics_node_update
 
-// using namespace __gnu_pbds;
 using namespace std;
 
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
@@ -43,27 +40,60 @@ template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_prin
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-// template<class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 
 long long mod(long long x) { return ((x % MOD + MOD) % MOD); }
 long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
 long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 
+bool comp(int a, int b) {
+	return a < b;
+}
+
 void solve() {
-	int n, k;
-	cin >> n >> k;
-	vector<pair<int, int>> v(n);
-	for (int i = 0; i < n; i++) {
-		cin >> v[i].first;
-		v[i].second = i;
-	}
-	sort(v.begin(), v.end());
-	int ans = 1;
-	for (int i = 1; i < n; i++)
-		if (v[i - 1].second + 1 != v[i].second)
-			ans++;
-	cout << (ans <= k ? "YES" : "NO") << endl;
+	cout << "comparator" << nline;
+	vector<int> arr = {1, 6, 3, 2, 7, 9, 6, 34, 2};
+	sort(arr.begin(), arr.end(), comp);
+	for (int i : arr) cout << i << " ";
+
+	cout << nline << nline;
+
+	cout << "string find function" << nline;
+	string a = "yash chaudhary";
+	int x = a.find("aut");
+	cout << x << nline;
+
+	cout << nline;
+
+	cout << "Set data structure" << nline;
+	set<int> s;
+	unordered_set<int> s1;
+	s.insert(3);
+	s.insert(5);
+	s.insert(5);
+	s.insert(1);
+	s.insert(78);
+	s.insert(4);
+	int count = s.count(5);
+	s.erase(3);
+	cout << "count -> " << count << nline << nline;
+
+	cout << "multiset and unordered_multiset" << nline;
+	multiset<int> s2;
+	s2.insert(9);
+	s2.insert(9);
+	s2.insert(7);
+	s2.insert(4);
+	s2.insert(65);
+	s2.insert(1);
+	for (int i : s2) cout << i << " ";
+
+	cout << nline << nline;
+
+	cout << "sort(all(x)) reverse(all(x)) random_shuffle(all(x))" << nline;
+	cout << nline;
+
+
 
 }
 
