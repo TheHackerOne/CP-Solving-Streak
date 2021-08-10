@@ -51,32 +51,12 @@ long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
 long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 
 void solve() {
-	ll n;
-	cin >> n;
-	vector<ll> arr(n);
-	for (ll i = 0; i < n; i++) cin >> arr[i];
-	vector<ll> a(n);
-	for (ll i = 0; i < n; i++) a[i] = pow(2, arr[i]);
-	vector<ll> psum(n + 1);
-	psum[0] = 0;
-	debug(arr)
-	debug(a)
-	for (ll i = 1; i <= n; i++) {
-		psum[i] += a[i - 1] + psum[i - 1];
-	}
-	debug(psum)
-
-	for (ll i = 1; i <= n; i++) {
-		ll left = psum[i] - psum[i - 1];
-		ll right = psum[n] - psum[n - (n - i)];
-		debug(left)
-		debug(right)
-		if (left == right) {
-			cout << "YES" << nline;
-			return;
-		}
-	}
-	cout << "NO" << nline;
+	ll n, k, s, i;
+	cin >> n >> k;
+	vector<ll> a(n * k + 1);
+	for (i = s = 0; i < n * k; i++)cin >> a[i];
+	for (i = (n - 1) / 2 * k; i < n * k; i += n / 2 + 1)s += a[i];
+	cout << s << endl;
 }
 
 int main() {
