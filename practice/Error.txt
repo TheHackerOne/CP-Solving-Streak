@@ -1,0 +1,5 @@
+arr[i] 5
+arr[i] 3
+arr[i] 5
+maxo 5
+maxi[i] 0
