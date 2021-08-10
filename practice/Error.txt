@@ -1,5 +1,10 @@
-arr[i] 5
-arr[i] 3
-arr[i] 5
-maxo 5
-maxi[i] 0
+avg 4
+avg 3
+avg 2
+arr [ 4 3 2 1 ]
+f 4
+s 3
+f 4
+s 2
+f 3
+s 1
