@@ -51,14 +51,10 @@ long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
 long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 
 void solve() {
-	int r, b, d;
-	cin >> r >> b >> d;
-	int mi = 1;
-	int packets = min(r, b);
-	int maxi = max(r, b);
-	int maxo = ceil(maxi / (float)packets);
-	if (maxo - mi <= d)
-		cout << "YES" << nline;
+	int n, m, k;
+	cin >> n >> m >> k;
+	int ans = (m - 1) + (m * (n - 1));
+	if (ans == k) cout << "YES" << nline;
 	else cout << "NO" << nline;
 }
 

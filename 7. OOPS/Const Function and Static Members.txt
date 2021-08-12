@@ -21,6 +21,7 @@ class student{
         this -> rollNumber = rollNumber;
     }
 
+    // in static functions we can only access static members
     static void getPrivateStudent(){
         cout<<"Accessing private static member using static function without an object "<<totalStudentsPrivate<<endl;
     }
