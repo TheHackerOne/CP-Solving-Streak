@@ -2,6 +2,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
+// copy constructor and copy assignment operator always do shallow copy
 class Student{
     int age;
     char *name;
