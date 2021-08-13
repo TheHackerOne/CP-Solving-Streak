@@ -1,5 +1,1 @@
-4
-Icosahedron
-Cube
-Tetrahedron
-Dodecahedron
+4 3
