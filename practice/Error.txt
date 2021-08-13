@@ -1,0 +1,6 @@
+a 12
+b 14
+count 1
+a 36
+b 28
+count 2
