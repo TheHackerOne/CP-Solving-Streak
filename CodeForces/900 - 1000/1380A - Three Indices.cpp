@@ -53,19 +53,23 @@ long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 void solve() {
 	int n;
 	cin >> n;
-	int cnt2 = 0, cnt3 = 0;
-	while (n % 2 == 0) {
-		n /= 2;
-		++cnt2;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) cin >> a[i];
+
+	int peaks = 0;
+	int peakIdx = INT_MIN;
+	for (int i = 1; i < n - 1; i++) {
+		if (a[i] > a[i - 1] && a[i] > a[i + 1]) {
+			peaks++;
+			peakIdx = i;
+		}
 	}
-	while (n % 3 == 0) {
-		n /= 3;
-		++cnt3;
-	}
-	if (n == 1 && cnt2 <= cnt3) {
-		cout << 2 * cnt3 - cnt2 << endl;
+	if (peakIdx == INT_MIN) {
+		cout << "NO" << nline;
 	} else {
-		cout << -1 << endl;
+		peakIdx++;
+		cout << "YES" << nline;
+		cout << peakIdx - 1 << " " << peakIdx << " " << peakIdx + 1 << nline;
 	}
 }
 
