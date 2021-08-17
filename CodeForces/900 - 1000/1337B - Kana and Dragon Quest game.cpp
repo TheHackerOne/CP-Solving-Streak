@@ -50,12 +50,33 @@ long long mod(long long x) { return ((x % MOD + MOD) % MOD); }
 long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
 long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 
-
-
 void solve() {
-	int n;
-	cin >> n;
-	cout << n << nline;
+	int x, n, m;
+	cin >> x >> n >> m;
+
+	if (m * 10 >= x) {
+		cout << "YES" << nline;
+		return;
+	}
+	while (x > 0 && n > 0) {
+		x = ((x / 2) + 10);
+		n--;
+	}
+
+	if (x <= 0) {
+		cout << "YES" << nline;
+		return;
+	} else {
+		while (x > 0 && m > 0) {
+			x -= 10;
+			m--;
+		}
+		if (x <= 0) {
+			cout << "YES" << nline;
+		} else {
+			cout << "NO" << nline;
+		}
+	}
 }
 
 int main() {
