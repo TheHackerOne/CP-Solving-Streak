@@ -51,14 +51,44 @@ long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
 long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
 
 void solve() {
-	ll x, y, k;
-	cin >> x >> y >> k;
 
-	ll sticksNeeded = k + (k * y);
-	ll ans = (sticksNeeded ) / (x - 1);
-	if ((ans * (x - 1) * 1LL) < sticksNeeded) ans++;
-	ans += k;
-	cout << ans << nline;
+	ll r, g, b, w;
+	cin >> r >> g >> b >> w;
+	ll count = 0;
+	ll val = min({r, g, b});
+	if (r % 2 == 1)
+		count++;
+	if (g % 2 == 1)
+		count++;
+	if (b % 2 == 1)
+		count++;
+	if (w % 2 == 1)
+		count++;
+	if (count <= 1)
+		cout << "YES" << endl;
+	else if (val != 0)
+	{
+		r--;
+		g--;
+		b--;
+		w--;
+		count = 0;
+		if (r % 2 == 1)
+			count++;
+		if (g % 2 == 1)
+			count++;
+		if (b % 2 == 1)
+			count++;
+		if (w % 2 == 1)
+			count++;
+		if (count <= 1)
+			cout << "YES" << "\n";
+		else
+			cout << "NO" << "\n";
+	}
+	else
+		cout << "NO" << "\n";
+
 }
 
 int main() {
