@@ -73,30 +73,20 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
+
 void solve() {
-	ll n, w;
-	cin >> n >> w;
-	vector<ll> profit(n + 1), time(n + 1);
-	for (ll i = 1; i <= n; i++) {
-		cin >> profit[i] ;
+	int n, k;
+	cin >> n >> k;
+	k--;
+	if (n % 2 == 0) {
+		int ans = (k % n);
+		cout << ans + 1 << "\n";
 	}
-	for (int i = 1; i <= n; i++) {
-		cin >> time[i];
+	else {
+		int mid = (n / 2);
+		int ans = ((k / mid) + k) % n;
+		cout << ans + 1 << "\n";
 	}
-	ll dp[n + 1][w + 1];
-	for (ll i = 0; i <= n; i++) {
-		for (ll j = 0; j <= w; j++) {
-			if (i == 0 || j == 0) {
-				dp[i][j] = 0;
-			} else {
-				if (time[i] > j) dp[i][j] = dp[i - 1][j];
-				else {
-					dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - time[i]] + profit[i]);
-				}
-			}
-		}
-	}
-	cout << dp[n][w] << nline;
 }
 
 int main() {
@@ -105,7 +95,11 @@ int main() {
 #endif
 
 	fastio();
-	solve();
+	ll t;
+	cin >> t;
+	while (t--) {
+		solve();
+	}
 
 	return 0;
 }
