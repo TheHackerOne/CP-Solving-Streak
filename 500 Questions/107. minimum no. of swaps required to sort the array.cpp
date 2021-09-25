@@ -1,14 +1,6 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-
-void inorder(int a[], vector<int> &v, int n, int index) {
-	if (index >= n) return;
-	inorder(a, v, n, 2 * index + 1);
-	v.push_back(a[index]);
-	inorder(a, v, n, 2 * index + 2);
-}
-
 // Function to find minimum swaps to sort an array
 int minSwaps(vector<int> &v) {
 	vector<int> sorted = v;
@@ -24,7 +16,6 @@ int minSwaps(vector<int> &v) {
 			swap(v[i], v[correct_position]);
 			swaps++;
 		}
-		if (i != mp[v[i]]) i--; //(test case for this condition) 8 3 14 17 15 1 12
 	}
 	return swaps;
 }
@@ -32,10 +23,7 @@ int minSwaps(vector<int> &v) {
 
 int main()
 {
-	int a[] = { 5, 6, 7, 8, 9, 10, 11 };
-	int n = sizeof(a) / sizeof(a[0]);
-	vector<int> v;
-	inorder(a, v, n, 0);
+	vector<int> v = { 8, 3, 14, 17, 15, 1, 12 };
 	cout << minSwaps(v) << endl;
 }
 
