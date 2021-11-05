@@ -2,16 +2,53 @@
 
 using namespace std;
 
-bool cycleDetectionUsingBFS(){
+vector<int> topo;
 
+bool toposort(vector<int> g[], int nodes, vector<bool> &visited){
+    // calculate indegree
+    vector<int> indegree(nodes, 0);
+    for(int i=0;i<nodes;i++){
+        for(int j:g[i]){
+            indegree[j]++;
+        }
+    }
+
+    queue<int> q;
+    // all nodes with indegree 0
+    for(int i=0;i<nodes;i++){
+        if(indegree[i] == 0)
+            q.push(i);
+    }
+
+    while(!q.empty()){
+        int node = q.front();
+        topo.push_back(node);
+        visited[node] = 1;
+        q.pop();
+        for(int neigh:g[node]){
+            if(!visited[neigh]){
+                q.push(neigh);
+                visited[neigh] = 1;
+            }
+        }
+    }
+
+    if(topo.size() == nodes) return false;
+    else return true;
+}
+
+bool cycleDetectionUsingBFS(vector<int> g[], int src, int nodes, vector<bool> &vis){
+    // toposort using BFS
+    bool hasCycle = toposort(g, nodes, vis);
+    return hasCycle;
 }
 
 bool cycleDetectionUsingBFSHelper(vector<int> g[], int src, int nodes){
     vector<bool> visited(nodes, 0);
     bool isCyclePresent = false;
     for(int i=0;i<nodes;i++){
-        if(!visited[nodes]){
-            bool isCycle = cycleDetectionUsingBFS();
+        if(!visited[i]){
+            bool isCycle = cycleDetectionUsingBFS(g, i, nodes, visited);
             if(isCycle) {
                 isCyclePresent = true;
                 break;
@@ -41,7 +78,7 @@ bool cycleDetectionUsingDFSHelper(vector<int> g[], int src, int nodes){
     bool isCyclePresent = false;
     for(int i=0;i<nodes;i++){
         if(!visited[nodes]){
-            bool isCycle = cycleDetectionUsingDFS(g, -1, src, visited, DFSvisited);
+            bool isCycle = cycleDetectionUsingDFS(g, -1, i, visited, DFSvisited);
             if(isCycle) {
                 isCyclePresent = true;
                 break;
@@ -53,7 +90,7 @@ bool cycleDetectionUsingDFSHelper(vector<int> g[], int src, int nodes){
 
 int main(){
     int nodes, edges;
-    cin>>nodes,edges;
+    cin>>nodes>>edges;
     vector<int> g[nodes];
 
     int a, b;
