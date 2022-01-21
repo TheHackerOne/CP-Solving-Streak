@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int minFlips(string target) {
+        int jumps = 0, idx= 0 ;
+        while(idx < target.length() && target[idx] != '1') idx++;
+        if(idx == target.length()) return 0;
+        for(int j=idx;j<target.length()-1;j++){
+            if(target[j] != target[j+1]) jumps++;
+        }
+        return jumps+1;
+    }
+};

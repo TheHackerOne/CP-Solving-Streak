@@ -1,28 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void solve() {
-    int n = 8, num = 0, bit = 0;
-    while(n!=0){
-        if((n&1)== 0)
-            num = num^(1<<bit);
-        cout<<"num -> "<<num<<endl;
-        n >>= 1;
-        bit++;
+void makeTree(vector<int> &arr, vector<int> &tree, int left, int right, int treeNode){
+    if(left == right){
+        tree[treeNode] = arr[left];
+        return;
     }
-    cout<<num<<endl;
+
+    int mid = (left+right)/2;
+    makeTree(arr, tree, left, mid, 2*treeNode);
+    makeTree(arr, tree, mid+1, right, 2*treeNode+1);
+    tree[treeNode] = tree[2*treeNode] + tree[2*treeNode+1];
 }
 
-int main() {
-#ifndef ONLINE_JUDGE  
-    freopen("Error.txt", "w", stderr);
-#endif
-
-    int t;
-    cin >> t;
-    while (t--) {
-        solve();
+int main(){
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
     }
+
+    vector<int> tree(4*n);
+
+    makeTree(arr, tree, 0, n-1, 1);
+    for(auto i:tree)cout<<i<<" ";
+    updateTree();
 
     return 0;
 }
