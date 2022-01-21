@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> minOperations(string boxes) {
+        int n = boxes.length();
+        vector<int> ans(n, 0), prefix(n, 0), sufix(n,0);
+        int count = 0;
+        for(int i=1;i<n;i++){
+            if(boxes[i] == '1') count += i;
+        }
+        ans[0] = count;
+            
+        for(int i=0;i<n;i++){
+            if(i != 0) prefix[i] = prefix[i-1] + boxes[i]-'0';
+            else prefix[i] = boxes[i]-'0';
+        }
+        
+        for(int i=n-1;i>=0;i--){
+            if(i != n-1) sufix[i] = sufix[i+1] + boxes[i]-'0';
+            else sufix[i] = boxes[n-1]-'0';
+        }
+        
+        for(int i=1;i<boxes.size();i++){
+            ans[i] = count - sufix[i] + prefix[i-1];
+            count = ans[i];
+        }
+        return ans;
+    }
+};

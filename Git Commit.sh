@@ -6,4 +6,5 @@ while read -p "Enter Commit Name : " COMMIT
     git commit -m "$COMMIT"
     git push -u origin main
     echo "Commit Successful !!!"
+    clear
 done
