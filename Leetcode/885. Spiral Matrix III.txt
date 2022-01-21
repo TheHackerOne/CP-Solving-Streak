@@ -1,0 +1,72 @@
+class Solution {
+public:
+    bool isValid(int r, int c, int row, int col){
+        if(r < 0 || c < 0 || r >= row || c >= col) return false;
+        return true;
+    }
+    
+    vector<vector<int>> spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
+        vector<vector<int>> ans;
+        int num = 1, len = 1;
+        char dir = 'R';
+        num++;
+        vector<int> x;
+        x.push_back(rStart);
+        x.push_back(cStart);
+        ans.push_back(x);
+        while(num != (rows*cols+1)){
+            if(dir == 'R'){
+                for(int i=0;i<len;i++){
+                    cStart+=1;
+                    if(isValid(rStart, cStart, rows, cols)){
+                        num++;
+                        vector<int> x;
+                        x.push_back(rStart);
+                        x.push_back(cStart);
+                        ans.push_back(x);
+                    }
+                }
+                dir = 'D';
+            }else if(dir == 'D'){
+                for(int i=0;i<len;i++){
+                    rStart+=1;
+                    if(isValid(rStart, cStart, rows,cols)){
+                        num++;
+                        vector<int> x;
+                        x.push_back(rStart);
+                        x.push_back(cStart);
+                        ans.push_back(x);
+                    }
+                }
+                dir = 'L';
+                len++;
+            }else if(dir == 'L'){
+                for(int i=0;i<len;i++){
+                    cStart-=1;
+                    if(isValid(rStart, cStart, rows, cols)){
+                        num++;
+                        vector<int> x;
+                        x.push_back(rStart);
+                        x.push_back(cStart);
+                        ans.push_back(x);
+                    }
+                }
+                dir = 'T';
+            }else{
+                for(int i=0;i<len;i++){
+                    rStart-=1;
+                    if(isValid(rStart, cStart, rows, cols)){
+                        num++;
+                        vector<int> x;
+                        x.push_back(rStart);
+                        x.push_back(cStart);
+                        ans.push_back(x);
+                    }
+                }
+                dir ='R';
+                len++;
+            }
+        }
+        return ans;
+    }
+};
