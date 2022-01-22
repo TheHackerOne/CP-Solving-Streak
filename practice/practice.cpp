@@ -1,31 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void makeTree(vector<int> &arr, vector<int> &tree, int left, int right, int treeNode){
-    if(left == right){
-        tree[treeNode] = arr[left];
-        return;
+ int recur(int idx, int size, int energy, int teleports, vector<int> &A, unordered_map<string, int> &mp){
+        if(idx == size){
+            return idx;
+        }
+        string str = to_string(idx)+to_string(energy)+to_string(teleports);
+        if(mp.find(str) != mp.end())return mp[str];
+        int left = idx, right = idx;
+        if(energy-abs(A[idx]-A[idx+1])>=0)
+            left = max(left, recur(idx+1, size, energy-abs(A[idx]-A[idx+1]), teleports,A,mp));
+        if(teleports > 0)
+            right = recur(idx+1, size, energy, teleports-1, A, mp);
+        return mp[str] = max({left, right, idx});
+    }
+    
+    int solve (int N,vector<int> &A,int X,int K)
+    {
+        unordered_map<string,int> mp;
+        int energy = X;
+        int teleports = K;
+        return recur(1, N, energy, teleports, A, mp)+1;
     }
 
-    int mid = (left+right)/2;
-    makeTree(arr, tree, left, mid, 2*treeNode);
-    makeTree(arr, tree, mid+1, right, 2*treeNode+1);
-    tree[treeNode] = tree[2*treeNode] + tree[2*treeNode+1];
-}
-
 int main(){
-    int n;
-    cin>>n;
+    int n, x,k;
+    cin>>n>>x>>k;
     vector<int> arr(n);
     for(int i=0;i<n;i++){
         cin>>arr[i];
     }
 
-    vector<int> tree(4*n);
-
-    makeTree(arr, tree, 0, n-1, 1);
-    for(auto i:tree)cout<<i<<" ";
-    updateTree();
+    cout<<solve(n,arr, x,k);
+   
 
     return 0;
 }
