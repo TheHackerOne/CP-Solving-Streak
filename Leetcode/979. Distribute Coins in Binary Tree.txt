@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void dfs(TreeNode *node, TreeNode *parent, int &steps){
+        if(node == nullptr) return;
+        
+        dfs(node->left, node, steps);
+        dfs(node->right, node, steps);
+        if(node->val < 1){
+            int neededCoins = 1+abs(node->val);
+            node->val = 1;
+            parent->val -= neededCoins;
+            steps += neededCoins;
+        }
+        if(node->val > 1){
+            int extra = node->val-1;
+            parent->val += extra;
+            node->val = 1;
+            steps+=extra;
+        }
+    }
+    
+    int distributeCoins(TreeNode* root) {
+        int steps = 0;
+        dfs(root, nullptr, steps);
+        return steps;
+    }
+};
