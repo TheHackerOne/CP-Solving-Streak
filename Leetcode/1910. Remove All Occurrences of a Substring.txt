@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int findIndex(string s, string part){
+        if(s.length() == 0 || s.length() < part.length()) return -1;
+        for(int i=0;i<=s.length()-part.length();i++){
+            int equals = 0;
+            for(int j=0;j<part.length();j++){
+                if(part[j] == s[i+j]) equals++;
+            }
+            if(equals == part.size()){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    string removeOccurrences(string s, string part) {
+        int index;
+        while((index = findIndex(s, part)) != -1){
+            s = s.substr(0, index) + s.substr(index+part.length());
+        }
+        return s;
+    }
+};
