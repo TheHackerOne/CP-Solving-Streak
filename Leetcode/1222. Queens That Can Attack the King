@@ -1,0 +1,63 @@
+class Solution {
+public:
+    bool canAttackKing(vector<int>queens, vector<vector<int>> &board){
+        int r = queens[0], c = queens[1];
+        for(int i=c-1;i>=0;i--){
+            if(board[r][i] == 8) break;
+            if(board[r][i] == 5 ) return true;
+        }
+        for(int i=c+1;i<8;i++){
+            if(board[r][i] == 8) break;
+            if(board[r][i] == 5 ) return true;
+        }
+        for(int i=r-1;i>=0;i--){
+            if(board[i][c] == 8) break;
+            if(board[i][c] == 5 ) return true;
+        }
+        for(int i=r+1;i<8;i++){
+            if(board[i][c] == 8) break;
+            if(board[i][c] == 5 ) return true;
+        }
+        
+        int x = r-1, y = c-1;
+        while(x >= 0 && y>=0){
+            if(board[x][y] == 8) break;
+            if(board[x][y] == 5) return true;
+            x--,y--;
+        }
+        x = r+1, y = c+1;
+        while(x < 8 && y < 8){
+            if(board[x][y] == 8) break;
+            if(board[x][y] == 5) return true;
+            x++,y++;
+        }
+        x = r-1, y = c+1;
+        while(x >= 0 && y<8){
+            if(board[x][y] == 8) break;
+            if(board[x][y] == 5) return true;
+            x--,y++;
+        }
+        x = r+1, y = c-1;
+        while(x < 8 && y >= 0 ){
+            if(board[x][y] == 8) break;
+            if(board[x][y] == 5) return true;
+            x++,y--;
+        }
+        return false;
+    }
+    
+    vector<vector<int>> queensAttacktheKing(vector<vector<int>>& queens, vector<int>& king) {
+        vector<vector<int>> board(8, vector<int> (8, 0));
+        board[king[0]][king[1]] = 5; // king
+        vector<vector<int>> ans;
+        for(int i=0;i<queens.size();i++){
+            board[queens[i][0]][queens[i][1]] = 8;
+        }
+        for(int i=0;i<queens.size();i++){
+            if(canAttackKing(queens[i], board)){
+                ans.push_back(queens[i]);
+            }
+        }
+        return ans;
+    }
+};
