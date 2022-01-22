@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void recur(int idx, int n, string str, vector<string> &ans, string asf, char prevChar){
+        if(idx == n){
+            ans.push_back(asf);
+            return;
+        }
+        
+        for(int i=0;i<str.length();i++){
+            if(str[i] != prevChar){
+                recur(idx+1, n, str, ans, asf+str[i], str[i]);
+            }
+        }
+    }
+    
+    string getHappyString(int n, int k) {
+        vector<string> ans;
+        string str = "abc";
+        recur(0, n, str, ans, "", '-');
+        sort(ans.begin(), ans.end());
+        if(ans.size() < k) return "";
+        return ans[k-1];
+    }
+};
