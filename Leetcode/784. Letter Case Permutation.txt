@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void recur(int idx, int len, vector<string> &ans, string asf, string s){
+        if(idx == len){
+            ans.push_back(asf);
+            return;
+        }
+        
+        if(s[idx] >= 65 && s[idx] <= 90){
+            recur(idx+1, len, ans, asf+s[idx], s);
+            recur(idx+1, len, ans, asf+(char)(tolower(s[idx])), s);
+        }else if(s[idx] >= 97 && s[idx] <= 122){
+            recur(idx+1, len, ans, asf+s[idx], s);
+            recur(idx+1, len, ans, asf+(char)(toupper(s[idx])), s);
+        }else{
+            recur(idx+1, len, ans, asf+s[idx], s);
+        }
+    }
+    
+    vector<string> letterCasePermutation(string s) {
+        vector<string>ans;
+        recur(0, s.length(), ans, "", s);
+        return ans;
+    }
+};
