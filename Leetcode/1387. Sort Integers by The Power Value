@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int countSteps(int n){
+        int count = 0;
+        while(n != 1){
+            if(n&1) n=3*n+1;
+            else n=n/2;
+            count++;
+        }   
+        return count;
+    }
+    
+    static bool comp(pair<int, int> a, pair<int, int> b){
+        if(a.first == b.first) return a.second < b.second;
+        return a.first < b.first;
+    }
+    
+    int getKth(int lo, int hi, int k) {
+        vector<pair<int, int>> arr;
+        for(int i=lo;i<=hi;i++){
+            int steps = countSteps(i);
+            arr.push_back({ steps, i });
+        }
+        sort(arr.begin(), arr.end(),comp);
+        for(auto i:arr) cout<<i.first<<" "<<i.second<<endl;
+        return arr[k-1].second;
+    }
+};
