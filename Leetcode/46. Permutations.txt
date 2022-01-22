@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void recur(int num, int lastNum, vector<int> &arr, vector<vector<int>> &ans,vector<int> &nums){
+        if(num == lastNum){
+            ans.push_back(arr);
+            return;
+        }
+        
+        for(int i=0;i<arr.size();i++){
+            if(arr[i] == -100){
+                arr[i] = nums[num];
+                recur(num+1, lastNum, arr, ans,nums);
+                arr[i] = -100;
+            }
+        }
+    }
+    
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> arr(nums.size(), -100);
+        recur(0, nums.size(), arr, ans, nums);
+        return ans;
+    }
+};
