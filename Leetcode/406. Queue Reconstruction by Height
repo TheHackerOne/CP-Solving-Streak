@@ -1,0 +1,27 @@
+class Solution {
+public:
+    static bool comp(vector<int> a, vector<int> b){
+        if(a[0] == b[0]) return a[1] < b[1];
+        else return a[0] > b[0];
+    }
+    
+    void swap(int j, int k, vector<vector<int>> &ans){
+        vector<int> temp = ans[j];
+        ans[j] = ans[k];
+        ans[k] = temp;
+    }
+    
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        sort(people.begin(), people.end(), comp);
+        int n = people.size();
+        vector<vector<int>> ans(n, vector<int>(2, -1));
+        for(int i=0;i<n;i++){
+            int h = people[i][0], k = people[i][1];
+            for(int j=i-1;j>=k;j--){
+                swap(j, j+1, ans);
+            }
+            ans[k] = {h, k};
+        }
+        return ans;
+    }
+};
