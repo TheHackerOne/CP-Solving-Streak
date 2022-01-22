@@ -1,5 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
 
 class Solution {
 public:
@@ -30,14 +28,11 @@ public:
             }
         }
 
-        for(auto i:prefix) cout<<i<<" ";
-            cout<<endl;
-        for(auto i:suffix) cout<<i<<" ";
-            cout<<endl;
+        int count = 0;
+        for(int i=0;i<n-1;i++){
+            if(prefix[i] == suffix[i+1]) count++;
+        }
+        
+        return count;
     }
 };
-
-int main(){
-    return 0;
-}
-
