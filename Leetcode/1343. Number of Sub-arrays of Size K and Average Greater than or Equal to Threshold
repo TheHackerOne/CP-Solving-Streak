@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& arr, int k, int threshold) {
+        int i=0, j=0, sum = 0,sumThres = k*threshold, count = 0;
+        while(j < arr.size()){
+            if(j-i+1 < k){
+                sum += arr[j++];
+            }else if(j-i+1 == k){
+                sum += arr[j];
+                if(sum >= sumThres) count++;
+                sum -= arr[i++];
+                j++;
+            }
+        }
+        return count;
+    }
+};
