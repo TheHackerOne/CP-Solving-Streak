@@ -1,0 +1,31 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        vector<char> ord;
+        for(int i=0;i<order.length();i++){
+            ord.push_back(order[i]);
+        }
+        map<char, int>freq;
+        for(int i=0;i<s.length();i++){
+            freq[s[i]]++;
+        }
+        string ans = "";
+        for(int i=0;i<ord.size();i++){
+            char currAlpha = ord[i];
+            if(freq.find(currAlpha) != freq.end()){
+                for(int i=0;i<freq[currAlpha];i++){
+                    ans+=currAlpha;
+                }
+                freq[currAlpha] = 0;
+            }
+        }
+        for(auto i:freq){
+            if(i.second != 0){
+                for(int x=0;x<i.second;x++){
+                    ans+=i.first;
+                }
+            }
+        }
+        return ans;
+    }
+};
