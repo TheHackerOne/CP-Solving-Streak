@@ -1,15 +1,15 @@
 class Solution {
 public:
-    int parent[900];
+    int parent[1000];
     
-    void find(int a){
+    int find(int a){
         if(parent[a] < 0 ) return a;
         return parent[a] = find(parent[a]);
     }
     
     void unionFunc(int a, int b, int &count){
-        int a = parent(a);
-        int b = parent(b);
+        a = find(a);
+        b = find(b);
         if(a == b) count++;
         else if(parent[a] < parent[b]){
             parent[a] += parent[b];
@@ -26,9 +26,11 @@ public:
         
         for(int i=0;i<dots;i++){
             for(int j=0;j<dots;j++){
-                int cellNo = i*dots+j;
-                if(cellNo != 0)
-                    unionFunc(0, cellNo, count);
+                if(i==0||j==0||i==dots-1||j==dots-1){
+                    int cellNo = i*dots+j;
+                    if(cellNo != 0)
+                        unionFunc(0, cellNo, count);
+                }
             }
         }
         
@@ -37,11 +39,11 @@ public:
                 if(grid[i][j] == '/'){
                     int cellNo1 = i*dots+j+1;
                     int cellNo2 = (i+1)*dots+j;
-                    unionFunc(cellNo1, cellNo2);
+                    unionFunc(cellNo1, cellNo2, count);
                 }else if(grid[i][j] == '\\'){
                     int cellNo1 = i*dots+j;
                     int cellNo2 = (i+1)*dots+(j+1);
-                    unionFunc(cellNo1, cellNo2);
+                    unionFunc(cellNo1, cellNo2, count);
                 }
             }
         }
@@ -49,3 +51,4 @@ public:
         return count;
     }
 };
+        
