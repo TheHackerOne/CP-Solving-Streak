@@ -1,0 +1,39 @@
+class Solution {
+public:
+    pair<int, int> dp[501][501][2];
+    
+    pair<int,int> dfs(int l, int r, vector<int> &piles, int turn){
+        if(l == r){
+            if(turn == 0) return {piles[l], 0};
+            else return {0, piles[l]};
+        }
+        
+        if(dp[l][r][turn].first != -1) return dp[l][r][turn];
+        
+        pair<int, int> op1 = dfs(l+1,r,piles,!turn);
+        pair<int, int> op2 = dfs(l,r-1,piles,!turn);
+        if(turn == 0){
+            op1.first += piles[l];
+            op2.first += piles[r];
+            if(op1.first > op2.first) return dp[l][r][turn] = op1;
+            else return dp[l][r][turn] = op2;
+        }else{
+            op1.second += piles[l];
+            op2.second += piles[r];
+            if(op1.second > op2.second) return dp[l][r][turn] = op1;
+            else return dp[l][r][turn] = op2;
+        }
+    }
+    
+    bool stoneGame(vector<int>& piles) {
+        for(int i=0;i<=500;i++){
+            for(int j=0;j<=500;j++){
+                for(int k=0;k<2;k++){
+                    dp[i][j][k] = {-1,-1};
+                }
+            }
+        }
+        pair<int, int>ans =  dfs(0, piles.size()-1, piles, 0);
+        return ans.first > ans.second;
+    }
+};
