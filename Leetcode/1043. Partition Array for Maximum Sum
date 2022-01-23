@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dfs(vector<int>arr, int k, int idx, int n, vector<int> &dp){
+    int dfs(vector<int>&arr, int k, int idx, int n, vector<long long> &dp){
         if(idx >= n){
             return 0;
         }
