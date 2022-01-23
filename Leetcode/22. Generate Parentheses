@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void recur(int openCount, int closeCount, int n, string asf, vector<string> &ans){
+        if(openCount == n && closeCount == n){
+            ans.push_back(asf);
+            return;
+        }
+        
+        if(openCount == closeCount){
+            return recur(openCount+1, closeCount, n, asf+"(", ans);
+        }else if(openCount > closeCount){
+            if(openCount < n)
+                recur(openCount+1, closeCount, n, asf+"(", ans);
+            if(closeCount < n)
+                recur(openCount, closeCount+1, n, asf+")", ans);
+        }
+    }
+    
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        recur(0, 0, n, "", ans);
+        return ans;
+    }
+};
