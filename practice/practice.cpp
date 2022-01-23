@@ -1,23 +1,25 @@
 class Solution {
 public:
-    int dfs(vector<int>arr, int k, int idx, int n, vector<int> &dp){
-        if(idx >= n){
-            return 0;
-        }
-        
-        if(dp[idx]!=-1)return dp[idx];  
-        
-        int maxTillNow = 0, sum = 0;
-        for(int i=idx;i<min(idx+k, n);i++){
-            maxTillNow = max(maxTillNow, arr[i]);
-            sum = max(sum, dfs(arr, k, i+1, n, dp) + maxTillNow*(i-idx+1));
-        }
-        return dp[idx] = sum;
+    int dfs(int row, int col, vector<vector<int>>& grid, int rows, int cols){
+        grid[row][col] = 0;
+        int count = 0;
+        if(col-1 >= 0 && grid[row][col] != 0) count+=dfs(row, col-1,grid, rows, cols);
+        if(row-1 >= 0 && grid[row][col] != 0) count+=dfs(row-1, col,grid, rows, cols);
+        if(col+1 < cols && grid[row][col] != 0) count+=dfs(row, col+1,grid, rows, cols);
+        if(row+1 < rows && grid[row][col] != 0) count+=dfs(row+1, col,grid, rows, cols);
+        return count;
     }
     
-    int maxSumAfterPartitioning(vector<int>& arr, int k) {
-        int n =arr.size();
-        vector<long long int> dp(n, -1);
-        return dfs(arr, k, 0, n, dp);
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int rows = grid.size(), cols = grid[0].size();
+        int ans = INT_MIN;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(grid[i][j] != 0){
+                    ans = max(ans, dfs(i, j, grid, rows,cols));
+                }
+            }
+        }
+        return ans;
     }
 };
