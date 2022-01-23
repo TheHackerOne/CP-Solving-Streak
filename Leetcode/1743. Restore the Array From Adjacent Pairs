@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void dfs(int head, vector<int> &ans, unordered_map<int, vector<int>> &mp, unordered_set<int> &s){
+        if(s.find(head) != s.end()) return;
+        s.insert(head);
+        ans.push_back(head);
+        for(auto i:mp[head]) dfs(i, ans, mp, s);
+    }
+    
+    vector<int> restoreArray(vector<vector<int>>& adjacentPairs) {
+        int endElement;
+        unordered_map<int, vector<int>> mp;
+        for(auto i:adjacentPairs){
+            mp[i[0]].push_back(i[1]);
+            mp[i[1]].push_back(i[0]);
+        }
+        for(auto i:mp){
+            if(i.second.size() == 1){
+                endElement = i.first;
+                break;
+            }
+        }
+        vector<int> ans;
+        unordered_set<int> s;
+        dfs(endElement, ans, mp, s);
+        return ans;
+    }
+};
