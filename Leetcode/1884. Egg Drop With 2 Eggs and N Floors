@@ -6,7 +6,7 @@ public:
         if(n <= 1) return n;
         if(dp[n][eggs] != -1) return dp[n][eggs];
         int minMoves = INT_MAX-1;
-        for(int i=1;i<n;i++){
+        for(int i=1;i<=n;i++){
             int opt1 = helper(n-i, eggs);
             int opt2 = helper(i-1, eggs-1);
             int res = max(opt1, opt2);

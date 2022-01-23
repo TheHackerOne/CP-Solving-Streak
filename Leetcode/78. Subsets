@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void dfs(int idx, int n, vector<vector<int>> &ans, vector<int> &asf,vector<int> &nums){
+        // base case
+        if(idx == n){
+            ans.push_back(asf);
+            return;
+        }
+        
+        // main logic
+        asf.push_back(nums[idx]);
+        dfs(idx+1, n, ans, asf, nums);
+        asf.pop_back();
+        dfs(idx+1, n, ans, asf, nums);
+    }
+    
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>ans;
+        vector<int> asf;
+        dfs(0, nums.size(), ans, asf, nums);
+        return ans;
+    }
+};
