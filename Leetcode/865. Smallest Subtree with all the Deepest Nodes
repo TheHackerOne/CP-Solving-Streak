@@ -1,0 +1,26 @@
+
+class Solution {
+public:
+    pair<TreeNode*, int> dfs(TreeNode *root){
+        if(root == nullptr) return {nullptr, 0};
+        
+        auto left = dfs(root->left);
+        auto right = dfs(root->right);
+        pair<TreeNode*, int> res;
+        if(left.second == right.second){
+            res.first = root;
+            res.second = left.second+1;
+        }else if(left.second > right.second){
+            res.first = left.first;
+            res.second = left.second+1;
+        }else{
+            res.first = right.first;
+            res.second =right.second+1;
+        }
+        return res;
+    }
+    
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        return dfs(root).first;
+    }
+};
