@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        vector<int> ans;
+        int xorAll = 0;
+        for(int i=0;i<nums.size();i++){
+            xorAll ^= nums[i];
+        }
+        int team1 = 0, team2 = 0;
+        int diffBit = 0, copyXorAll = xorAll;
+        while(copyXorAll != 0){
+            if(copyXorAll&1){
+                break;
+            }else diffBit++;
+            copyXorAll>>=1;
+        }
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]&(1<<diffBit)){
+                team1 = team1^nums[i];
+            }else{
+                team2 = team2^nums[i];
+            }
+        }
+        ans.push_back(team1);
+        ans.push_back(team2);
+        return ans;
+    }
+};
