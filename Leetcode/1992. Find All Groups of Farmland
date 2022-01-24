@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> helper(int i, int j, vector<vector<int>> &land){
+        int n = land.size(), m = land[0].size();
+        int bottomLeft = i, topRight = j;
+        while(bottomLeft+1 < n && land[bottomLeft+1][j] == 1){
+            bottomLeft++;
+        }
+        while(topRight+1 < m && land[i][topRight+1] == 1){
+            topRight++;
+        }
+        int rows = bottomLeft-i+1, cols = topRight-j+1;
+        for(int r=i;r<=i+rows-1;r++){
+            for(int c=j;c<=j+cols-1;c++){
+                land[r][c] = 0;
+            }
+        }
+        return {i, j, i+rows-1, j+cols-1};
+    }
+    
+    vector<vector<int>> findFarmland(vector<vector<int>>& land) {
+        int n = land.size(), m = land[0].size();
+        vector<vector<int>> ans;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(land[i][j] == 1){
+                    vector<int> res = helper(i, j, land);
+                    ans.push_back(res);
+                }
+            }
+        }
+        return ans;
+    }
+};
