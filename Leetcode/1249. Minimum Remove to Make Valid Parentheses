@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        unordered_map<int, int> mp;
+        stack<int> st;
+        for(int i=0;i<s.length();i++){
+            if(s[i] == '(') st.push(i);
+            else if(s[i] == ')'){
+                if(st.empty()) mp[i] = 1;
+                else st.pop();
+            }
+        }
+        while(!st.empty()){
+            mp[st.top()] = 1;
+            st.pop();
+        }
+        string ans = "";
+        for(int i=0;i<s.length();i++){
+            if(mp.find(i) == mp.end()){
+                ans += s[i];
+            }
+        }
+        return ans;
+    }
+};
