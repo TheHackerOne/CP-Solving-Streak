@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> findBall(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        vector<int>arr(m);
+        for(int c=0;c<m;c++){
+            int cpos = c;
+            int npos;
+            for(int r=0;r<n;r++){
+                npos = cpos+grid[r][cpos];
+                if(npos < 0 || npos >= m || grid[r][npos] != grid[r][cpos]){
+                    cpos = -1;
+                    break;
+                }
+                cpos = npos;
+            }
+            arr[c] = cpos;
+        }
+        return arr;
+    }
+};
