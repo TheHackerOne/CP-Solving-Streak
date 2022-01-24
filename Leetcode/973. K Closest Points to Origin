@@ -1,0 +1,27 @@
+class Solution {
+public:
+    double getDistance(double x, double y){
+        return sqrt(pow(abs(x),2)+pow(abs(y),2));
+    }
+    
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        priority_queue<pair<double,pair<int, int>>> pq;
+        for(auto i:points){
+            int x = i[0], y = i[1];
+            double dist = getDistance(x, y);
+            if(pq.size() == k){
+                pq.push({dist, {x, y}});
+                pq.pop();
+            }else{
+                pq.push({dist, {x, y}});
+            }
+        }
+        vector<vector<int>> ans;
+        while(!pq.empty()){
+            pair<int, pair<int, int>> p = pq.top();
+            ans.push_back({p.second.first, p.second.second});
+            pq.pop();
+        }
+        return ans;
+    }
+};
