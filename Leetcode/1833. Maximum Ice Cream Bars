@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int maxIceCream(vector<int>& costs, int coins) {
+        sort(costs.begin(), costs.end());
+        int icecream = 0, count = 0;;
+        while(icecream < costs.size() && coins >= costs[icecream]){
+            coins -= costs[icecream++];
+            count++;
+        }
+        return count;
+    }
+};
