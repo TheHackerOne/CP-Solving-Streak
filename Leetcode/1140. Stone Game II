@@ -1,0 +1,37 @@
+class Solution {
+public:
+    pair<int, int> dp[101][200][2];
+    pair<int, int> helper(int idx, vector<int> &p, int m, int turn){
+        if(idx == p.size()){
+            return {0, 0};
+        }
+        if(dp[idx][m][turn].first != -1) return dp[idx][m][turn];
+        pair<int, int> maxSum = {INT_MIN, INT_MIN};
+        int sum = 0;
+        for(int i=1;i<=2*m;i++){
+            if(idx+i <= p.size()){
+                sum += p[idx+i-1];
+                pair<int, int> pt = helper(idx+i, p, max(m, i), !turn);
+                if(!turn){
+                    pt.first += sum;
+                    if(maxSum.first < pt.first) maxSum = pt;
+                }else{
+                    pt.second += sum;
+                    if(maxSum.second < pt.second) maxSum = pt;
+                }
+            }
+        }
+        return dp[idx][m][turn] = maxSum;
+    }
+    
+    int stoneGameII(vector<int>& piles) {
+        for(int i=0;i<101;i++){
+            for(int j=0;j<200;j++){
+                dp[i][j][0] = {-1, -1};
+                dp[i][j][1] = {-1, -1};
+            }
+        }
+        pair<int, int> scores = helper(0, piles, 1, 0);
+        return scores.first;
+    }
+};
