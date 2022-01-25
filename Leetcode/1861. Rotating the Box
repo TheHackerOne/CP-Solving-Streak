@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void rotate(vector<vector<char>> &box, vector<vector<char>> &nb){
+        int n = box.size(), m = box[0].size();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                nb[j][n-i-1] = box[i][j];
+            }
+        }
+    }
+    
+    vector<vector<char>> rotateTheBox(vector<vector<char>>& box) {
+        int n = box.size(), m = box[0].size();
+        vector<vector<char>> nBox(m, vector<char>(n));
+        rotate(box, nBox);
+        
+        for(int i=m-1;i>=0;i--){
+            for(int j=n-1;j>=0;j--){
+                if(nBox[i][j] == '#'){
+                    int r = i, c = j;
+                    while(r+1 < m && nBox[r+1][c] == '.'){
+                        r=r+1;
+                    }
+                    swap(nBox[i][j], nBox[r][c]);
+                }   
+            }
+        }
+        return nBox;
+    }
+};
