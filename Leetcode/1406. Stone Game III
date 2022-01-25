@@ -1,0 +1,40 @@
+class Solution {
+public:
+    pair<int, int> dp[50001][2];
+    pair<int, int> helper(int idx, vector<int> &p, int turn){
+        if(idx == p.size()){
+            return {0, 0};
+        }
+        if(dp[idx][turn].first != INT_MIN) return dp[idx][turn];
+        
+        pair<int, int> maxSum = {INT_MIN, INT_MIN};
+        int sum = 0;
+        for(int i=1;i<=3;i++){
+            if(idx+i <= p.size()){
+                sum += p[idx+i-1];
+                pair<int, int> pt = helper(idx+i, p, !turn);
+                if(!turn){
+                    pt.first += sum;
+                    if(maxSum.first < pt.first) maxSum = pt;
+                }else{
+                    pt.second += sum;
+                    if(maxSum.second < pt.second) maxSum = pt;
+                }
+            }
+        }
+        return dp[idx][turn] = maxSum;
+    }
+    
+    string stoneGameIII(vector<int>& piles) {
+        for(int i=0;i<50001;i++){
+                dp[i][0] = {INT_MIN, INT_MIN};
+                dp[i][1] = {INT_MIN, INT_MIN};
+            }
+        
+        pair<int, int> s = helper(0, piles, 0);
+        cout<<s.first<<" "<<s.second<<endl;
+        if(s.first > s.second) return "Alice";
+        else if(s.first < s.second) return "Bob";
+        else return "Tie";
+    }
+};
