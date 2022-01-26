@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int dp[301][5001];
+    int recur(int idx, int n, vector<int> &c, int amount){
+        if(idx == n){
+            if(amount == 0) return 1;
+            else return 0;
+        }
+        if(dp[idx][amount] != -1) return dp[idx][amount];
+        int op1 = recur(idx+1, n, c, amount), op2 = 0 ;
+        if(amount >= c[idx]){
+            op2 = recur(idx, n, c,amount-c[idx]);
+        }
+        return dp[idx][amount] = op1+op2;
+    }
+    
+    int change(int amount, vector<int>& coins) {
+        memset(dp, -1, sizeof dp);
+        return recur(0, coins.size(), coins, amount);
+    }
+};
