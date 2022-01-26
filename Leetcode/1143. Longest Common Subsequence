@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int dp[1001][1001];
+    int recur(int idx1, int n1, string &text1, int idx2, int n2, string &text2){
+        if(idx1 == n1 || idx2 == n2){
+            return 0;
+        }
+        if(dp[idx1][idx2] != -1) return dp[idx1][idx2];
+        
+        if(text1[idx1] == text2[idx2]){
+            return dp[idx1][idx2] = 1 + recur(idx1+1, n1, text1, idx2+1, n2, text2);
+        }
+        return dp[idx1][idx2] = max(recur(idx1+1, n1, text1, idx2, n2, text2), recur(idx1, n1, text1, idx2+1, n2, text2));
+    }
+    
+    int longestCommonSubsequence(string text1, string text2) {
+        memset(dp,-1, sizeof dp);
+        return recur(0, text1.length(), text1, 0, text2.length(), text2);
+    }
+};
