@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int dfs(int idx, int n, vector<int> &nums, int sum, int &target, map<pair<int, int>, int> &mp){
+        if(idx == n){
+            if(sum == target) return 1;
+            else return 0;
+        }
+        if(mp.find({idx, sum}) != mp.end()) return mp[{idx, sum}];
+        int op1 = dfs(idx+1, n, nums, sum-nums[idx], target, mp);
+        int op2 =dfs(idx+1, n, nums, sum+nums[idx], target, mp);
+        
+        return mp[{idx, sum}] = op1+op2;
+    }
+    
+    int findTargetSumWays(vector<int>& nums, int target) {
+        map<pair<int, int>, int> mp;
+        return dfs(0, nums.size(), nums, 0, target, mp);
+    }
+};
