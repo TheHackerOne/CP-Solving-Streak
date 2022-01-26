@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int dp[400][400];
+    int recur(int idx, int n, vector<int> &days, vector<int> &costs, int covered){
+        if(idx == n){
+            return 0;
+        }
+        if(dp[idx][covered] != -1) return dp[idx][covered];
+        if(days[idx] <= covered) return recur(idx+1, n, days,costs, covered);
+        int op1 = recur(idx+1, n, days, costs, days[idx])+costs[0];
+        int op2 = recur(idx+1, n, days, costs, days[idx]+6)+costs[1];
+        int op3 = recur(idx+1, n, days, costs, days[idx]+29)+costs[2];
+        return dp[idx][covered] = min({op1, op2, op3});
+    }
+    
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        memset(dp, -1, sizeof dp);
+        return recur(0, days.size(), days, costs, 0);
+    }
+};
