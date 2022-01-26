@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool recur(int idx, int n, string &s, vector<string> &dic){
+        if(idx >= n) return true;
+        
+        bool ans = false;
+        for(int i=idx;i<n;i++){
+            string str = s.substr(idx, i-idx+1);
+            for(auto i:dic){class Solution {
+public:
+    int dp[301];
+    bool recur(int idx, int n, string &s, vector<string> &dic){
+        if(idx >= n) return true;
+        if(dp[idx] != -1) return dp[idx];
+        bool ans = false;
+        for(int i=idx;i<n;i++){
+            string str = s.substr(idx, i-idx+1);
+            for(auto i:dic){
+                if(str == i){
+                    ans |= recur(idx+str.length(), n, s,dic);
+                }
+            }
+        }
+        return dp[idx] = ans;
+    }
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        memset(dp, -1, sizeof(dp));
+        return recur(0, s.length(), s, wordDict);
+    }
+};
+                if(str == i){
+                    ans |= recur(idx+str.length(), n, s,dic);
+                }
+            }
+        }
+        return ans;
+    }
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        return recur(0, s.length(), s, wordDict);
+    }
+};
