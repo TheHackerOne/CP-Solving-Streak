@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void dfs(int r, int c, vector<vector<int>> &grid, int col, int &prev){
+        grid[r][c] = -col;
+        int count = 0;
+        if(r-1>=0 && (grid[r-1][c] == prev || grid[r-1][c] == -col )){
+            count++;
+            if(grid[r-1][c] == prev) dfs(r-1,c,grid,col,prev);
+        }
+        if(c-1>=0 && (grid[r][c-1] == prev || grid[r][c-1] == -col)){
+            count++;
+            if(grid[r][c-1] == prev) dfs(r,c-1,grid,col,prev);
+        }
+        if(r+1<grid.size() && (grid[r+1][c] == prev || grid[r+1][c] == -col)){
+            count++;
+            if(grid[r+1][c] == prev) dfs(r+1,c,grid,col,prev);
+        }
+        if(c+1<grid[0].size() && (grid[r][c+1] == prev || grid[r][c+1] == -col)){
+            count++;
+            if(grid[r][c+1] == prev) dfs(r,c+1,grid,col,prev);
+        }
+        if(count == 4) grid[r][c] = prev;
+    }
+    
+    vector<vector<int>> colorBorder(vector<vector<int>>& grid, int row, int col, int color) {
+        int main = grid[row][col];
+        dfs(row, col, grid, color, main);
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                if(grid[i][j] < 0 ) grid[i][j] = color;
+            }
+        }
+        return grid;
+    }
+};
