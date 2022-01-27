@@ -1,8 +1,8 @@
 class Solution {
 public:
     int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
-        if(source == target) return 0;
-        int n = routes.size(), m = routes[0].size();
+        int n = routes.size();
+        if(target==source) return 0;
         unordered_map<int, vector<int>> mp;
         for(int i=0;i<n;i++){
             int bus = i;
@@ -13,21 +13,28 @@ public:
         
         queue<int> q;
         int level = 1;
-        vector<bool> visited(mp.size()+1, 0);
+        vector<bool> vbusStop(100005, 0);
+        vector<bool> vbus(100005, 0);
         q.push(source); // store the source bus stop
-        visited[source] = 1;
+        vbusStop[source] = 1;
         while(!q.empty()){
             int size = q.size();
             while(size--){
                 int busStop = q.front();
                 q.pop();
+                
                 vector<int> buses = mp[busStop];
+                
                 for(auto bus:buses){
-                    for(auto bstop:routes[bus]){
-                        if(bstop == target) return level;
-                        if(!visited[bstop]){
-                            q.push(bstop);
-                            visited[bstop] = 1;
+                    if(!vbus[bus]){
+                        vbus[bus]=1;
+                        for(auto bstop:routes[bus]){
+                            
+                            if(!vbusStop[bstop]){
+                                if(bstop == target) return level;
+                                q.push(bstop);
+                                vbusStop[bstop] = 1;
+                            }
                         }
                     }
                 }
