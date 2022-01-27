@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> updateMatrix(vector<vector<int>>& matrix){
+    queue<pair<int,int>> q;
+    int n = matrix.size(), m = matrix[0].size();
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(matrix[i][j] == 1) matrix[i][j] = -1;
+            else q.push({i,j});
+        }
+    }
+    int level = 1;
+    while(!q.empty()){
+        int size=q.size();
+        while(size--){
+            pair<int, int> pq = q.front();
+            q.pop();
+            int r = pq.first, c = pq.second;
+            if(r-1>=0 && matrix[r-1][c] == -1) matrix[r-1][c] = level, q.push({r-1, c});
+            if(c-1>=0 && matrix[r][c-1] == -1) matrix[r][c-1] = level, q.push({r, c-1});
+            if(r+1<n && matrix[r+1][c] == -1) matrix[r+1][c] = level, q.push({r+1, c});
+            if(c+1<m && matrix[r][c+1] == -1) matrix[r][c+1] = level, q.push({r, c+1});
+        }
+        level++;
+    }
+    return matrix;
+}
+
+int main(){
+    
+    int n,m;
+    cin>>n>>m;
+    
+    vector<vector<int>>arr(n,vector<int>(m));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            int x;
+            cin>>x;
+            arr[i][j]=x;
+        }
+    }
+    
+    vector<vector<int>>ans=updateMatrix(arr);
+    
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cout<<ans[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
