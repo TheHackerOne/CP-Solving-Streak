@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void dfs(int src, vector<vector<int>> &graph, stack<int> &st, vector<bool> &visited){
+	visited[src] = 1;
+	for(auto neigh:graph[src]){
+		if(!visited[neigh]){
+			dfs(neigh, graph,st, visited);
+		}
+	}
+	st.push(src);
+}
+
+void dfs(int src, vector<vector<int>> &graph, vector<bool> &visited){
+	visited[src] = 1;
+	for(auto neigh:graph[src]){
+		if(!visited[neigh]){
+			dfs(neigh, graph, visited);
+		}
+	}
+}
+
+int kosaraju(vector<vector<int>> &graph,int n){
+	vector<bool> visited(n, 0);
+	stack<int> st;
+	int scc = 0;
+	// do randomized dfs
+	for(int i=0;i<n;i++){
+		if(!visited[i]){
+			dfs(i, graph, st,visited);
+		}
+	}
+	// reverse all the edges
+	vector<vector<int>> graph2(n);
+	for(int i=0;i<n;i++){
+		for(int j=0;j<graph[i].size();j++){
+			int u = i, v = graph[i][j];
+			graph2[v].push_back(u);
+		}
+	}
+
+	// do dfs according to the stack order
+	vector<bool> visited2(n, 0);
+	while(!st.empty()){
+		int top = st.top();
+		st.pop();
+		if(!visited2[top]){
+			dfs(top, graph2, visited2);
+			scc++;
+		}
+	}
+
+	return scc;
+}
+
+int main(){
+    int n, m;
+    cin>>n>>m;
+    vector<vector<int>>graph(n); 
+	for(int i = 0;i<m;i++) {
+	    int u, v;
+	    cin >> u >> v; 
+	    graph[u-1].push_back(v-1);
+	}
+    cout<<kosaraju(graph, n);
+}
