@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void dfs(int src, vector<vector<int>> &adjlist, stack<int> &st, vector<bool> &visited){
+    visited[src] = 1;
+    for(auto neigh:adjlist[src]){
+        if(!visited[neigh]){
+            dfs(neigh, adjlist, st, visited);
+        }
+    }
+    st.push(src);
+}
+
+int findMotherVertex(int n,vector<vector<int>> &adjlist)
+{
+    stack<int> st;
+    int v = adjlist.size();
+    vector<bool> visited(v, 0);
+    for(int i=0;i<v;i++){
+        if(!visited[i]){
+            dfs(i, adjlist, st,visited);
+        }
+    }
+
+    for(int i=0;i<visited.size();i++){
+        visited[i] = 0;
+    }
+    int ans = st.top();
+    dfs(st.top(), adjlist, st, visited);
+    for(int i=0;i<visited.size();i++){
+        if(visited[i] == false) return -1;
+    }
+    return ans+1;
+}
+
+int main()
+{
+    int n,m;cin>>n>>m;
+    vector<vector<int>> adjlist(n);
+    for(int i=0;i<m;++i)
+    {
+        int u,v;cin>>u>>v;
+        adjlist[u-1].push_back(v-1);
+    }
+    cout<<findMotherVertex(n,adjlist)<<"\n";
+    return 0;
+}
