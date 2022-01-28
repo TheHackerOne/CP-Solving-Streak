@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int swimInWater(vector<vector<int>>& grid) {
+        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
+        int rows = grid.size(), cols = grid[0].size();
+        pq.push({ grid[0][0], {0, 0} });
+        while(!pq.empty()){
+            // remove node
+            pair<int, pair<int, int>> p = pq.top();
+            pq.pop();
+            int costTillNow = p.first, x = p.second.first, y = p.second.second;
+            if(x == rows-1 && y == rows-1) return costTillNow;
+            // mark
+            if(grid[x][y] < 0) continue;
+            grid[x][y] = -1;
+            // add neighbours
+            if(x-1>=0 && grid[x-1][y] >= 0) pq.push({ max(costTillNow, grid[x-1][y]), { x-1, y} });
+            if(y-1>=0 && grid[x][y-1] >= 0) pq.push({ max(costTillNow, grid[x][y-1]), { x, y-1}});
+            if(x+1<rows && grid[x+1][y] >= 0) pq.push({ max(costTillNow, grid[x+1][y]), {x+1, y}});
+            if(y+1<rows && grid[x][y+1] >= 0) pq.push({ max(costTillNow, grid[x][y+1]), {x, y+1}});
+        }
+        return -1;
+    }
+};
