@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int dijikstra(int src, int v, vector<pair<int, int>> graph[]){
+    deque<pair<int, int>> dq;
+    dq.push_back({ src, 0 }); // node distance
+    vector<int> visited(v, 0);
+    vector<int> dist(v, INT_MAX);
+    while(!dq.empty()){
+        // remove
+        pair<int, int> p = dq.front();
+        dq.pop_front();
+        int node = p.first;
+        int distance = p.second;
+        if(node == v-1) return distance;
+        // mark*
+        if(visited[p.first])continue;
+        visited[p.first] = true;
+        // work
+
+        // add*
+        for(auto neigh:graph[node]){
+            if(!visited[neigh.first] && distance+neigh.second <= dist[neigh.first]){
+                dist[neigh.first] = distance+neigh.second;
+                if(dist[neigh.first] == distance) dq.push_front({neigh.first,distance});
+                else dq.push_back({neigh.first, distance+1});
+            }
+        }
+    }
+    return -1;
+}
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+
+    vector<pair<int, int>> graph[n];
+    for(int i=0;i<m;i++){
+        int u, v;
+        cin>>u>>v;
+        u--, v--;
+        graph[u].push_back({v, 0});
+        graph[v].push_back({u, 1});
+    }
+
+    cout<<dijikstra(0, n, graph);
+    return 0;
+}
