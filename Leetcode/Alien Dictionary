@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string alienOrder(vector<string>& words) {
+    map<char, set<char>> graph;
+    map<char, int> indegree;
+    for(string str:words){
+      for(int i=0;i<str.length();i++){
+        char ch = str[i];
+        indegree[ch] = 0;
+      }
+    }
+    // cout<<indegree.size()<<endl;
+    
+    for(int i=0;i<words.size()-1;i++){
+      string str1 = words[i], str2 = words[i+1];
+      int minLen = min(str1.length(), str2.length());
+      if(str1.substr(0, minLen) == str2.substr(0, minLen)) return "";
+      for(int j=0;j<minLen;j++){
+        if(str1[j] != str2[j]){
+          // cout<<str1[j]<<" "<<str2[j]<<endl;
+          char ch1 = str1[j], ch2 = str2[j];
+          if(graph[ch1].find(ch2) == graph[ch1].end()){
+            graph[ch1].insert(ch2);
+            indegree[ch2]+=1;
+          }
+          break;
+        }
+      }
+    }
+    queue<char> q;
+    for(auto i:indegree){
+      if(i.second == 0) q.push(i.first);
+    }
+    string ans = "";
+    while(!q.empty()){
+      char ch = q.front();
+      q.pop();
+      ans += ch;
+      for(auto neigh:graph[ch]){
+        indegree[neigh]-=1;
+        if(indegree[neigh] == 0){
+          q.push(neigh);
+        }
+      }
+    }
+    return ans.length() == indegree.size() ? ans : "";
+}
+
+int main() { 
+  int n;
+  cin>>n;
+  vector<string> words(n);
+  for(int i = 0; i < n; i++){
+    cin>>words[i];
+  }
+    
+    cout<<alienOrder(words)<<endl;
+}
