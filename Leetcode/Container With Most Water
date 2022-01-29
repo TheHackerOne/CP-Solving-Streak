@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+
+    int i=0, j=n-1, maxWater = INT_MIN;
+    while(i < j){
+        int water = (j-i)*min(arr[i], arr[j]);
+        maxWater = max(maxWater, water);
+        if(arr[i] < arr[j]) i++;
+        else j--;
+    }
+    cout<<maxWater<<endl;
+
+    return 0;
+}
