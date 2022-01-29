@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void reverse(int s, int e, string &str){
+        int i = s, j= e;
+        while(i <= j){
+            swap(str[i], str[j]);
+            i++, j--;
+        }
+    }
+
+    int nextGreaterElement(int n) {
+        // arr[i] < arr[i+1]
+        string str = to_string(n);
+        int idx = str.length()-2;
+        while(idx >= 0 && str[idx] >= str[idx+1]){
+            idx--;
+        }
+        if(idx < 0) return -1;
+        // find an element from backwards, just larger than arr[i];
+        int swapper = str.length()-1;
+        while(str[swapper] <= str[idx]){
+            swapper--;
+        }
+        // swap()
+        swap(str[idx], str[swapper]);
+        // reverse till end
+        reverse(idx+1, str.length()-1, str);
+        long next = stol(str);
+        return next == n || next > INT_MAX ? -1 : next;
+    }
+};
