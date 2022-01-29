@@ -1,0 +1,10 @@
+int maxChunksToSorted(vector<int> &arr) {
+    int ans = 0, maxTillNow = 0;
+    for(int i=0;i<arr.size();i++){
+        maxTillNow = max(maxTillNow, arr[i]);
+        if(i == maxTillNow){
+            ans++;
+        }
+    }
+    return ans;
+}
