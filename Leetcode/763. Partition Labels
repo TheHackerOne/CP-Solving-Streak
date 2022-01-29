@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        vector<int> ans;
+        unordered_map<char, int> mp;
+        for(int i=0;i<s.length();i++){
+            mp[s[i]] = i;
+        }
+        int partitionSize = 0, currIdx = 0, maxTillNow = 0;
+        while(currIdx < s.length()){
+            maxTillNow = max(maxTillNow, mp[s[currIdx]]);
+            partitionSize++;
+            if(maxTillNow == currIdx){
+                ans.push_back(partitionSize);
+                partitionSize = 0;
+            }
+            currIdx++;
+        }   
+
+        return ans;
+    }
+};
