@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> arr(n, 0);
+
+    int k;
+    cin>>k;
+    while(k--){
+        int start, end, inc;
+        cin>>start>>end>>inc;
+        arr[start] += inc;
+        if(end+1 != n)
+            arr[end+1] -= inc;
+    }
+    vector<int> prefix(n);
+    for(int i=0;i<n;i++){
+        if(i == 0) prefix[i] = arr[i];
+        else prefix[i] = prefix[i-1]+arr[i];
+    }
+
+    for(auto i:prefix) cout<<i<<" ";
+
+
+    return 0;
+}
