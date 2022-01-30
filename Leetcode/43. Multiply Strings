@@ -1,0 +1,57 @@
+class Solution {
+public:
+    string addNums(string s1, string s2){
+    if(s1.length() < s2.length()) swap(s1, s2);
+    int i = s1.length()-1, j = s2.length()-1, carry = 0;
+    string ans = "";
+    while(i >= 0 || j >= 0){
+        int n1 = s1[i]-'0', n2 = (j >= 0)?s2[j]-'0':0;
+        int sum = n1+n2+carry;
+        if(sum > 9){
+            carry = sum/10;
+            ans = to_string(sum%10)+ans;
+        }else{
+            ans = to_string(sum)+ans;
+            carry = 0;
+        }
+
+        i--, j--;
+    }
+    if(carry) ans = to_string(carry)+ans;
+    return ans;
+}
+
+string multiplyNums(string s1, char s){
+    string ans = "";
+    int carry = 0;
+    for(int i=s1.length()-1;i>=0;i--){
+        int multiple = (s1[i]-'0')*(s-'0')+carry;
+        if(multiple > 9){
+            carry = multiple/10;
+            ans = to_string(multiple%10) + ans;
+        }else{
+            ans = to_string(multiple) + ans;
+            carry = 0;
+        }
+    }
+    if(carry) ans = to_string(carry)+ans;
+    return ans;
+}
+    
+    string multiply(string s1, string s2) {
+        if(s1.length() < s2.length()) swap(s1, s2);
+        string str = "0", count = "";
+        for(int i=s2.length()-1;i>=0;i--){
+            int s2Num = s2[i];
+            string currMultiple = multiplyNums(s1, s2Num);
+            str = addNums(str, currMultiple+count);
+            count += "0";
+        }
+        int i = 0;
+        string finalAns = "";
+        while(str[i] == '0')i++;
+        while(i < str.length()) finalAns += str[i++];
+        if(finalAns.length() == 0) return "0";
+        return finalAns;
+    }
+};
