@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+vector<int> sieveOfEratosthenes(int n) {
+  vector<int> isPrime(n+1, 1);
+  for(int i=2;i*i<=n;i++){
+    if(isPrime[i]){
+      for(int j=2*i;j<=n;j+=i){
+        isPrime[j] = 0;
+      }
+    }
+  }
+  vector<int> ans;
+  for(int i=2;i<=n;i++){
+    if(isPrime[i]){
+      ans.push_back(i);
+    }
+  }
+  return ans;
+}
+
+void segmentedSieveAlgo(int a, int b) {
+  int sqrtB = sqrt(b);
+  vector<int> primesTillRootB = sieveOfEratosthenes(sqrtB);
+
+  vector<bool> isPrime(b-a+1, true);
+
+  for(int i=0;i<primesTillRootB.size();i++){
+    int currPrime = primesTillRootB[i];
+
+    int multiple = ceil((a*1.0)/currPrime);
+    if(multiple == 1) multiple++;
+
+    int startMultiple = multiple*currPrime;
+    int idxOfStart = startMultiple-a;
+
+    for(int j=idxOfStart;j<=b-a+1;j+=currPrime){
+      isPrime[j] = false;
+    }
+  }
+
+  for(int i=0;i<isPrime.size();i++){
+    if(isPrime[i] && i+a>1){
+      cout<<i+a<<endl;
+    }
+  }
+}
+
+
+int main() {
+  
+  int a,b;
+  cin>>a;
+  cin>>b;
+  segmentedSieveAlgo(a, b);
+}
