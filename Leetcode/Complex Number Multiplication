@@ -1,0 +1,20 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string complexNumberMultiply(string num1, string num2) {
+    // (a*c-b*d)+(a*d+b*c)i
+    string ans = "";
+    string a = "", b = "", c = "", d = "";
+    int idx = 0;
+    while(num1[idx] != '+') a += num1[idx++];
+    idx++;
+    while(idx < num1.length()-1) b += num1[idx++];
+    idx = 0;
+    while(num2[idx] != '+') c += num2[idx++];
+    idx++;
+    while(idx < num2.length()-1) d += num2[idx++];
+    int first = stoi(a)*stoi(c)-stoi(b)*stoi(d);
+    int second = stoi(a)*stoi(d)+stoi(b)*stoi(c);
+    ans += to_string(first)+"+"+to_string(second)+"i";
+    return ans;
+}
