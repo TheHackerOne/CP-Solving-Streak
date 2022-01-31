@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool ispalindrome(int i, int j, string str){
+        while(i < j){
+            if(str[i] != str[j]) return false;
+            i++, j--;
+        }
+        return true;
+    }
+
+    bool validPalindrome(string s) {
+        // 2 pointer
+        int i = 0,j = s.length()-1;
+        while(i < j &&s[i] == s[j]){
+            i++, j--;
+        }
+        if(i >= j) return true;
+        bool op1 = ispalindrome(i+1, j, s);
+        bool op2 = ispalindrome(i, j-1, s);
+        return op1||op2;
+    }
+};
