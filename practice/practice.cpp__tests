@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"1\n0\n2\n4\n4"
+			"BRRBRBR\nBRBRBRB\nB\nB\nBRRBRBBRBR"
 		],
-		"test": "5\n5\n1 2 3 4 5\n2\n1000 1000\n2\n1 0\n5\n3 0 2 1 1\n5\n2 1 0 3 0\n"
+		"test": "5\n7\n?R???BR\n7\n???R???\n1\n?\n1\nB\n10\n?R??RB??B?\n"
 	}
 ]
