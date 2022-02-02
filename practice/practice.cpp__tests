@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"YES\nYES\nNO\nNO"
+			"3\n4\n1"
 		],
-		"test": "4\nAABBAC\nCACA\nBBBBAC\nABCA\n"
+		"test": "3\n6\n3 4 2 4 1 2\n3\n1000 1002 998\n2\n12 11\n"
 	}
 ]
