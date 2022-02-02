@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"YES\nNO\nYES\nYES"
+			"4\n1\n6\n32591\n32590\n23125"
 		],
-		"test": "4\nEEE\nEN\nENNEENE\nNENN\n"
+		"test": "6\n10\n1\n25\n1000000000\n999999999\n500000000\n"
 	}
 ]
