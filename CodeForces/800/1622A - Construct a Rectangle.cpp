@@ -75,28 +75,28 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    int n, k;
-    cin>>n>>k;
-    vector<vector<char>> board(n ,vector<char> (n, '.'));
-    int validRooks = (n+1)/2;
-    if(k > validRooks) {
-        cout<<-1<<nline;
+    int a,b,c;
+    vector<int> sides(3);
+    cin>>sides[0]>>sides[1]>>sides[2];
+    sort(all(sides));
+
+    a = sides[0], b = sides[1], c = sides[2];
+    if(a == b and b == c and a%2 == 0){
+        cout<<"YES"<<nline;
         return;
     }
-    int rcount = 0;
-    for(int i=0;i<n;i+=2){
-        int r = i, c = n-i-1;
-        if(rcount < k){
-            board[r][c] = 'R';
-            rcount++;
-        }
+    if(a == b and c%2==0){
+        cout<<"YES"<<nline;
+        return;
+    }if(b == c and a%2==0){
+        cout<<"YES"<<nline;
+        return;
     }
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            cout<<board[i][j];
-        }
-        cout<<nline;
+    if(a+b == c){
+        cout<<"YES"<<nline;
+        return;
     }
+    cout<<"NO"<<nline;
 }
 
 int main() {
