@@ -73,29 +73,110 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
-
-void solve() {
-    int n, k;
-    cin>>n>>k;
-    string str;
-    cin>>str;
-    int reqLen = 2*k+1;
-    if(n < reqLen){
-        cout<<"NO"<<nline;
-        return;
-    }
-    if(k == 0){
-        cout<<"YES"<<nline;
-        return;
-    }
-    for(int i=0;i<k;i++){
-        int first = str[i], last = str[n-i-1];
-        if(first != last){
-            cout<<"NO"<<nline;
-            return;
+bool isValid(string str){
+    stack<int>st;
+    for(int i=0;i<str.length();i++){
+        if(str[i] == '(') st.push('(');
+        else{
+            if(st.empty()) return false;
+            else st.pop();
         }
     }
-    cout<<"YES"<<nline;
+    if(!st.empty()) return false;
+    return true;
+}
+
+void solve() {
+    string str;
+    cin>>str;
+    int ac = 0, bc = 0, cc = 0;
+    for(int i=0;i<str.length();i++){
+        if(str[i] == 'A') ac++;
+        else if(str[i] == 'B') bc++;
+        else cc++;
+    }
+    if(ac+bc == cc){
+        if(str[0] == 'C'){
+            //c is open 
+            //ab is close
+            string str1 = "";
+            for(int i=0;i<str.length();i++){
+                if(str[i] == 'C') str1 += '(';
+                else str1 += ')';
+            }
+            if(isValid(str1)){
+                cout<<"YES"<<nline;
+                return;
+            }
+        }else {
+            //ab is open 
+            //c is close
+            string str1 = "";
+            for(int i=0;i<str.length();i++){
+                if(str[i] == 'C') str1 += ')';
+                else str1 += '(';
+            }
+            if(isValid(str1)){
+                cout<<"YES"<<nline;
+                return;
+            }
+        }
+    }else if(ac+cc == bc){
+        if(str[0] == 'B'){
+            //b is open 
+            //ac is close
+            string str1 = "";
+            for(int i=0;i<str.length();i++){
+                if(str[i] == 'B') str1 += '(';
+                else str1 += ')';
+            }
+            if(isValid(str1)){
+                cout<<"YES"<<nline;
+                return;
+            }
+        }else {
+            //ac is open 
+            //b is close
+            string str1 = "";
+            for(int i=0;i<str.length();i++){
+                if(str[i] == 'B') str1 += ')';
+                else str1 += '(';
+            }
+            if(isValid(str1)){
+                cout<<"YES"<<nline;
+                return;
+            }
+        }
+    }else if(bc+cc == ac){
+        if(str[0] == 'A'){
+            //a is open 
+            //bc is close
+            string str1 = "";
+            for(int i=0;i<str.length();i++){
+                if(str[i] == 'A') str1 += '(';
+                else str1 += ')';
+            }
+            // cout<<str1<<endl;
+            if(isValid(str1)){
+                cout<<"YES"<<nline;
+                return;
+            }
+        }else {
+            //bc is open 
+            //a is close
+            string str1 = "";
+            for(int i=0;i<str.length();i++){
+                if(str[i] == 'A') str1 += ')';
+                else str1 += '(';
+            }
+            if(isValid(str1)){
+                cout<<"YES"<<nline;
+                return;
+            }
+        }
+    }        
+    cout<<"NO"<<nline;
+    
 }
 
 int main() {
