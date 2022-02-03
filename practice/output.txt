@@ -1,4 +1,4 @@
-cc
-cbaabc
-aa
-baaaab
+3
+4
+1
+470
