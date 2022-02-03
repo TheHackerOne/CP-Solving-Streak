@@ -1,65 +1,61 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void Dijikstra(int src, int vertex, vector<pair<int, int>> graph[]){
-    vector<int> visited(vertex, 0);
-    vector<int> dist(vertex, INT_MAX);
-    priority_queue<pair<int,int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, src});
-    dist[src]=0;
+void dijikstra(int src, int v, unordered_map<int, vector<pair<int, int>>> &graph){ 
+    vector<int> dist(v, INT_MAX);
+    dist[src] = 0;
+    priority_queue<pair<int, int>,vector<pair<int, int>>,greater<pair<int, int>>> pq;
+    pq.push({ 0, src });
+    vector<bool> visited(v, 0);
+    // remove mark* work add*
     while(!pq.empty()){
         // remove
-        pair<int,int> p = pq.top();
+        pair<int, int> p = pq.top();
         pq.pop();
         int node = p.second;
-        int distance = p.first;
-
-        // mark*
+        int distTillNow = p.first;
+        // mark
         if(visited[node]) continue;
         visited[node] = 1;
-
         // work
-
-
-        // add*
-        for(auto neigh:graph[node]){
-            if(!visited[neigh.first] && distance+neigh.second < dist[neigh.first]){
-                dist[neigh.first] = distance + neigh.second;
-                pq.push({dist[neigh.first], neigh.first});
+        cout<<src<<" -> "<<node<<" @ "<<distTillNow<<endl;
+        // add neighbours
+        for(auto i:graph[node]){
+            if(!visited[i.first] && distTillNow+i.second < dist[i.first]){
+                dist[i.first] = distTillNow+i.second;
+                pq.push({ dist[i.first], i.first });
             }
         }
     }
-    for(auto i:dist) cout<<i<<" ";
 }
 
-void Prims(int src, int vertex, vector<pair<int, int>> graph[]){
-    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>,greater<pair<int, pair<int, int>>>> pq;
-    pq.push({0, { -1, src }}); // dist from parent to node, parent, node
-    vector<int> visited(vertex, 0);
-    int mstCost = 0;
+void prims(int src, int v, unordered_map<int, vector<pair<int,int>>> graph){
+    vector<bool> visited(v, 0);
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
+    pq.push({ 0, { src, src } });
     while(!pq.empty()){
         // remove
         pair<int, pair<int, int>> p = pq.top();
         pq.pop();
-        int node = p.second.second;
         int parent = p.second.first;
-        int dist = p.first;
-
-        // mark*
-        if(visited[node])continue;
+        int node = p.second.second;
+        int cost = p.first;
+        // mark
+        if(visited[node]) continue;
         visited[node] = 1;
-
         // work
-        cout<<parent<<" -> "<<node<<" @ "<<dist<<endl;
-        mstCost += dist;
-        // add*
+        cout<<parent<<" -> "<<node<<" @ "<<cost<<endl;
+        // add neighbour
         for(auto neigh:graph[node]){
             if(!visited[neigh.first]){
-                pq.push({neigh.second, { node, neigh.first}});
+                pq.push({ neigh.second, { node, neigh.first }});
             }
         }
     }
-    cout<<"Cost of MST -> "<<mstCost<<endl;
+}
+
+bool comp(pair<int, pair<int, int>> &a, pair<int, pair<int, int>> &b){
+    return a.first < b.first;
 }
 
 vector<int> parent(10000, -1);
@@ -70,69 +66,94 @@ int findParent(int node){
     return findParent(parent[node]);
 }
 
-void unionNodes(int a,int b){
+void unionNodes(int a, int b, int w){
+    int oa = a, ob = b;
     a = findParent(a);
-    b = findParent(b); 
-    if(a < b){
-        parent[a] += parent[b];
-        parent[b] = a;
-    }else{
-        parent[b] += parent[a];
-        parent[a] = b;
+    b = findParent(b);
+    if(a != b){
+        cout<<oa<<" -> "<<ob<<" @ "<<w<<endl;
+        if(a < b){
+            parent[a] += parent[b];
+            parent[b] = a;
+        }else{
+            parent[b] += parent[a];
+            parent[a] = b;
+        }
     }
 }
 
-void Kruskal(int src, int vertex,vector<pair<int, int>> graph[]){
-    priority_queue<pair<int, pair<int, int>> ,vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
-    for(int i=0;i<vertex;i++){
-        for(auto j:graph[i]){
-            pq.push({ j.second, {i, j.first} });
+void kruskal(int src, unordered_map<int, vector<pair<int, int>>> &graph){
+    vector<pair<int, pair<int, int>>> arr;
+    for(auto i:graph){
+        int node = i.first;
+        vector<pair<int, int>> neigh = i.second;
+        for(auto j:neigh){
+            arr.push_back({ j.second, { node, j.first } });
         }
     }
-    int mstCost = 0;
-    while(!pq.empty()){
-        // remove
-        pair<int, pair<int, int>> p = pq.top();
-        pq.pop();
-        int node = p.second.first;
-        int parent = p.second.second;
-        int cost = p.first;
 
-        int a = findParent(node);
-        int b = findParent(parent);
-        if((a != b) || (a == -1 && b == -1)){
-            unionNodes(node, parent);
-            cout<<parent<<" "<<node<<endl;
-            mstCost += cost;
+    sort(arr.begin(), arr.end(), comp);
+
+    for(int i=0;i<arr.size();i++){
+        int u = arr[i].second.first, v = arr[i].second.second, w = arr[i].first;
+        unionNodes(u, v, w);
+    }
+}
+
+void bellmanFord(int src, int v, unordered_map<int,vector<pair<int, int>>> &graph){
+    vector<int>dist(v, INT_MAX);
+
+    dist[src] = 0;
+
+    for(int i=0;i<v-1;i++){
+        for(auto i:graph){
+            int u = i.first;
+            vector<pair<int, int>> neigh = i.second;
+            for(auto j:neigh){
+                int weight = j.second, v = j.first;
+                if(dist[u] == INT_MAX) continue;
+                if(dist[u] + weight < dist[v]){
+                    dist[v] = dist[u]+weight;
+                }
+            }
         }
     }
-    cout<<"Cost of MST -> "<<mstCost<<endl;
+    for(auto i:dist)cout<<i<<" ";
 }
 
 int main() {
-    int vertex, edges;
-    cin>>vertex>>edges;
+#ifndef ONLINE_JUDGE  
+    freopen("Error.txt", "w", stderr);
+#endif
 
-    vector<pair<int, int>> graph[vertex];
-    for(int i=0;i<edges;i++){
-        int u, v,w;
-        cin>>u>>v>>w;
-        graph[u].push_back({v, w});
-        graph[v].push_back({u, w});
+    int v, e;
+    cin>>v>>e;
+    unordered_map<int, vector<pair<int, int>>> graph;
+    for(int i=0;i<e;i++){
+        int a,b,w;
+        cin>>a>>b>>w;
+        graph[a].push_back({b, w});
+        graph[b].push_back({a, w});
     }
 
-    cout<<"Dijikstra for shortest path from a source to all other vertex "<<endl;
-    Dijikstra(0, vertex, graph);
+    // single source shortest path in terms of edge weight
+    cout<<"DIJIKSTRA\n";
+    dijikstra(0, v, graph);
+    cout<<endl;
 
-    cout<<endl<<endl;
+    // minimum spanning tree
+    cout<<"PRIMS \n";
+    prims(0, v, graph);
+    cout<<endl;
 
-    cout<<"Prims for minimum spanning tree "<<endl;
-    Prims(0, vertex, graph);
+    // KRUSKAL minimum spanning tree
+    cout<<"Kruskal\n";
+    kruskal(0, graph);
+    cout<<endl;
 
-    cout<<endl<<endl;
+    // bellman ford - shortest path in weighted graph with negative edge weight(not negative weight cycle)
+    bellmanFord(0, v, graph);
 
-    cout<<"Kruskal (Dijoint set Union) for MST"<<endl;
-    Kruskal(0, vertex, graph);
 
     return 0;
 }
