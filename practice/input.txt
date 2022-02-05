@@ -1,17 +1,4 @@
-8
-2 z
-ab
-3 z
-abc
-4 z
-abcd
-5 z
-abcde
-6 z
-abcdef
-7 z
-abcdefg
-8 z
-abcdefgh
-9 z
-abcdefghi
+3
+3 4
+2 12
+105 564
