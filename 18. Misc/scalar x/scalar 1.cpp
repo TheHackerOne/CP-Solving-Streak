@@ -75,22 +75,101 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    int A;
-    cin>>A;
-    int start = 5, counter = 4;
-    while(start < A){
-        start += counter;
-        counter *= 2;
+
+    int g;
+    cin>>g;
+    vector<int> a(g), b(g);
+    for(int i=0;i<g;i++){
+        cin>>a[i];
     }
-    if(start == A){
-        cout<<start-1<<nline;
-        return;
+    for(int i=0;i<g;i++){
+        cin>>b[i];
     }
-    counter /= 2;
-    start-=counter;
-    int diff = A-start;
-    cout<<counter-diff<<nline;
+    int n = a.size();
+    vector<int> prem(n, 0),prec(n, 0),sufm(n, 0),sufc(n, 0);
+    
+    // prefix
+    for(int i=0;i<n;i++){
+        if(i == 0){
+            if(a[i] == 0){
+                prem[i] = b[i];
+            }else{
+                prec[i] = b[i];
+            }
+        }else if(a[i] == 0){ // mindi wins
+            prem[i] = prem[i-1]+b[i];
+            prec[i] = prec[i-1];
+        }else if(a[i] == 1){
+            prec[i] = prec[i-1]+b[i];
+            prem[i] = prem[i-1];
+        }
+    }
+    //suffix
+    for(int i=n-1;i>=0;i--){
+        if(i == n-1){
+            if(a[i] == 0){
+                sufm[i] = b[i];
+            }else{
+                sufc[i] = b[i];
+            }
+        }else if(a[i] == 0){
+            sufm[i] = sufm[i+1]+b[i];
+            sufc[i] = sufc[i+1];
+        }else if(a[i] == 1){
+            sufc[i] = sufc[i+1]+b[i];
+            sufm[i] = sufm[i+1];
+        }
+    }
+    //prefix
+    int diff1 = INT_MIN,fromStart = -1;
+    for(int i=0;i<n;i++){
+        if(prec[i] > prem[i]){
+            if(prec[i]-prem[i] > diff1){
+                diff1 = prec[i]-prem[i];
+                fromStart = i;
+            }
+        }
+    }
+    //suffix
+    int diff2 = INT_MIN,fromEnd = -1;
+    for(int i=n-1;i>=0;i--){
+        if(sufc[i] > sufm[i]){
+            if(sufc[i] - sufm[i] > diff2){
+                diff2 = sufc[i]-sufm[i];
+                fromEnd = i;
+            }
+        }
+    }
+
+    // debug(prem)
+    // debug(prec)
+    // debug(sufm)
+    // debug(sufc)
+    // debug(diff1)
+    // debug(diff2)
+    if(diff1 > diff2){
+        for(int i=0;i<=fromStart;i++){
+            if(a[i] == 0) a[i] = 1;
+            else a[i] = 0;
+        }
+    }else{
+        for(int i=n-1;i>=fromEnd;i--){
+            if(a[i] == 0) a[i] = 1;
+            else a[i] = 0;
+        }
+    }
+
+
+    
+    int maxScore = 0;
+    for(int i=0;i<n;i++){
+        if(a[i] == 0){
+            maxScore += b[i];
+        }
+    }
+    cout<<maxScore;
 }
+
 
 int main() {
 #ifndef ONLINE_JUDGE

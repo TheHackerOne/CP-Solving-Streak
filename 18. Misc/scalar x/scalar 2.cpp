@@ -74,24 +74,61 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
 
-void solve() {
-    int A;
-    cin>>A;
-    int start = 5, counter = 4;
-    while(start < A){
-        start += counter;
-        counter *= 2;
+bool canFinish(int speed, vector<vector<int>> &a, int burgers, int timelimit){
+    int count = 0;
+    double timeGot = (double)timelimit;
+    debug(speed)
+    for(auto i:a){
+        vector<int> info = i;
+        int burgers = info[0], speedBoost = info[1];
+        double timereq = burgers/(double)speed;
+        debug(timereq)
+        if(timeGot >= timereq){
+            count += burgers;
+            timeGot -= timereq;
+            speed += speedBoost;
+        }else{
+            int burgerCanEat = ceil(speed*timeGot);
+            count += burgerCanEat;
+            timeGot = 0;
+        }
+        debug(timeGot)
     }
-    if(start == A){
-        cout<<start-1<<nline;
-        return;
+    if(timeGot > 0 ){
+        count += ceil(speed*timeGot);
     }
-    counter /= 2;
-    start-=counter;
-    int diff = A-start;
-    cout<<counter-diff<<nline;
+    debug(count)
+    debug("\n")
+    if(count >= burgers) return true;
+    else return false;
 }
 
+int solve() {
+    int n;
+    cin>>n;
+    vector<vector<int>> a(n, vector<int>(2));
+    int b, c;
+    for(int i=0;i<n;i++){
+        int x,y;
+        cin>>x>>y;
+        a[i][0] = x;
+        a[i][1] = y;
+    }
+    cin>>b>>c;
+
+    int ans = -1;
+    int l = 1, h = b;
+    while(l <= h){
+        int midrate = (l+h)/2; // midrate burgers per min
+        if(canFinish(midrate,a,b,c)){
+            ans = midrate;
+            h = midrate-1;
+        }else{
+            l = midrate+1;
+        }
+    }
+    cout<<ans<<nline;
+}
 int main() {
 #ifndef ONLINE_JUDGE
     freopen("Error.txt", "w", stderr);

@@ -1,3 +1,9 @@
-1
-5
-4 1 5 2 3
+int start = 5, counter = 4;
+    while(start < A){
+        start += counter;
+        counter *= 2;
+    }
+    counter /= 2;
+    start--;
+    int ans = start-A-1;
+    return ans;
