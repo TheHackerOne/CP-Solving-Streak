@@ -2,8 +2,15 @@
 	{
 		"correct_answers":
 		[
-			"Yes\nNo\nNo\nNo"
+			"5\n-2\n-3"
 		],
-		"test": "4\n5\nsouse\nhouhe\n3\ncat\ndog\n2\naa\naz\n3\nabc\nbca\n"
+		"test": "3\n10\n-5\n-5\n"
+	},
+	{
+		"correct_answers":
+		[
+			"-3\n-15\n0\n2\n12\n-15\n19"
+		],
+		"test": "7\n-7\n-29\n0\n3\n24\n-29\n38\n"
 	}
 ]
