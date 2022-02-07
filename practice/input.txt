@@ -1,9 +1,4 @@
-int start = 5, counter = 4;
-    while(start < A){
-        start += counter;
-        counter *= 2;
-    }
-    counter /= 2;
-    start--;
-    int ans = start-A-1;
-    return ans;
+1
+5
+souse
+houhe
