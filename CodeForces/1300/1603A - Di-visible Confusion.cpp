@@ -75,31 +75,22 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    int n;
+    ll n;
     cin>>n;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++){
+    vector<ll> arr(n+1);
+    for(ll i=1;i<=n;i++){
         cin>>arr[i];
     }
-    vector<int> bitCount(31, 0);
-    for(int i=0;i<n;i++){
-        int num = arr[i];
-        for(int j=0;j<31;j++){
-            if((num>>j)&1) bitCount[j]++;
+    ll lcmAll = 2;
+    for(ll i=1;i<=n;i++){
+        if(arr[i]%lcmAll == 0){
+            cout<<"NO"<<nline;
+            return;
         }
+        if(lcmAll <= 1e9)
+            lcmAll = (lcmAll*(i+2LL))/gcd(lcmAll, i+2LL);
     }
-    debug(bitCount)
-    for(int k=1;k<=n;k++){
-        bool flag = true;
-        for(int i=0;i<31;i++){
-            if(bitCount[i]!=0 and bitCount[i]%k) {
-                flag = false;
-                break;
-            }
-        }
-        if(flag) cout<<k<<" ";
-    }
-    cout<<endl;
+    cout<<"YES"<<nline;
 }
 
 int main() {
