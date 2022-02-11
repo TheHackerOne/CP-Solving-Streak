@@ -95,13 +95,10 @@ void solve() {
     sort(pos.begin(),pos.end());
     sort(neg.begin(),neg.end());
     
-    for( int i=pos.size()-1;i>=0;i-=k)
-    {
+    for( int i=pos.size()-1;i>=0;i-=k){
         ans+=2*pos[i];
     }
-    for( int i=neg.size()-1;i>=0;i-=k)
-    {
-        
+    for( int i=neg.size()-1;i>=0;i-=k){
         ans+=2*neg[i];
     }
     
