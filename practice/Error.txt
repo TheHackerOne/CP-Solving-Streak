@@ -1,3 +1,0 @@
-ans 7
-ans 8
-ans 0
