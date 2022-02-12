@@ -1,0 +1,8 @@
+ans [ 6 1 6 ]
+minMoves 2
+ans [ 9 ]
+minMoves 0
+ans1 [ 1 2 1 2 1 2 ]
+minMoves1 6
+ans2 [ 6 3 2 5 4 1 ]
+minMoves2 4
