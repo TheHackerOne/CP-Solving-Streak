@@ -1,15 +1,6 @@
-7
-cabad
-cabac
-gdededede
-gdedededg
-abcd
-bd
-aaaaabaaaaa
-aaaaaaaaab
-bagelelelelegax
-elelelegab
-baaaaaaa
-aaab
-dcabc
-abcd
+1
+4
+1 3
+4 3
+2 1
+

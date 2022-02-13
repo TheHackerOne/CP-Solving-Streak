@@ -108,6 +108,8 @@ void solve() {
         findTar(str, tar, idx[i], allPoss);
     }
 
+    
+
     if(allPoss.find(tar) != allPoss.end()) cout<<"YES"<<nline;
     else cout<<"NO"<<nline;
 }
