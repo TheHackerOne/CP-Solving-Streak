@@ -1,14 +1,16 @@
-startNode 1
-edge1 1 2
-i 2
-startNode 2
-startNode 4
-edge1 4 3
-i 3
-startNode 3
-edge2 1 3
-i 1
-startNode 1
-edge2 2 1
-i 2
-startNode 2
+totalEven 6
+counter 2
+totalEven 6
+counter 2
+totalEven 0
+counter 0
+totalEven 2
+counter 0
+totalEven 10
+counter 4
+totalEven 2
+counter 0
+totalEven 2
+counter 2
+totalEven 6
+counter 2
