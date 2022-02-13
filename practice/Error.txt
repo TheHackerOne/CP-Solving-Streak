@@ -1,6 +1,10 @@
-primeIdx [ 1 3 5 6 ]
-primeIdx [ 1 ]
-primeIdx [ 0 2 8 ]
-primeIdx [ ]
-primeIdx [ 1 ]
-primeIdx [ 1 ]
+ans 1
+ans-first+1 2
+ans 2
+ans-first+1 3
+ans 2
+ans-first+1 3
+ans 1
+ans-first+1 1
+ans 3
+ans-first+1 1
