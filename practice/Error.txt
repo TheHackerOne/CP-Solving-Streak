@@ -1,16 +1,6 @@
-totalEven 6
-counter 2
-totalEven 6
-counter 2
-totalEven 0
-counter 0
-totalEven 2
-counter 0
-totalEven 10
-counter 4
-totalEven 2
-counter 0
-totalEven 2
-counter 2
-totalEven 6
-counter 2
+primeIdx [ 1 3 5 6 ]
+primeIdx [ 1 ]
+primeIdx [ 0 2 8 ]
+primeIdx [ ]
+primeIdx [ 1 ]
+primeIdx [ 1 ]
