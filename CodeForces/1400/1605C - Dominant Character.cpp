@@ -52,7 +52,6 @@ template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_prin
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T, class V> void _print(unordered_map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 // template<class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 /*---------------------------------------------------------------------------------------------------------------------------*/
@@ -74,71 +73,20 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
-bool comp(pair<ll, ll> &a,pair<ll, ll> &b){
-    return a.first < b.first;
-}
-
-bool comp1(pair<ll, ll> &a,pair<ll, ll> &b){
-    return a.second < b.second;
-}
 
 void solve() {
-    ll n, k;
-    cin>>n>>k;
-    vector<ll> arr(n);
-    unordered_map<ll, ll> mp;
-    for(ll i=0;i<n;i++){
-        cin>>arr[i];
-        mp[arr[i]]++;
-    }
-    debug(mp)
-    unordered_map<ll, ll> redundant;
-    for(auto i:mp){
-        ll diff = i.second-k;
-        if(diff > 0){
-            redundant[i.first] = diff;
+    int n,i;
+    cin>>n;
+    string s,ans[7]={"aa","aba","aca","abca","acba","abbacca","accabba"};
+    cin>>s;
+    int res=-1;
+    for(int i=0;i<7;i++){
+        if(s.find(ans[i])!=-1){
+            res=ans[i].length();
+            break;
         }
-    }
-
-    debug(redundant)
-
-    ll countZero = 0;
-    for(ll i=0;i<n;i++){
-        if(redundant.find(arr[i]) != redundant.end() and redundant[arr[i]] > 0){
-            redundant[arr[i]]--;
-            arr[i] = 0;
-            countZero++;
-            debug(redundant)
-        }
-    }
-    debug(countZero)
-
-    vector<pair<ll, ll>> a(n);
-
-    for(ll i=0;i<n;i++){
-        a[i] = {arr[i], i};
-    }
-
-    sort(all(a),comp);
-    debug(a)
-    ll remItems = n - countZero;
-
-    ll partitionSize = remItems/k;
-    debug(partitionSize)
-    for(ll i=countZero;i<n;i+=k){
-        if(i+k-1 >= n) {
-            for(ll j=i;j<n;j++) a[j].first = 0;
-                break;
-        }
-        for(ll j=1;j<=k;j++){
-            a[i+j-1].first = j;
-        }
-    }
-
-    sort(all(a), comp1);
-
-    for(auto i:a) cout<<i.first<<" ";
-        cout<<nline;
+    }       
+    cout<<res<<endl;
 }
 
 int main() {
