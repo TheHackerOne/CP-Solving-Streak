@@ -76,29 +76,16 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    ll n;
+    int n;
     cin>>n;
-    vector<ll> arr(n);
-    ll sum = 0;
-    for(ll i=0;i<n;i++){
-        cin>>arr[i];
-        sum += arr[i];
+    vector<int> arr(n);
+    int cnt = 1;
+    for(int i=0;i<n;i++){
+        arr[i] = cnt;
+        cnt += 2;
     }
-
-    if(sum%3 != 0){
-        cout<<-1<<nline;
-        return;
-    }
-    ll cnt1 = 0, cnt2 = 0;
-    for(ll i=0;i<n;i++){
-        if(arr[i]%3 == 1) cnt1++;
-        if(arr[i]%3 == 2) cnt2++;
-    }
-    ll ans = min(cnt1,cnt2);
-    cnt1 -= ans;
-    cnt2 -= ans;
-    ans += (max(cnt1, cnt2)/3)*2;
-    cout<<ans<<nline;
+    for(auto i:arr) cout<<i<<" ";
+    cout<<nline;
 }
 
 int main() {
