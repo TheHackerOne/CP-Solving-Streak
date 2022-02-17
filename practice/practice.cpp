@@ -49,6 +49,7 @@ void _print(ull t) {cerr << t;}
 
 template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(deque <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -74,29 +75,56 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
+static bool comp(int a, int b){
+        return a > b;
+    }
+    
+    long long smallestNumber(long long num) {
+        deque<int> digits;
+        long long n = num;
+        bool pos = n >= 0 ? true : false;
+        if(!pos) num *= -1;
+        while(num != 0){
+            int rem = num%10;
+            digits.push_back(rem);
+            num/=10;
+        }
+        if(pos)
+            sort(digits.begin(), digits.end());
+        else sort(digits.begin(), digits.end(),comp);
+        int cnt = 0;
+        debug(digits)
+        while(digits.front() == 0) cnt++, digits.pop_front();
+        while(digits.back() == 0) cnt++, digits.pop_back();
+        long long ans = 0;
+        if(pos){
+            string str = "";
+            str += to_string(digits.front());
+            digits.pop_front();
+            while(cnt--) str += "0";
+            while(!digits.empty()){
+                str += to_string(digits.front());
+                digits.pop_front();
+            }
+            ans = stoll(str);
+        }else{
+            string str = "";
+            debug(cnt)
+            while(digits.size() != 0){
+                str += to_string(digits.front());
+                digits.pop_front();
+            }
+            while(cnt--) str += '0';
+            ans = stoll(str);
+            ans *= -1;
+        }
+        return ans;
+    }
 
 void solve() {
-    string str;
-    cin>>str;
-    ll n = str.length();
-    ll dp[n+1][2];
-
-    ll ans=0;
-    dp[0][0] = dp[0][1] = 0;
-    for(ll i=1;i<=n;i++){
-        if(str[i-1] == '0'){
-            dp[i][0] = dp[i-1][1] + 1;
-            dp[i][1] = 0; 
-        }else if(str[i-1] == '1'){
-            dp[i][1] = dp[i-1][0]+1;
-            dp[i][0] = 0;
-        }else{
-            dp[i][0] = dp[i-1][1]+1;
-            dp[i][1] = dp[i-1][0]+1;
-        }
-        ans += max(dp[i][0], dp[i][1]);
-    }
-    cout<<ans<<nline;
+    long long n;
+    cin>>n;
+    cout<<smallestNumber(n)<<nline;
 }
 
 int main() {
