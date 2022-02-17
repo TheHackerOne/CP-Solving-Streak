@@ -1,0 +1,49 @@
+class Solution {
+public:
+    static bool comp(int a, int b){
+        return a > b;
+    }
+    
+    long long smallestNumber(long long num) {
+        if(num == 0)return 0;
+        deque<int> digits;
+        long long n = num;
+        bool pos = n >= 0 ? true : false;
+        if(!pos) num *= -1;
+        while(num != 0){
+            int rem = num%10;
+            digits.push_back(rem);
+            num/=10;
+        }
+        if(pos)
+            sort(digits.begin(), digits.end());
+        else sort(digits.begin(), digits.end(),comp);
+        int cnt = 0;
+        // debug(digits)
+        while(digits.front() == 0) cnt++, digits.pop_front();
+        while(digits.back() == 0) cnt++, digits.pop_back();
+        long long ans = 0;
+        if(pos){
+            string str = "";
+            str += to_string(digits.front());
+            digits.pop_front();
+            while(cnt--) str += "0";
+            while(!digits.empty()){
+                str += to_string(digits.front());
+                digits.pop_front();
+            }
+            ans = stoll(str);
+        }else{
+            string str = "";
+            // debug(cnt)
+            while(digits.size() != 0){
+                str += to_string(digits.front());
+                digits.pop_front();
+            }
+            while(cnt--) str += '0';
+            ans = stoll(str);
+            ans *= -1;
+        }
+        return ans;
+    }
+};
