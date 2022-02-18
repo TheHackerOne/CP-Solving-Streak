@@ -1,6 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
-
 class Solution {
 private:
    void dfs(vector<vector<char>> &grid, int i, int j){
@@ -19,7 +16,7 @@ public:
          int components = 0;
         for(int i=0;i<row;i++){
          for(int j=0;j<col;j++){
-            if(grid[i][j] == 1){
+            if(grid[i][j] == '1'){
                components++;
                dfs(grid, i, j);
             }
@@ -29,22 +26,3 @@ public:
         return components;
     }
 };
-
-void solve() {
-
-}
-
-int main() {
-#ifndef ONLINE_JUDGE  
-    freopen("Error.txt", "w", stderr);
-#endif
-
-    int t;
-    cin >> t;
-    while (t--) {
-        solve();
-    }
-
-    return 0;
-}
-
