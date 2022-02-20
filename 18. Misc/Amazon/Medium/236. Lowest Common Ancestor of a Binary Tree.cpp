@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool nodeToRoot(TreeNode *root, vector<TreeNode> &path, TreeNode *node){
+    bool nodeToRoot(TreeNode *root, vector<TreeNode*> &path, TreeNode *node){
         // base case
          if(root == nullptr) return false;
 
