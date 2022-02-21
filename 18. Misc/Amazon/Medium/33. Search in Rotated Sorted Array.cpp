@@ -7,7 +7,7 @@ public:
    }
    int pivot = -1;
    int n = nums.size();
-   int first= 0, last = n-1;
+   int first = 0, last = n-1;
    while(first <= last){
       int mid = (first+last)/2;
       if(nums[mid] > nums[mid+1]){
@@ -17,7 +17,7 @@ public:
          first = mid+1;
       }else if(nums[mid] < nums[0]){
          last = mid-1;
-      }else break;
+      }else break; //IMPORTANT STEP
    }
    if(pivot == -1) pivot = n-1;
    int ans = -1;
@@ -47,6 +47,5 @@ public:
       }
    }
    return ans;
-
 }
 };
