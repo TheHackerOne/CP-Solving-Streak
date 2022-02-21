@@ -25,6 +25,7 @@ public:
             int size = arr.size();
             swap(arr[idx], arr[size-1]);
             mp[arr[idx]] = idx;
+            mp.erase(val);
             arr.pop_back();
             return true;
         }
