@@ -1,10 +1,7 @@
 #include<bits/stdc++.h>
-
-using namespace std;
-
 class Node{
 private:
-	vector<Node*> list(26, nullptr);
+	Node* list[26];
 	bool endsWith = false;
 public:
 
@@ -76,9 +73,3 @@ public:
 		return true;
 	}
 };
-
-int main(){
-
-
-	return 0;
-}
