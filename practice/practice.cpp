@@ -1,9 +1,10 @@
+#include<bits/stdc++.h>
 class Node{
-public:
+private:
 	Node* list[26];
-	int endsWith = 0;
-	int countPrefix = 0;
+	bool endsWith = false;
 
+public:
 	bool containsKey(char ch){
 		return (list[ch-'a'] != nullptr);
 	}
@@ -13,86 +14,88 @@ public:
 	}
 
 	Node *get(char ch){
-		return list[ch - 'a'];
+		return list[ch-'a'];
 	}
 
-	void incrementPrefix(){
-		countPrefix += 1;
+	void setEnd(){
+		endsWith = true;
 	}
 
-	void EndsHere(){
-		endsWith += 1;
-	}
-
-	int endsWithCount(){
+	bool EndsHere(){
 		return endsWith;
-	}
-
-	int getPrefixCount(){
-		return countPrefix;
-	}
-
-	void decrementPrefix(){
-		countPrefix--;
-	}
-
-	void decrementEndsCount(){
-		endsWith--;
 	}
 };
 
-class Trie{
+class Trie {
 private:
 	Node *root;
 public:
 
-	Trie(){
+	Trie() {
 		root = new Node();
 	}
 
-	void insert(string &word){
-	  Node *node = root;
-	  for(int i=0;i<word.length();i++){
-	  		if(!node->containsKey(word[i])){
-	  			node->put(word[i], new Node());
-	  		}
-	  		node = node->get(word[i]);
-	  		node->incrementPrefix();
-	  }
-	  node->EndsHere();
-	}
-
-	int countWordsEqualTo(string &word){
-	  Node *node = root;
-	  for(int i=0;i<word.length();i++){
-	  		if(!node->containsKey(word[i])){
-	  			node->put(word[i], new Node());
-	  		}
-	  		node = node->get(word[i]);
-	  }
-	  return node->endsWithCount();
-	}
-
-	int countWordsStartingWith(string &word){
-	  Node *node = root;
-	  for(int i=0;i<word.length();i++){
-	  		if(!node->containsKey(word[i])){
-	  			node->put(word[i], new Node());
-	  		}
-	  		node = node->get(word[i]);
-	  }
-	  return node->getPrefixCount();
-	}
-
-	void erase(string &word){
-	 	Node *node = root;
+	/** Inserts a word into the trie. */
+	void insert(string word) {
+		Node*node = root;
 		for(int i=0;i<word.length();i++){
 			if(!node->containsKey(word[i])){
-				return;
+				node->put(word[i], new Node());
 			}
 			node = node->get(word[i]);
-			node->decrementPrefix();
 		}
-		node->decrementEndsCount();
+		node->setEnd();
+	}
+
+	/** Returns if the word is in the trie. */
+	bool search(string word) {
+		Node *node = root;
+		for(int i=0;i<word.length();i++){
+			if(!node->containsKey(word[i])){
+				return false;
+			}
+			node = node->get(word[i]);
+		}
+		if(node->EndsHere())
+			return true;
+		else return false;
+	}
+
+	bool checkIfAllPrefixExists(string str){
+		bool flag = true;
+		Node *node = root;
+		for(int i=0;i<str.length();i++){
+			if(node->containsKey(str[i])){
+				node = node->get(str[i]);
+				if(!node->EndsHere()) {
+					flag = false;
+					break;
+				}
+			}else {
+				flag = false;
+				break;
+			}
+		}
+		return flag;
 	}
 };
+
+
+string completeString(int n, vector<string> &a){
+    string ans = "";
+    Trie trie;
+    for(auto str:a){
+    	trie.insert(str);
+    }
+    for(int i=0;i<a.size();i++){
+        if(trie.checkIfAllPrefixExists(a[i])){
+        		if(a[i].length() > ans.length()) {
+        			ans = a[i];
+        		}else if(a[i].length() == ans.length() and ans > a[i]){
+        			ans = a[i];
+        		}	
+        }
+    }
+    if(ans.length() == 0) return "None";
+    return ans;
+}
