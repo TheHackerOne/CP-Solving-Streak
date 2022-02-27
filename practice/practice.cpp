@@ -1,36 +1,40 @@
-class Solution {
+class Solution
+{
+private:
+	int minw = INT_MAX, maxw = INT_MIN;
+	void width(Node *root, int w){
+		if(root == nullptr) return;
+
+		minw = min(minw, w);
+		maxw = max(maxw, w);
+		width(root->left, w-1); 
+		width(root->right, w+1); 
+	}
+
+	void verticalOrder(Node *root, int level, unordered_map<int, vector<int>> &mp){
+		// base case
+		if(roto == nullptr) return;
+
+		// main logic
+		mp[level] = root->val;
+		verticalOrder(root->left, level-1, mp)
+		verticalOrder(root->right, level+1, mp)
+	}
+
 public:
-    vector<int> findAnagrams(string s, string p) {
-        vector<int> ans;
-        unordered_map<char, int> mp, mp1;
-        for(auto ch:p) mp[ch]++;
-        int st = -1, en = -1;
-        int match = 0;
-        while(true){
-            bool f1 = false, f2 = false;
-            while(en < (int)(s.length()-1) and match < p.length()){
-                en++;
-                char ch = s[en];
-                mp1[ch]++;
-                f1 = true;
-                if(mp.find(ch) != mp.end() and mp1[ch] <= mp[ch]){
-                    match++;
-                }
-                if(match == p.length()) break;
-            }
-            while(st < en and match == p.length()){
-                ans.push_back(st+1);
-                st++;
-                char ch = s[st];
-                mp1[ch]--;
-                f2 = true;
-                if(mp.find(ch) != mp.end() and mp1[ch] < mp[ch]){
-                    match--;
-                }                
-            }
-            
-            if(!f1 and !f2) break;
-        }
-        return ans;
-    }
+	vector<int> verticalOrder(Node *root)
+	{
+	 	width(root);
+	 	int widthOfTree = maxw-minw+1;
+	 	unordered_map<int, vector<int>> mp;
+	 	int rootLevel = abs(minw);
+	 	verticalOrder(root, rootLevel, mp);
+	 	vector<int> ans;
+	 	for(int i=0;i<=maxw+abs(minw);i++){
+	 		for(auto j:mp[i]){
+	 			ans.push_back(j);
+	 		}
+	 	}
+	 	return ans;
+	}
 };
