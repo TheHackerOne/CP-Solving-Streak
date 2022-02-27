@@ -1,14 +1,18 @@
 class Solution {
 private:
-	void dfs(int node, unordered_map<int, vector<int>> &graph, vector<int> &visited,vector<int> &dfsVisited){
+	bool dfs(int node, unordered_map<int, vector<int>> &graph, vector<int> &visited,vector<int> &dfsVisited){
 		visited[node] = 1;
 		dfsVisited[node] = 1;
 		for(auto neigh:graph[node]){
 			if(!visited[neigh]){
-				dfs(neigh, graph, visited, dfsVisited);
-			}
+				bool isCycle = dfs(neigh, graph, visited, dfsVisited);
+                if(isCycle) return true;
+			}else{
+                if(dfsVisited[neigh]) return true;
+            }
 		}
 		dfsVisited[node] = 0;
+        return false;
 	}
 	
 public:
@@ -24,8 +28,10 @@ public:
 		vector<int> dfsVisited(numCourses, 0);
 		for(auto i:graph){
 			if(!visited[i.first]){
-				dfs(i.first, graph, visited, dfsVisited);
+				bool isCycle = dfs(i.first, graph, visited, dfsVisited);
+                if(isCycle) return false;
 			}
 		}
+        return true;
 	}
 };
