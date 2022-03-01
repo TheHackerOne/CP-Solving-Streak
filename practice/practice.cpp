@@ -1,78 +1,137 @@
 #include <iostream>
+#include <vector>
+#include <stack>
+#include <bits/stdc++.h>
 using namespace std;
 
-class ListNode
+class Node
 {
 public:
-    int val = 0;
-    ListNode *next = nullptr;
+  int val;
+  vector<Node*> children;
 
-    ListNode(int val)
-    {
-        this->val = val;
-    }
+  Node() {}
+
+  Node(int _val)
+  {
+    val = _val;
+  }
+
+  Node(int _val, vector<Node*> _children)
+  {
+    val = _val;
+    children = _children;
+  }
 };
 
-void printList(ListNode *node)
-{
-    ListNode *curr = node;
-    while (curr != nullptr)
-    {
-        cout << curr->val << " ";
-        curr = curr->next;
-    }
-    cout << endl;
+void preorder(Node *root, string &str){
+
+  str += to_string(root->val)+" ";
+  for(auto child:root->children){
+    preorder(child, str);
+  }
+  str += "-1 ";
 }
 
-ListNode *segregate012(ListNode *head){
-    ListNode *zero = new ListNode(-1), *one = new ListNode(-1), *two = new ListNode(-1);
-    ListNode *pervZero = zero, *prevOne = one, *prevTwo = two;
-    ListNode *curr = head;
-    while(curr != nullptr){
-        if(curr->val == 0){
-            pervZero->next = curr;
-            pervZero = curr;
-        }else if(curr->val == 1){
-            prevOne->next = curr;
-            prevOne = curr;
-        }else{
-            prevTwo->next = curr;
-            prevTwo = curr;
-        }
-        curr = curr -> next;
-    }
-    pervZero->next = prevOne->next = prevTwo->next = nullptr;
-    // printList(zero->next);
-    // printList(one->next);
-    // printList(two->next);
-    prevOne->next = two->next;
-    pervZero->next = one->next;
-    return zero->next;
+// Encodes a tree to a single string.
+string serialize(Node* root)
+{
+  if(root == nullptr) return "";
+  string str = "";
+  preorder(root, str);
+  return str;
+}
+
+vector<int> simple_tokenizer(string s)
+{
+  vector<int> ans;
+  stringstream ss(s);
+  string word;
+  while (ss >> word) {
+      ans.push_back(stoi(word));
+  }
+  return ans;
 }
 
 
 
-ListNode *createList(int n)
-{
-    ListNode *dummy = new ListNode(-1);
-    ListNode *prev = dummy;
-    while (n-- > 0)
-    {
-        int val;
-        cin >> val;
-        prev->next = new ListNode(val);
-        prev = prev->next;
+// Decodes your encoded data to tree.
+Node* deserialize(string s){
+  vector<int> split = simple_tokenizer(s);
+  Node *root = new Node(split[0]);
+  stack<Node *> st;
+  st.push(root);
+  for(int i=1;i<split.size();i++){
+    if(split[i] != -1){
+      Node *newNode = new Node(split[i]);
+      st.push(newNode);
+    }else{
+      Node *top = st.top();
+      st.pop();
+      st.top() -> children.push_back(top);
     }
-    return dummy->next;
+  }
+  return root;  
+}
+
+// input_Section_====================================================================
+
+void display(Node* node)
+{
+  if (node == nullptr)
+    return;
+
+  string str = node->val + "->";
+  for (Node* child : node->children)
+  {
+    str += child->val;
+  }
+
+  for (Node* child : node->children)
+  {
+    display(child);
+  }
+}
+
+Node* createTree(vector<string>& arr)
+{
+  stack<Node*> st;
+  for (int i = 0; i < arr.size - 1; i++)
+  {
+    string s = arr[i];
+    if (s == "null")
+    {
+      Node* node = st.top();
+      st.pop();
+      st.peek()->children.add(node);
+    }
+    else
+    {
+      Node* node = new Node(stoi(s));
+      st.push(node);
+    }
+  }
+
+  return st.size() != 0 ? st.top() : nullptr;
+}
+
+void solve()
+{
+  string str;
+  cin >> str;
+  stringstream ss(str);
+  string word;
+  vector<string> arr;
+  while (ss >> word)
+    arr.push_back(word);
+
+  Node* root = createTree(arr);
+  string s = serialize(root);
+  display(deserialize(s));
 }
 
 int main()
 {
-    int n;
-    cin >> n;
-    ListNode *h1 = createList(n);
-    h1 = segregate012(h1);
-    printList(h1);
-
-    return 0;
+  solve();
+  return 0;
 }

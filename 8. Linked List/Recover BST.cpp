@@ -1,3 +1,10 @@
+TreeNode *getRightMostNode(TreeNode *left, TreeNode *curr){
+    while(left->right != nullptr and left->right != curr){
+        left = left->right;
+    }
+    return left;
+}
+
 void recoverTree(TreeNode *root){
     // morris traversal
     TreeNode *a1 = nullptr, *b1 = nullptr, *a2 = nullptr, *b2 = nullptr;
