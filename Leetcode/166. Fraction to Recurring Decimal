@@ -9,6 +9,8 @@ public:
           ans += to_string(q);
           long long beforeDec = ans.length();
           if(r == 0){
+              if(ans != "0")
+                if((pnum < 0 and pden >= 0 ) or (pnum >= 0 and pden < 0)) ans = "-"+ans;
             return ans;
           }else{
             ans += ".";
