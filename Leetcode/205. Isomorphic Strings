@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+      unordered_map<char, int> mp;
+      if(s.length() != t.length()) return false;
+      unordered_map<char, int> present;
+      for(int i=0;i<s.length();i++){
+        char ch1 = s[i], ch2 = t[i];
+        if(mp.find(ch1) == mp.end()){
+          if(present.find(ch2) == present.end()){
+            mp[ch1] = ch2;
+            present[ch2] = 1;
+          }else return false;
+        }else{
+          if(ch2 == mp[ch1]){}
+          else return false;
+        }    
+      }
+      return true;
+    }
+};
