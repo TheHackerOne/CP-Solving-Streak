@@ -1,137 +1,267 @@
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+// #include <ext/pb_ds/assoc_container.hpp> // Common file
+// #include <ext/pb_ds/tree_policy.hpp> // Including tree_order_statistics_node_update
+
+// using namespace __gnu_pbds;
 using namespace std;
 
-class Node
-{
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define MOD 1000000007
+#define MOD1 998244353
+#define INF 1e18
+#define nline "\n"
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
+#define ff first
+#define ss second
+#define PI 3.141592653589793238462
+#define set_bits __builtin_popcountll
+#define sz(x) ((int)(x).size())
+#define all(x) (x).begin(), (x).end()
+// COMPLEX CLASS
+#define X real()
+#define Y imag()
+#define dist(a, b) abs(a-b)
+#define angle(x) ((arg(x) * 180) / PI)
+#define pos(p, x, y) (conj(p - x) * (p - y)).Y
+// pos > 0 = left, pos < 0 = right, pos = 0 = on the vector
+
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double lld;
+typedef complex<lld> C;
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) {cerr << t;}
+void _print(int t) {cerr << t;}
+void _print(string t) {cerr << t;}
+void _print(char t) {cerr << t;}
+void _print(lld t) {cerr << t;}
+void _print(double t) {cerr << t;}
+void _print(ull t) {cerr << t;}
+
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
+template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T, class V> void _print(unordered_map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
+// template<class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+/*---------------------------------------------------------------------------------------------------------------------------*/
+ll gcd(ll a, ll b) {if (b > a) {return gcd(b, a);} if (b == 0) {return a;} return gcd(b, a % b);}
+ll expo(ll a, ll b, ll mod) {ll res = 1; while (b > 0) {if (b & 1)res = (res * a) % mod; a = (a * a) % mod; b = b >> 1;} return res;}
+void extendgcd(ll a, ll b, ll*v) {if (b == 0) {v[0] = 1; v[1] = 0; v[2] = a; return ;} extendgcd(b, a % b, v); ll x = v[1]; v[1] = v[0] - v[1] * (a / b); v[0] = x; return;} //pass an arry of size1 3
+ll mminv(ll a, ll b) {ll arr[3]; extendgcd(a, b, arr); return arr[0];} //for non prime b
+ll mminvprime(ll a, ll b) {return expo(a, b - 2, b);}
+bool revsort(ll a, ll b) {return a > b;}
+void swap(int &x, int &y) {int temp = x; x = y; y = temp;}
+ll combination(ll n, ll r, ll m, ll *fact, ll *ifact) {ll val1 = fact[n]; ll val2 = ifact[n - r]; ll val3 = ifact[r]; return (((val1 * val2) % m) * val3) % m;}
+void google(int t) {cout << "Case #" << t << ": ";}
+vector<int> sieve(int n) {int*arr = new int[n + 1](); vector<int> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (ll j = (ll(i) * ll(i)); j <= n; j += i)arr[j] = 1;} return vect;}
+ll mod_add(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a + b) % m) + m) % m;}
+ll mod_mul(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a * b) % m) + m) % m;}
+ll mod_sub(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a - b) % m) + m) % m;}
+ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
+ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
+void precision(int a) {cout << setprecision(a) << fixed;}
+/*--------------------------------------------------------------------------------------------------------------------------*/
+
+class TreeNode{
 public:
-  int val;
-  vector<Node*> children;
-
-  Node() {}
-
-  Node(int _val)
+  int val = 0;
+  TreeNode* left = nullptr;
+  TreeNode* right = nullptr;
+  TreeNode(int val)
   {
-    val = _val;
+    this->val = val;
   }
+  
+  TreeNode(int val, TreeNode* left, TreeNode* right) {
+      this->val = val;
+      this->left = left;
+      this->right = right;
+    }
+  
+  
+};
 
-  Node(int _val, vector<Node*> _children)
-  {
-    val = _val;
-    children = _children;
+class CBTInserter {
+  private:
+    TreeNode* head;
+    TreeNode* nip;
+    queue<TreeNode*> que; 
+  public:
+      CBTInserter(TreeNode* root) {
+        head = root;
+        que.push(root);
+        bool found = false;
+        while(!que.empty()){
+          int size = que.size();
+          while(size--){
+            TreeNode *node = que.front();
+            if(node->left == nullptr){
+              nip = node;
+              found = true;
+              break;
+            }              
+            que.push(node->left);
+            if(node->right == nullptr){
+              nip = node;
+              found = true;
+              break;
+            }
+            que.push(node->right);
+            que.pop();
+          }
+          if(found) break;
+        }
+      }
+      
+      int insert(int val){
+        TreeNode *curr = new TreeNode(val);
+        que.push(curr);
+        int ans = nip->val;
+        if(nip->left == nullptr){
+          nip->left = curr;
+        }else if(nip->right == nullptr){
+          nip->right = curr;
+          que.pop();
+          nip = que.front();
+        }
+        return ans;
+      }
+      
+      TreeNode* get_root() {
+        return head;
+      }
+};
+
+class Pair {
+public:
+  TreeNode* node = nullptr;
+  int state = 0;
+
+  Pair(TreeNode* node, int state) {
+    this->node = node;
+    this->state = state;
   }
 };
 
-void preorder(Node *root, string &str){
-
-  str += to_string(root->val)+" ";
-  for(auto child:root->children){
-    preorder(child, str);
-  }
-  str += "-1 ";
-}
-
-// Encodes a tree to a single string.
-string serialize(Node* root)
-{
-  if(root == nullptr) return "";
-  string str = "";
-  preorder(root, str);
-  return str;
-}
-
-vector<int> simple_tokenizer(string s)
-{
-  vector<int> ans;
-  stringstream ss(s);
-  string word;
-  while (ss >> word) {
-      ans.push_back(stoi(word));
-  }
-  return ans;
-}
-
-
-
-// Decodes your encoded data to tree.
-Node* deserialize(string s){
-  vector<int> split = simple_tokenizer(s);
-  Node *root = new Node(split[0]);
-  stack<Node *> st;
-  st.push(root);
-  for(int i=1;i<split.size();i++){
-    if(split[i] != -1){
-      Node *newNode = new Node(split[i]);
-      st.push(newNode);
-    }else{
-      Node *top = st.top();
-      st.pop();
-      st.top() -> children.push_back(top);
-    }
-  }
-  return root;  
-}
-
-// input_Section_====================================================================
-
-void display(Node* node)
-{
-  if (node == nullptr)
-    return;
-
-  string str = node->val + "->";
-  for (Node* child : node->children)
-  {
-    str += child->val;
-  }
-
-  for (Node* child : node->children)
-  {
-    display(child);
-  }
-}
-
-Node* createTree(vector<string>& arr)
-{
-  stack<Node*> st;
-  for (int i = 0; i < arr.size - 1; i++)
-  {
-    string s = arr[i];
-    if (s == "null")
+  TreeNode* treeCreationMethod2LevelOrder(vector<int> &arr) {
+    TreeNode* root = NULL;
+    queue<Pair*> que;
+    que.push(new Pair(new TreeNode(arr[0]),0));
+    root = que.front()->node;
+    for(int i=1;i<arr.size();)
     {
-      Node* node = st.top();
-      st.pop();
-      st.peek()->children.add(node);
+        Pair *top = que.front();
+        if(top->state == 0)
+        {
+            if(arr[i]!=-1)
+            {
+                TreeNode* nnode = new TreeNode(arr[i]);
+                top->node->left = nnode;
+                que.push(new Pair(nnode,0));
+            }
+            i++;
+            top->state++;
+        }
+        else if(top->state == 1)
+        {
+            if(arr[i] !=-1)
+            {
+                TreeNode *nnode = new TreeNode(arr[i]);
+                top->node->right = nnode;
+                que.push(new Pair(nnode, 0));
+            }
+            i++;
+            top->state++;
+        }
+        else{
+            que.pop();
+        }
     }
-    else
+    return root;
+  }
+
+  void levelOrder(TreeNode* node) {
+        queue<TreeNode*> q;
+    q.push(node);
+    while(q.size()!=0)
     {
-      Node* node = new Node(stoi(s));
-      st.push(node);
+        int size = q.size();
+        while(size-- > 0)
+        {
+            TreeNode *curr = q.front();
+            q.pop();
+            cout<<curr->val<<" ";
+            if(curr->left != NULL)
+            q.push(curr->left);
+            if(curr->right != NULL)
+            q.push(curr->right);
+        }
     }
   }
 
-  return st.size() != 0 ? st.top() : nullptr;
-}
+  int main(){
+      
+    int n;
+    cin>>n;
+    
+    TreeNode* root;
+    CBTInserter *obj;
 
-void solve()
-{
-  string str;
-  cin >> str;
-  stringstream ss(str);
-  string word;
-  vector<string> arr;
-  while (ss >> word)
-    arr.push_back(word);
+    while (n-- > 0) {
+      string s;
+      getline(cin , s);
+      
+      if (s == "insert") {
+        string aa;
+        getline(cin,aa);
+        int val = stoi(aa);
+        int x = obj->insert(val);
+        cout << "Inserted in: " <<  x << endl;
+      }
+      else if(s=="CBTInserter") {
+        string xx;
+        getline(cin,xx);
+        int len = stoi(xx);
+        string ss;
+        getline(cin,ss);
+        vector<int> arr;
+        int i = 0;
+        string temp = "";
+        while( i < ss.size() ) {
+            if (ss[i] == ' ') {
+                arr.push_back(stoi(temp));
+                temp = "";
+                i++;
+                continue;
+            }
+            else{
+                temp += ss[i];
+                i++;
+            }
+        }
+        arr.push_back(stoi(temp));
+        
+        root = treeCreationMethod2LevelOrder(arr);
+        obj = new CBTInserter(root);
+        cout << "CBI Inserter Proccessed!" << endl;
+      }
 
-  Node* root = createTree(arr);
-  string s = serialize(root);
-  display(deserialize(s));
-}
+      else if (s == "get_root" ) {
+        TreeNode* head = obj->get_root();
+        levelOrder(root);
+      }
 
-int main()
-{
-  solve();
-  return 0;
-}
+    }
+  }

@@ -1,0 +1,24 @@
+
+class Solution {
+private:
+    int leftCount = 0, rightCount = 0;
+    
+    int helper(TreeNode *root, int x){
+        if(root == nullptr) return 0;
+        
+        int left = helper(root->left, x);
+        int right = helper(root->right, x);
+        if(root->val == x){
+            leftCount = left;
+            rightCount = right;
+        }
+        return left+right+1;
+    }
+public:
+    bool btreeGameWinningMove(TreeNode* root, int n, int x) {
+        helper(root, x);
+        int remCount = n-(leftCount+rightCount+1);
+        int maxNodes = max({ remCount, leftCount, rightCount });
+        return maxNodes > (n/2);
+    }
+};
