@@ -1,0 +1,42 @@
+class Solution {
+public:
+    
+vector<string> split(string str){
+	stringstream ss(str);
+	string word = "";
+	vector<string> res;
+
+	while(ss >> word){
+		res.push_back(word);
+	}
+	return res;
+}
+
+vector<string> subdomainVisits(vector<string>& cpdomains)
+{
+	vector<string> ans;
+	unordered_map<string, int> mp;
+
+	for(auto str:cpdomains){
+		for(int i=0;i<str.length();i++){
+			if(str[i] == '.') str[i] = ' ';
+		}
+		vector<string> partition = split(str);
+		for(int s=1;s<partition.size();s++){
+			string str = "";
+			for(int j=s;j<partition.size();j++){
+				str += partition[j]+'.';
+			}
+			str.pop_back();
+			mp[str] += stoi(partition[0]);
+		}
+	}
+
+	for(auto i:mp){
+		ans.push_back(to_string(i.second)+" "+i.first);
+	}
+
+	return ans;
+}
+    
+};
