@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<char, vector<int>> mp;
+        for(int i=0;i<s.length();i++){
+            mp[s[i]].push_back(i);
+        }        
+        int res = INT_MAX;
+        for(auto [ch, vec]:mp){
+            if(vec.size() == 1 and vec[0] < res){
+                res = vec[0];
+            }
+        }
+        return res == INT_MAX ? -1 : res;
+    }
+};
