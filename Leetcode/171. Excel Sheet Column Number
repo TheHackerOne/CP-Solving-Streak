@@ -1,0 +1,17 @@
+class Solution {
+private:
+    int getVal(char ch){
+        return (int)(ch-'A'+1);
+    }
+public:
+    int titleToNumber(string str) {
+        int len = str.length();
+        int cnt = 0, counter = 0;
+        for(int i=len-1;i>=0;i--){
+            int val = getVal(str[i]);
+            cnt += pow(26, counter)*val;
+            counter++;
+        }
+        return cnt;
+    }
+};
