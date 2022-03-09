@@ -1,0 +1,70 @@
+class Solution {
+    class Node{
+    public:
+        Node *list[26];
+        int preCnt = 0;
+        
+        void setNode(char ch, Node *node){
+            list[ch-'a'] = node;
+        }
+        
+        bool containsKey(char ch){
+            return list[ch-'a'] != nullptr;
+        }
+        
+        Node* getNode(char ch){
+            return list[ch-'a'];
+        }
+    };
+    
+    class Trie{
+    public:
+        Node *root;
+        
+        Trie(){
+            root = new Node();
+        }
+        
+        void insert(string word){
+            Node *node = root;
+            for(int i=0;i<word.length();i++){
+                char ch = word[i];
+                if(!node->containsKey(ch)){
+                    node->setNode(ch, new Node());
+                }
+                node = node->getNode(ch);
+                node->preCnt++;
+            }
+        }
+        
+        string getLongestPrefix(int n){
+            string ans = "";
+            Node *node = root;
+            while(true){
+                int cnt = 0;
+                char ch = ' ';
+                for(int i=0;i<26;i++){
+                    if(node->list[i] != nullptr) {
+                        ch = 'a'+i;
+                        cnt++;
+                    }
+                }
+                if(cnt == 0 or cnt > 1) return ans;
+                node = node->getNode(ch);
+                if(node->preCnt != n) return ans; 
+                ans += ch;                
+            }
+            cout<<"hell"<<endl;
+            return ans;
+        }
+    };
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        Trie *trie = new Trie();
+        for(int i=0;i<strs.size();i++){
+            trie->insert(strs[i]);
+        }
+        
+        return trie->getLongestPrefix(strs.size());
+    }
+};
