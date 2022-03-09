@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int carry = 1;
+        int n = digits.size();
+        for(int i=n-1;i>=0;i--){
+            int sum = digits[i]+carry;
+            if(sum <= 9){
+                digits[i] = sum;
+                carry = 0;
+                return digits;
+            }else{
+                carry = sum/10;
+                digits[i] = sum%10;
+            }
+        }
+        vector<int> ans;
+        if(carry != 0) {
+            ans.push_back(carry);
+            for(auto i:digits) ans.push_back(i);
+        }
+        return ans;
+    }
+};
