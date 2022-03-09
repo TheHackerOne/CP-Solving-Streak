@@ -1,0 +1,23 @@
+class Solution {
+private:
+    int getSumOfDigits(int n){
+        int res = 0;
+        while(n!=0){
+            int rem = n%10;
+            res += pow(rem, 2);
+            n /= 10;
+        }
+        return res;
+    }
+public:
+    bool isHappy(int n) {
+        unordered_set<int> set;
+        while(true){
+            if(n == 1) return true;
+            if(set.find(n) != set.end()) return false;
+            else set.insert(n);
+            n = getSumOfDigits(n);
+        }
+        return true;
+    }
+};
