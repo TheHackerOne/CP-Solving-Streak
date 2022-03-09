@@ -1,7 +1,5 @@
-3
-CBTInserter
-7
-1 2 3 4 5 6 7
-insert
-8
-get_root
+2
+2 1
+5 3
+5 0
+1 2 3 4 5
