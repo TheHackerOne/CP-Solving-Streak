@@ -1,0 +1,40 @@
+class Solution {
+private:
+    int upperBound(vector<int> &arr, int tar){
+        int l = 0, h = arr.size()-1;
+        int ans = -1;
+        while(l <= h){
+            int mid = (l+h)/2;
+            if(arr[mid] == tar){
+                ans = mid;
+                l = mid+1;
+            }else if(arr[mid] < tar){
+                l = mid+1;
+            }else{
+                h = mid-1;
+            }
+        }
+        return ans;
+    }
+    int lowerBound(vector<int> &arr, int tar){
+        int l = 0, h = arr.size()-1;
+        int ans = -1;
+        while(l <= h){
+            int mid = (l+h)/2;
+            if(arr[mid] == tar){
+                ans = mid;
+                h = mid-1;
+            }else if(arr[mid] < tar){
+                l = mid+1;
+            }else{
+                h = mid-1;
+            }
+        }
+        return ans;
+    }
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> ans = { lowerBound(nums, target), upperBound(nums, target) };
+        return ans;
+    }
+};
