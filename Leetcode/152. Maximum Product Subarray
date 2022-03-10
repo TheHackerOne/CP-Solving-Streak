@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        // if(nums.size() == 1) return nums[0];
+        int res = 1, maxPro = INT_MIN;
+        int n = nums.size();
+        for(int i=0;i<n;i++){
+            res *= nums[i];
+            maxPro = max(maxPro, res);
+            if(res == 0){
+                res = 1;
+            }
+        }
+        res = 1;
+        for(int i=n-1;i>=0;i--){
+            res *= nums[i];
+            maxPro = max(maxPro, res);
+            if(res == 0){
+                res = 1;
+            }
+        }
+        return maxPro;
+    }
+};
