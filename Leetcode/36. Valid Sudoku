@@ -1,0 +1,43 @@
+class Solution {
+private:
+    bool rowValid(int i, int j, vector<vector<char>> &b){
+        char ch = b[i][j];
+        for(int k=0;k<9;k++){
+            if(k != j and b[i][k] == ch) return false;
+        }
+        return true;
+    }
+    
+    bool colValid(int i, int j, vector<vector<char>> &b){
+        char ch = b[i][j];
+        for(int k=0;k<9;k++){
+            if(k != i and b[k][j] == ch) return false;
+        }
+        return true;
+    }
+    
+    bool boxValid(int i, int j, vector<vector<char>> &b){
+        int r = 3*(i/3), c = 3*(j/3);
+        char ch = b[i][j];
+        for(int n=0;n<3;n++){
+            for(int m=0;m<3;m++){
+                int x = r+n, y = c+m;
+                if(x != i and y != j and b[x][y] == ch) return false;
+            }
+        }
+        return true;
+    }
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[i][j] == '.') continue;
+                else{
+                    if(rowValid(i, j, board) and colValid(i, j, board) and boxValid(i, j, board)){}
+                    else return false; 
+                }
+            }
+        }
+        return true;
+    }
+};
