@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string countAndSay(int n) {
+        if(n == 1) return "1";
+        if(n == 2) return "11";
+        
+        string res = countAndSay(n-1);
+        string ans = "";
+        int i = 0, counter = 0;
+        char ch = res[0];
+        while(i < res.length()){
+            if(ch == res[i]) i++, counter++;
+            else{
+                ans += to_string(counter)+ch;
+                ch = res[i];
+                counter = 0;
+            }
+        }
+        ans += to_string(counter)+ch;
+        return ans;
+    }
+};

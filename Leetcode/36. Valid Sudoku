@@ -33,7 +33,7 @@ public:
             for(int j=0;j<9;j++){
                 if(board[i][j] == '.') continue;
                 else{
-                    if(rowValid(i, j, board) and colValid(i, j, board) and boxValid(i, j, board)){}
+                    if(rowValid(i, j, board) and colValid(i, j, board) and boxVnalid(i, j, board)){}
                     else return false; 
                 }
             }
