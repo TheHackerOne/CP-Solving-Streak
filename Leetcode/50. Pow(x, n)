@@ -1,0 +1,19 @@
+class Solution {
+private:
+    double helper(double x, long long n){
+        if(n == 0) return 1.0;
+        if(n == 1) return x;
+        
+        double res = helper(x, n/2);
+        if(n%2) return res*res*x;
+        else return res*res;
+    }
+public:
+    double myPow(double x, int n) {
+        if(x == 1.0) return x;
+        if(n < 0){
+            double res = helper(x, -1LL*n);
+            return 1/res;
+        }else return helper(x, n);
+    }
+};
