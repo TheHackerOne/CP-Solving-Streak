@@ -1,0 +1,47 @@
+class Solution {
+private:
+    bool isOperator(char ch){
+        if(ch == '*' or ch == '+' or ch == '-' or ch == '/') return true;
+        return false;
+    }
+public:
+    int calculate(string s) {
+        int i = 0;
+        stack<int> st;
+        char sign = '+';
+        while(i < s.length()){
+            if(s[i] == ' ') {
+                i++;
+                continue;
+            }else if(s[i] == '+' or s[i] == '-'  or s[i] == '/' or s[i] == '*'){
+                sign = s[i++];
+            }else{
+                // extract num
+                int num = 0;
+                while(s[i] >= '0' and s[i] <= '9'){
+                    num = num*10+(s[i]-'0');
+                    i++;
+                }
+                if(sign == '+') st.push(num);
+                else if(sign == '-') st.push(-num);
+                else if(sign == '*'){
+                    int n1 = st.top();
+                    st.pop();
+                    int res = n1*num;
+                    st.push(res);
+                }else if(sign == '/'){
+                    int n1 = st.top();
+                    st.pop();
+                    int res = n1/num;
+                    st.push(res);
+                }
+            }
+        }
+        int sum = 0;        
+        while(!st.empty()){
+            sum += st.top();
+            st.pop();
+        }
+        return sum;
+    }
+};
