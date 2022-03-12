@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+        unordered_map<int, int> mp;  // n^2 space
+        int n = nums1.size();
+        for(int i=0;i<n;i++){ // n^2 time
+            for(int j=0;j<n;j++){
+                mp[nums1[i]+nums2[j]]++;
+            }
+        }
+        
+        int cnt = 0, target = 0;
+        
+        for(int i=0;i<n;i++){ // n^2 time
+            for(int j=0;j<n;j++){
+                int sum = nums3[i]+nums4[j];
+                int rem = target - sum;
+                cnt += mp.find(rem) == mp.end() ? 0 : mp[rem];
+            }
+        }
+        
+        return cnt;
+    }
+};
