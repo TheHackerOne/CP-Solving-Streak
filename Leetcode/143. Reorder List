@@ -1,0 +1,41 @@
+
+class Solution {
+private:
+    ListNode *mid(ListNode *head){
+        ListNode *slow = head, *fast = head;
+        while(fast->next != nullptr and fast->next->next != nullptr){
+            slow = slow -> next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+    
+    ListNode *reverseLL(ListNode *head){
+        ListNode *prev = nullptr, *curr = head, *forw = nullptr;
+        while(curr != nullptr){
+            forw = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forw;
+        }
+        return prev;
+    }
+public:
+    void reorderList(ListNode* head) {
+        ListNode *h1 = head;
+        ListNode *midEle = mid(head);
+        ListNode *h2 = midEle->next;
+        midEle->next = nullptr;
+        h2 = reverseLL(h2);
+        
+        ListNode *c1 = h1, *c2 = h2, *f1 = nullptr, *f2 = nullptr;
+        while(c2 != nullptr){
+            f1 = c1->next, f2 = c2->next;
+            c1->next = c2;
+            c2->next = f1;
+            c1 = f1;
+            c2 = f2;
+        }
+        
+    }
+};
