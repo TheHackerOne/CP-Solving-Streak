@@ -1,0 +1,57 @@
+
+class Solution {
+private:
+    int lengthOfLL(ListNode *h){
+        int cnt = 0;
+        while(h != nullptr){
+            h = h->next;
+            cnt++;
+        }
+        return cnt;
+    }
+    
+    int carry = 0;
+    
+    ListNode *recur(ListNode *l1, int idx1, ListNode *l2, int idx2){
+        // base case
+        if(idx1 == 0 and idx2 == 0){
+            int sum = l1->val + l2->val + carry;
+            carry = sum/10;
+            ListNode *node = new ListNode(sum%10);
+            return node;
+        }
+        
+        // main logic
+        if(idx1 != idx2) {
+            ListNode *nextNode = recur(l1->next, idx1-1, l2, idx2);
+            int sum = l1->val + carry;
+            ListNode *node = new ListNode(sum%10);
+            node->next = nextNode;
+            carry = sum/10;
+            return node;
+        }else{
+            ListNode *nextNode = recur(l1->next, idx1-1, l2->next, idx2-1);
+            int sum = l1->val + l2->val + carry;
+            carry = sum/10;
+            ListNode *node = new ListNode(sum%10);
+            node->next = nextNode;
+            return node;
+        }
+    }
+    
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int len1 = lengthOfLL(l1);
+        int len2 = lengthOfLL(l2);
+        if(len1 < len2) {
+            swap(l1, l2);
+            swap(len1, len2);
+        }
+        ListNode *node = recur(l1, len1-1, l2, len2-1);
+        if(carry != 0){
+            ListNode *newNode = new ListNode(carry);
+            newNode->next = node;
+            return newNode;
+        }else return node;
+    }
+};
