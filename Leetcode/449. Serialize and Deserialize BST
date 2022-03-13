@@ -1,0 +1,56 @@
+class Codec {
+private:
+    void recur(TreeNode *root, string &res){
+        // base case
+        if(root == nullptr) {
+            res += "-1 ";
+            return;
+        }
+        
+        // main logic
+        res += to_string(root->val)+" ";
+        recur(root->left, res);
+        recur(root->right, res);
+    }
+    
+    int idx = 0;
+    
+    TreeNode *makeTree(vector<int> &data){
+        int num = data[idx++];
+        
+        // base case
+        if(idx >= data.size()) return nullptr;
+        if(num == -1) return nullptr;
+        
+        //main logic
+        TreeNode *node = new TreeNode(num);
+        node->left = makeTree(data);
+        node->right = makeTree(data);
+        return node;
+    }
+    
+    vector<int> decode(string data){
+        stringstream ss(data);
+        string word = "";
+        vector<int> res;
+        while(ss >> word){
+            res.push_back(stoi(word));
+        }
+        return res;
+    }
+    
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string code = "";
+        recur(root, code);
+        return code;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        vector<int> arr = decode(data);
+        return makeTree(arr);
+    }
+};
