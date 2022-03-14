@@ -2,7 +2,32 @@
 using namespace std;
 
 void solve() {
+  int n, m;
+  cin>>n>>m;
+  vector<int> a(n), b(m);
+  for(int i=0;i<n;i++)cin>>a[i];
+  for(int i=0;i<m;i++)cin>>b[i];
 
+  vector<pair<int, int>> arr;
+  for(int i=0;i<n;i++){
+    arr.push_back({ a[i], 1 });
+  }
+
+  for(int i=0;i<m;i++){
+    arr.push_back({ b[i], 2 });
+  }
+
+  sort(arr.begin(), arr.end());
+
+  int cnt = 0;
+
+  for(int i=1;i<arr.size();i++){
+    if(arr[i].second != arr[i-1].second){
+      cnt++;
+    }
+  }
+
+  cout<<cnt<<endl;
 }
 
 int main() {
@@ -18,31 +43,3 @@ int main() {
 
     return 0;
 }
-
-
-class Solution {
-private:
-    void helper(string s, string ipsf, int dots, vector<string> &res){
-        //base case
-        if(dots == 3){
-            if(s.length() == 0 or stoi(s) > 255 or (s.length() > 1 and s[0] == '0')) return;
-            else{
-              res.push_back(ipsf+s);
-              return;
-            }
-        }
-        
-        // main logic
-        for(int i=1;i<=3;i++){
-            string sub = s.substr(0, i);
-            if(stoi(sub) > 255 or (sub.length() > 1 and sub[0] == '0')) continue;
-            helper(s.substr(i), ipsf+sub+".", dots+1, res);
-        }
-    }
-public:
-    vector<string> restoreIpAddresses(string s) {
-        vector<string> res;
-        helper(s, "", 0, res);
-        return res;
-    }
-};

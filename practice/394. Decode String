@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<string> st;
+        for(int i=0;i<s.length();i++){
+            if(s[i] == ']'){
+                string str = "";
+                while(st.top() != "["){
+                    str = st.top() + str;
+                    st.pop();
+                }
+                st.pop();
+                int num = 0;
+                int cnt = 0;
+                while(!st.empty() and st.top() >= "0" and st.top() <= "9"){
+                    num = stoi(st.top())*pow(10, cnt++) + num;
+                    st.pop();
+                }
+                string fin = "";
+                while(num--) fin += str;
+                st.push(fin);
+            }else{
+                string str(1,s[i]);
+                st.push(str);
+            }
+        }
+        string ans = "";
+        while(!st.empty()){
+            ans = st.top() + ans;
+            st.pop();
+        }
+        return ans;
+    }
+};
