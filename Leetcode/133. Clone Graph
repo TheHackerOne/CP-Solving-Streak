@@ -1,0 +1,24 @@
+
+
+class Solution {
+private:
+    Node *dfs(Node *node, unordered_map<Node*,Node*> &mp){
+        Node *newNode = new Node(node->val);
+        mp[node] = newNode;
+        for(auto neigh:node->neighbors){
+            if(mp.find(neigh) != mp.end()){
+                newNode->neighbors.push_back(mp[neigh]);
+            }else{
+                Node *n = dfs(neigh, mp);
+                newNode->neighbors.push_back(n);
+            }
+        }
+        return newNode;
+    }
+public:
+    Node* cloneGraph(Node* node) {
+        if(node == nullptr) return node;
+        unordered_map<Node*,Node*> mp;
+        return dfs(node, mp);
+    }
+};
