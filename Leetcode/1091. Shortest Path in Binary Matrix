@@ -1,0 +1,39 @@
+class Solution {
+private:
+    bool isValid(int x, int y, int n){
+        if(x >= 0 and x < n and y >= 0 and y < n) return true;
+        return false;
+    }
+    
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        if(grid[0][0] == 1) return -1;
+        
+        int n = grid.size();
+        queue<pair<int, pair<int, int>>> q;
+        q.push({ 1, { 0, 0 } });
+        grid[0][0] = -1;
+        
+        vector<int> xi = {-1, -1, 0, 1, 1, 1, 0, -1};
+        vector<int> yi = {0, 1, 1, 1, 0, -1, -1, -1};
+        
+        while(!q.empty()){
+            int size = q.size();
+            while(size--){
+                pair<int, pair<int, int>> p = q.front();
+                q.pop();
+                int lvl = p.first, x = p.second.first, y = p.second.second;
+                
+                if(x == n-1 and y == n-1) return lvl;
+                for(int i=0;i<8;i++){
+                    int newx = x+xi[i], newy = y+yi[i];
+                    if(isValid(newx, newy, n) and grid[newx][newy] != -1 and grid[newx][newy] == 0){
+                        grid[newx][newy] = -1;
+                        q.push({ lvl+1, { newx, newy } });
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
