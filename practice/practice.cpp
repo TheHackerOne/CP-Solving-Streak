@@ -1,45 +1,63 @@
-#include<bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-void solve() {
-  int n, m;
-  cin>>n>>m;
-  vector<int> a(n), b(m);
-  for(int i=0;i<n;i++)cin>>a[i];
-  for(int i=0;i<m;i++)cin>>b[i];
-
-  vector<pair<int, int>> arr;
-  for(int i=0;i<n;i++){
-    arr.push_back({ a[i], 1 });
-  }
-
-  for(int i=0;i<m;i++){
-    arr.push_back({ b[i], 2 });
-  }
-
-  sort(arr.begin(), arr.end());
-
-  int cnt = 0;
-
-  for(int i=1;i<arr.size();i++){
-    if(arr[i].second != arr[i-1].second){
-      cnt++;
-    }
-  }
-
-  cout<<cnt<<endl;
-}
-
-int main() {
-#ifndef ONLINE_JUDGE  
-    freopen("Error.txt", "w", stderr);
-#endif
-
-    int t;
-    cin >> t;
-    while (t--) {
-        solve();
-    }
-
-    return 0;
-}
+int main()
+{
+ int n;
+ cin>>n;
+ int a[n];
+ for(int i=0;i<n;i++)
+ {
+   cin>>a[i];
+ }
+ int m;
+ cin>>m;
+ int b[m];
+ for(int i=0;i<m;i++)
+ {
+   cin>>b[i];
+ }
+ int i=0;
+ int j=0;
+ int first=min(a[0],b[0]);
+ int second=max(a[0],b[0]);
+ int ans=0;
+ 
+ while(i<n &&j<m)
+ {
+   
+       if(first>second)//context switch hoga.............
+       {
+        ans++;
+        if(first==a[i])
+        {
+          j++;
+          first=b[j];
+          second=a[i];
+        }
+        else
+        {
+          i++;
+          first=a[i];
+          second=b[j];
+        }
+        
+      }
+      else
+      {
+       if(first==a[i])
+       {
+         i++;
+         first=a[i];    
+       }
+       else
+       {
+         j++;
+         first=b[j];    
+       }
+     }
+     
+   }
+   ans++;
+   cout<<ans<<endl;
+ }
