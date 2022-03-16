@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string sortSentence(string s) {
+        stringstream ss(s);
+        string word = "";
+        vector<string> str(10, "");
+        while(ss >> word){
+            int num = word[word.length()-1]-'0';
+            str[num-1] = (word.substr(0, word.length()-1));
+        }
+        string ans = "";
+        for(int i=0;i<10;i++){
+            if(str[i] != ""){
+                ans += str[i] + " "; 
+            }else break;
+        }
+        ans.pop_back();
+        return ans;
+    }
+};
