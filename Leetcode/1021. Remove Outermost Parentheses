@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        int o = 0, c = 0;
+        stack<char> st;
+        vector<string> ans;
+        string res = "";
+        for(int i=0;i<s.length();i++){
+            if(s[i] == '(') {
+                st.push('(');
+                o++;
+            }else if(s[i] == ')'){
+                st.push(')');
+                c++;
+            }
+            if(o == c and o != 0){
+                string r = "";
+                while(!st.empty()){
+                    r = st.top()+r;
+                    st.pop();
+                }
+                ans.push_back(r);
+            }
+        }
+        for(auto &str:ans) {
+            str = str.substr(1, str.length()-2);
+        }
+        for(auto str:ans) res += str;
+        
+        return res;
+    }
+};
