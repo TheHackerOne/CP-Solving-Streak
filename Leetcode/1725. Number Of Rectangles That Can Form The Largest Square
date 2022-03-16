@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int countGoodRectangles(vector<vector<int>>& r) {
+        int maxLen = 0;
+        for(auto i:r){
+            int mini = min(i[0], i[1]);
+            maxLen = max(maxLen, mini);
+        }
+        int cnt = 0;
+        for(auto i:r){
+            if(min(i[0], i[1]) >= maxLen) cnt++;
+        }
+        return cnt;
+    }
+};
