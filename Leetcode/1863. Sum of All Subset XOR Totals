@@ -1,0 +1,20 @@
+class Solution {
+private:
+    void sub(int idx, vector<int> &nums, int n, int xorall, int &sumxor){
+        // base case
+        if(idx == n){
+            sumxor += xorall;
+            return;
+        }
+        
+        // main logic
+        sub(idx+1, nums, n, xorall^nums[idx], sumxor);
+        sub(idx+1, nums, n, xorall, sumxor);
+    }
+public:
+    int subsetXORSum(vector<int>& nums) {
+        int sumxor = 0;
+        sub(0, nums, nums.size(), 0, sumxor);
+        return sumxor;
+    }
+};
