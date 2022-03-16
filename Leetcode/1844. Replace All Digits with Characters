@@ -1,0 +1,17 @@
+class Solution {
+private:
+    char shift(char ch, int i){
+        while(i--) ch++;
+        return ch;
+    }
+public:
+    string replaceDigits(string s) {
+        for(int i=0;i<s.length();i+=2){
+            char ch = s[i];
+            int shi = i+1 < s.length() ? s[i+1]-'0': 0;
+            char newch = shift(ch, shi);
+            s[i+1] = newch;
+        }
+        return s;
+    }
+};
