@@ -1,0 +1,21 @@
+class Solution {
+private:
+    string solve(string s, int k){
+        stringstream ss(s);
+        string word = "";
+        int cnt = 0;
+        string res = "";
+        while(cnt < k and ss >> word){
+            res += word+" ";
+            cnt++;
+        }
+        res.pop_back();
+        return res;
+    }
+public:
+    string truncateSentence(string s, int k) {
+        string ans = "";
+        ans = solve(s, k);
+        return ans;
+    }
+};
