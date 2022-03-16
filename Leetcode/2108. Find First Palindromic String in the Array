@@ -1,0 +1,18 @@
+class Solution {
+private:
+    bool isPalindrome(string str){
+        int l = 0, h = str.length()-1;
+        while(l <= h){
+            if(str[l++] != str[h--]) return false;
+        }
+        return true;
+    }
+public:
+    string firstPalindrome(vector<string>& words) {
+        string ans = "";
+        for(auto  str:words){
+            if(isPalindrome(str)) return str;
+        }
+        return ans;
+    }
+};
