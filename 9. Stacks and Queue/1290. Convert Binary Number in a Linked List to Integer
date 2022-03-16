@@ -1,0 +1,24 @@
+
+class Solution {
+private:
+    int lenll(ListNode *head){
+        int len = 0;
+        while(head != nullptr) {
+            head = head->next;
+            len++;
+        }
+        return len;
+    }
+public:
+    int getDecimalValue(ListNode* head) {
+        int len = lenll(head);
+        len--;
+        int num = 0;
+        while(head != nullptr){
+            int dig = head->val;
+            num += pow(2, len--)*dig;
+            head = head->next;
+        }
+        return num;
+    }
+};
