@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countConsistentStrings(string allowed, vector<string>& words) {
+        int cnt = 0;
+        unordered_map<char, int> mp1;
+        for(auto ch:allowed) mp1[ch] = 1;
+        for(auto str:words){
+            unordered_map<char, int> mp;
+            for(auto ch:str) mp[ch] = 1;
+            bool flag = true;
+            for(auto i:mp){
+                if(mp1.find(i.first) == mp.end()){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag)cnt++;
+        }
+        return cnt;
+    }
+};
