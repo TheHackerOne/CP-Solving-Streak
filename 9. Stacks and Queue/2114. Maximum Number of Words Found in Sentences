@@ -1,0 +1,22 @@
+class Solution {
+private:
+    int getCnt(string str){
+        int cnt = 0;
+        stringstream ss(str);
+        string word = "";
+        while(ss >> word){
+            cnt++;
+        }
+        return cnt;
+    }
+public:
+    int mostWordsFound(vector<string>& sentences) {
+        int ans = 0;
+        for(auto i:sentences){
+            string str = i;
+            int cnt = getCnt(str);
+            ans = max(ans, cnt);
+        }
+        return ans;
+    }
+};
