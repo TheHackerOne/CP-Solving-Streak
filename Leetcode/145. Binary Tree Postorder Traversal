@@ -1,0 +1,18 @@
+
+class Solution {
+private:
+    void dfs(TreeNode *root, vector<int> &pre){
+        if(root == nullptr) return;
+        dfs(root->left, pre);
+        dfs(root->right,pre);
+        
+        pre.push_back(root->val);
+    }
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> pre;
+        if(root == nullptr) return pre;
+        dfs(root, pre);
+        return pre;
+    }
+};
