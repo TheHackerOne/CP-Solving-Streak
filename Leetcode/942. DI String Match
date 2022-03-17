@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> diStringMatch(string str) {
+        int count = 0;
+        stack<int> st;
+        vector<int> ans;
+        for(int i=0;i<str.length();i++){
+            if(str[i] == 'I'){
+                st.push(count);
+                while(!st.empty()) {
+                    ans.push_back(st.top());
+                    st.pop();
+                }
+            }else if(str[i] == 'D'){
+                st.push(count);
+            }
+            count += 1;
+        }
+        st.push(count);
+        while(!st.empty()) {
+            ans.push_back(st.top());
+            st.pop();
+        }
+        
+        
+        return ans;
+    }
+};
