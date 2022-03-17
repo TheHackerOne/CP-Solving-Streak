@@ -1,0 +1,18 @@
+class Solution {
+private:
+    string numVal(string str){
+        string res = "";
+        for(auto ch:str){
+            int num = ch-'a';
+            res += to_string(num);
+        }
+        return res;
+    }
+public:
+    bool isSumEqual(string f, string s, string t) {
+        int f1 = stoi(numVal(f));
+        int f2 = stoi(numVal(s));
+        int f3 = stoi(numVal(t));
+        return (f1+f2 == f3);
+    }
+};
