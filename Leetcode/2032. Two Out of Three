@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> twoOutOfThree(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3) { 
+        unordered_map<int, int> mp;
+        unordered_set<int> n1, n2, n3;
+        for(auto &i:nums1) n1.insert(i);
+        for(auto &i:nums2) n2.insert(i);
+        for(auto &i:nums3) n3.insert(i);
+        
+        for(auto &i:n1){
+            mp[i] = 1;
+        }
+        for(auto &i:n2){
+            if(mp.find(i) != mp.end()) mp[i] = 2;
+            else mp[i] = 1;
+        }
+        for(auto &i:n3){
+            if(mp.find(i) != mp.end()) mp[i] = 2;
+            else mp[i] = 1;
+        }
+        vector<int> res;
+        
+        for(auto [num, cnt]:mp){
+            if(cnt == 2) res.push_back(num);
+        }
+        return res;
+    }
+};
