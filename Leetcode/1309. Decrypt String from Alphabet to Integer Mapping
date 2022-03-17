@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string freqAlphabets(string s) {        
+        string res = "";
+        
+        int idx = s.length()-1;
+        
+        while(idx >= 0){
+            if(s[idx] == '#'){
+                int num = stoi(s.substr(idx-2, 2));
+                char ch = 'a';
+                num--;
+                while(num--) ch++;
+                idx -= 3;
+                res = ch + res;
+            }else{
+                string str = "";
+                int cnt = 0;
+                while(idx >=0  and s[idx] != '#'){
+                    idx--, cnt++;
+                }
+                str = s.substr(idx+1, cnt);
+                string t = "";
+                for(auto ch:str){
+                    char c = 'a'+(ch-'1');
+                    t += c;
+                }
+                res = t + res;
+            }
+        }
+        
+        return res;
+    }
+};
