@@ -1,0 +1,25 @@
+
+class Solution {
+private:
+    TreeNode*curr = nullptr;
+    
+    void dfs(TreeNode *root){
+        if(root == nullptr) return;
+        
+        dfs(root->left);
+    
+        root->left = nullptr;
+        curr->right = root;
+        curr = root;
+        
+        dfs(root->right);
+    }
+public:
+    TreeNode* increasingBST(TreeNode* root) {
+        if(root == nullptr) return root;
+        TreeNode *d = new TreeNode(-1);
+        curr = d;
+        dfs(root);
+        return d->right;
+    }
+};
