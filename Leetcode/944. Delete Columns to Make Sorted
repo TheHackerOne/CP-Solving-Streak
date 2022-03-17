@@ -1,0 +1,29 @@
+class Solution {
+private:
+    bool isSortInc(string &str){
+        bool res = true;
+        for(int i=1;i<str.length();i++){
+            if(str[i]-str[i-1] < 0) return false;
+        }
+        return res;
+    }
+public:
+    int minDeletionSize(vector<string>& strs) {
+        int row = strs.size(), col = strs[0].length();
+        vector<string>ans;
+        for(int i=0;i<col;i++){
+            string c = "";
+            for(int j=0;j<row;j++){
+                c += strs[j][i];
+            }
+            ans.push_back(c);
+        }
+        int cnt = 0;
+        
+        for(auto str:ans) {
+            if(!isSortInc(str)) cnt++;
+        }
+        
+        return cnt;
+    }
+};
