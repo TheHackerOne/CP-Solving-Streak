@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int findFinalValue(vector<int>& nums, int original) {
+        sort(nums.begin(), nums.end());
+        int idx = lower_bound(nums.begin(),nums.end(), original)-nums.begin();
+        while(idx < nums.size() and nums[idx] == original){
+            original *= 2;
+            idx = lower_bound(nums.begin(),nums.end(), original)-nums.begin();
+        }
+        return original;
+    }
+};
