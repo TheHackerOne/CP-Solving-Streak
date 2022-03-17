@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int> finalPrices(vector<int>& prices) {
+        int n = prices.size();
+        vector<int> nstr(n);
+        stack<int> st;
+        for(int i=n-1;i>=0;i--){
+            while(!st.empty() and prices[i] < st.top()) st.pop();
+            if(st.empty()) nstr[i] = prices[i];
+            else nstr[i] = prices[i]-st.top();
+            st.push(prices[i]);
+        }
+        return nstr;
+    }
+};
