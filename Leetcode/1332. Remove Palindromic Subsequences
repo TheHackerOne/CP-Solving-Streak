@@ -1,0 +1,15 @@
+class Solution {
+private:
+    bool isPal(string &str){
+        int l = 0, h = str.length()-1;
+        while(l < h){
+            if(str[l++] != str[h--]) return false;
+        }
+        return true;
+    }
+public:
+    int removePalindromeSub(string s) {
+        if(isPal(s)) return 1;
+        else return 2;
+    }
+};
