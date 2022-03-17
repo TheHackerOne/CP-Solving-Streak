@@ -1,0 +1,12 @@
+class Solution {
+public:
+    string generateTheString(int n) {
+        string str(n, 'a');
+        if(n%2){
+            return str;
+        }else{
+            str.pop_back();
+            return str+'b';
+        }
+    }
+};
