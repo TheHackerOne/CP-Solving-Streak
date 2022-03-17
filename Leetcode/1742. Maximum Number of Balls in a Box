@@ -1,0 +1,26 @@
+class Solution {
+private:
+    int getSum(int i){
+        int sum = 0;
+        while(i != 0){
+            sum += i%10;
+            i /= 10;
+        }
+        return sum;
+    }
+public:
+    int countBalls(int low, int high) {
+        unordered_map<int, int> mp;
+        for(int i=low;i<=high;i++){
+            int sumDig = getSum(i);
+            mp[sumDig]++;
+        }
+        int maxBalls = 0;
+        for(auto [box,balls]:mp){
+            if(balls > maxBalls){
+                maxBalls = balls;
+            }
+        }
+        return maxBalls;
+    }
+};
