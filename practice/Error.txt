@@ -1,4 +1,16 @@
-ans [ -1 0 -1 -1 -1 -1 0 -1 -1 -1 0 -1 -1 ]
-ans [ -1 0 -1 -1 -1 -1 0 -1 -1 -1 0 -1 -1 ]
-ans [ -1 0 -1 -1 -1 -1 0 -1 -1 -1 0 -1 -1 ]
-ans [ -1 0 -1 -1 -1 -1 0 -1 -1 -1 0 -1 -1 ]
+"cuaieuouac"
+
+cuaieuo
+cuaieuou
+cuaieuoua
+cuaieuouac
+uaieuo
+uaieuou
+uaieuoua
+uaieuouac
+aieuo
+aieuou
+aieuoua
+aieuouac
+ieuoua
+ieuouac
