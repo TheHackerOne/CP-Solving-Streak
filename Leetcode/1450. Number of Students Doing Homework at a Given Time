@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int busyStudent(vector<int>& st, vector<int>& et, int qt) {
+        int n = st.size();
+        int cnt = 0;
+        for(int i=0;i<n;i++){
+            if(qt >= st[i] and qt <= et[i]) cnt++;
+        }
+        return cnt;
+    }
+};
