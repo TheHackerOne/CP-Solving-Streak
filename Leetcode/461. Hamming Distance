@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        int cnt = 0;
+        if(x < y) swap(x, y);
+        int xo = x^y;
+        if(xo&1) cnt++;
+        int shift = 1;
+        while(x != 0){
+            x >>= shift;
+            y >>= shift;
+            int xo = x^y;
+            if(xo&1) cnt++;
+        }
+        return cnt;
+    }
+};
