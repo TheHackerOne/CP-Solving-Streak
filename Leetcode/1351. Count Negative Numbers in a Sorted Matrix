@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int countNegatives(vector<vector<int>>& grid) {
+        int r = grid.size(), c = grid[0].size();
+        int ro = 0, co = c-1;
+        while(co >= 0 and grid[ro][co] < 0){
+            co--;
+        }
+        co++;
+        if(co == c) co--;
+        int ans = 0;
+        while(ro < r){
+            if(grid[ro][co] < 0)
+                ans += c-co;
+            ro++;
+            if(ro == r) break;
+            while(co >= 0 and grid[ro][co] < 0){
+                co--;
+            }
+            co++;            
+            if(co == c) co--;
+        }
+        return ans;
+    }
+};
