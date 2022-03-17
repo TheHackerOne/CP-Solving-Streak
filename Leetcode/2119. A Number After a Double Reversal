@@ -1,0 +1,12 @@
+class Solution {
+public:
+    bool isSameAfterReversals(int num) {
+        if(num == 0) return true;
+        string str = to_string(num);
+        int idx = str.length()-1;
+        while(idx >= 0 and str[idx] == '0') str.pop_back();
+        reverse(str.begin(), str.end());
+        reverse(str.begin(), str.end());
+        return stoi(str) == num;
+    }
+};
