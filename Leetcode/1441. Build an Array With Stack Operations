@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<string> buildArray(vector<int>& target, int n) {
+        int counter = 1;
+        int idx = 0;
+        vector<string> res;
+        
+        while(counter <= n and idx < target.size()){
+            if(counter == target[idx]){
+                counter++, idx++;
+                res.push_back("Push");
+            }else{
+                counter++;
+                res.push_back("Push");
+                res.push_back("Pop");
+            }
+        }
+        
+        return res;
+    }
+};
