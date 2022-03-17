@@ -1,0 +1,8 @@
+class Solution {
+public:
+    bool squareIsWhite(string c) {
+        int num = c[1], ch = c[0]-'a'+1;
+        if((num+ch)%2) return true;
+        return false;
+    }
+};
