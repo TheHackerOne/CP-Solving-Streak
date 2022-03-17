@@ -1,0 +1,11 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map<int, int> mp;
+        for(auto &i:arr) mp[i]++;
+        unordered_set<int> st;
+        for(auto [ele, cnt]:mp) st.insert(cnt);
+        
+        return st.size() == mp.size();
+    }
+};
