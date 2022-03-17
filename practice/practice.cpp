@@ -1,29 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void ngtl(vector<int> &arr){
-  stack<int> st;
-  int n = arr.size();
-  vector<int> res(n);
+int countWords(vector<string>& words1, vector<string>& words2) {
+        unordered_map<string, int> mp;
+        for(auto str:words1) mp[str]++;
+        for(auto i:mp){
+            if(i.second != 1) mp.erase(i.first);
+        }
+        // for(auto &str:words2) mp[str]++;
+        // int ans = 0;
+        // for(auto i:mp){
+        //     if(i.second == 2) ans++;
+        // }
+        return 0;
+    }
 
-  for(int i=0;i<n;i++){
-    while(!st.empty() and arr[i] >= st.top()) st.pop();
-    if(st.empty()) res[i] = -1;
-    else res[i] = st.top();
-    st.push(arr[i]);
-  }
-
-
-  for(auto i:arr) cout<<i<<" ";
-    cout<<endl;
-  for(auto i:res) cout<<i<<" ";
-    cout<<endl;
-}
-
-void rotate(){
-  vector<int> arr = { 8, 3, 1, 7, 3, 2, 7 };
-
-  ngtl(arr);
+void solve() {
+  vector<string> str1 = {"yash"};
+  vector<string> str2 = {"yash"};
+  cout<<countWords(str1, str2);
 }
 
 int main() {
@@ -34,7 +29,7 @@ int main() {
     int t;
     cin >> t;
     while (t--) {
-        rotate();
+        solve();
     }
 
     return 0;
