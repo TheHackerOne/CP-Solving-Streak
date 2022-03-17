@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int countCharacters(vector<string>& words, string chars) {
+        unordered_map<char, int> mp;
+        for(auto ch:chars) mp[ch]++;
+        int cnt = 0;
+        for(auto str:words){
+            unordered_map<char, int> mp1 = mp;
+            bool flag = true;
+            for(int i=0;i<str.length();i++){
+                if(mp1.find(str[i]) != mp1.end()){
+                    mp1[str[i]]--;
+                    if(mp1[str[i]] == 0) mp1.erase(str[i]);
+                }else {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) cnt += str.length();
+        }
+        return cnt;
+    }
+};
