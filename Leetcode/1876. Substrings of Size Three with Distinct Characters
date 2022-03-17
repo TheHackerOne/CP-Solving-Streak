@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int countGoodSubstrings(string s) {
+        unordered_map<char, int> mp;
+        mp[s[0]]++;
+        mp[s[1]]++;
+        int cnt = 0, l = 0;
+        for(int i=2;i<s.length();i++){
+            mp[s[i]]++;
+            if(mp.size() == 3) cnt++;
+            mp[s[l]]--;
+            if(mp[s[l]] == 0) mp.erase(s[l]);
+            l++;
+        }
+        return cnt;
+    }
+};
