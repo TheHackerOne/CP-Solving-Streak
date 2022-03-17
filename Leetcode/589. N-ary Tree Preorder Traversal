@@ -1,0 +1,19 @@
+
+class Solution {
+private:
+    void dfs(Node *root, vector<int> &pos){
+        pos.push_back(root->val);
+        for(auto child:root->children){
+            dfs(child, pos);
+        }
+        
+    }
+public:
+    vector<int> preorder(Node* root) {
+        
+        vector<int> post;
+        if(root == nullptr) return post;
+        dfs(root, post);
+        return post;
+    }
+};
