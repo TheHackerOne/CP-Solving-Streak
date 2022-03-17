@@ -1,0 +1,19 @@
+class Solution {
+private:
+    int digcnt(int n){
+        int cnt = 0;
+        while(n != 0){
+            cnt++;
+            n/=10;
+        }
+        return cnt;
+    }
+public:
+    int findNumbers(vector<int>& nums) {
+        int cnt = 0;
+        for(auto i:nums){
+            if(digcnt(i)%2==0) cnt++;
+        }
+        return cnt;
+    }
+};
