@@ -1,0 +1,24 @@
+
+class Solution {
+private:
+    static bool comp(int &a, int &b){
+        return a > b;
+    }
+public:
+    vector<int> minSubsequence(vector<int>& nums) {
+        vector<int> res;
+        sort(nums.begin(), nums.end());
+        int total = accumulate(nums.begin(), nums.end(), 0);
+        int sum = 0, remsum = total;
+        int idx = nums.size()-1;
+        while(sum <= remsum){
+            sum += nums[idx];
+            remsum -= nums[idx];
+            res.push_back(nums[idx]);
+            idx--;
+        }
+        
+        sort(res.begin(), res.end(), comp);
+        return res;
+    }
+};
