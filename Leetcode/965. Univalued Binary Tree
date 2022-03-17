@@ -1,0 +1,16 @@
+
+class Solution {
+private:
+    bool helper(TreeNode *root,int &val){
+        if(root == nullptr) return true;
+        
+        if(root->val != val) return false;
+        return helper(root->left, val) and helper(root->right, val);
+    }
+public:
+    bool isUnivalTree(TreeNode* root) {
+        if(root == nullptr) return true;
+        int val = root->val;
+        return helper(root, val);
+    }
+};
