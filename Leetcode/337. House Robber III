@@ -1,0 +1,31 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    pair<int, int> rob_(TreeNode *root){
+        if(root == nullptr) return {0, 0};
+        
+        // not robbed, robbed
+        pair<int, int> left = rob_(root -> left);
+        pair<int, int> right = rob_(root -> right);
+        
+        pair<int, int> ans;
+        ans.first = max(left.first, left.second) + max(right.first, right.second);
+        ans.second = left.first + right.first + root ->val;
+        return ans;
+    }
+    
+    int rob(TreeNode* root) {
+        pair<int, int> ans = rob_(root);
+        return max(ans.first, ans.second);
+    }
+};
