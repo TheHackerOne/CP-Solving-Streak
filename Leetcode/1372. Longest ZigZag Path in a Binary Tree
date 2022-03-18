@@ -1,0 +1,28 @@
+class Solution {
+private:
+    pair<int, int> helper(TreeNode *root, int &res){
+        if(root == nullptr){
+            pair<int, int> res;
+            res.first = -1;
+            res.second = -1;
+            return res;
+        }
+        
+        pair<int, int> left = helper(root->left, res);
+        pair<int, int> right = helper(root->right, res);
+        pair<int, int> ans;
+        
+        ans.first = left.second + 1;
+        ans.second = right.first + 1;
+        res = max({ res, ans.first, ans.second});
+        
+        return ans;
+    }
+public:
+    int longestZigZag(TreeNode* root) {
+        int res = 0;
+        if(root == nullptr) return res;
+        pair<int, int> ans = helper(root, res);
+        return res;
+    }
+};
