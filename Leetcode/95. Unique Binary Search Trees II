@@ -1,0 +1,33 @@
+
+class Solution {
+private:
+    vector<TreeNode *> helper(int s, int e){
+        if(s > e) return { nullptr };
+        if(s == e){
+            TreeNode *newNode = new TreeNode(s+1);
+            return { newNode };
+        }
+        
+        vector<TreeNode *> trees;
+        
+        for(int i=s;i<=e;i++){
+            vector<TreeNode*> leftTrees = helper(s, i-1);
+            vector<TreeNode*> rightTrees = helper(i+1, e);
+            
+            for(int j=0;j<leftTrees.size();j++){
+                for(int k=0;k<rightTrees.size();k++){
+                    TreeNode *node = new TreeNode(i+1);
+                    node->left = leftTrees[j];
+                    node->right = rightTrees[k];
+                    trees.push_back(node);
+                }
+            }
+        }
+        
+        return trees;
+    }
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        return helper(0, n-1);
+    }
+};
