@@ -1,0 +1,27 @@
+
+class Solution {
+public:
+    vector<TreeNode*> allPossibleFBT(int n) {
+        if(n == 1){
+            vector<TreeNode*> res;
+            TreeNode *newNode = new TreeNode(0);
+            res.push_back(newNode);
+            return res;
+          }
+
+          vector<TreeNode *> trees;
+          for(int i=2;i<=n;i+=2){
+            vector<TreeNode *> leftTrees = allPossibleFBT(i-1);
+            vector<TreeNode *> rightTrees = allPossibleFBT(n-i);
+            for(int j=0;j<leftTrees.size();j++){
+              for(int k=0;k<rightTrees.size();k++){
+                TreeNode *node = new TreeNode(0);
+                node->left = leftTrees[j];
+                node->right = rightTrees[k];
+                trees.push_back(node);
+              }
+            }
+          }
+          return trees;
+    }
+};
