@@ -1,0 +1,52 @@
+
+class Solution {
+private:
+    int levelTree(TreeNode *root){
+        if(root == nullptr) return 0;
+        
+        int left = levelTree(root->left);
+        int right = levelTree(root->right);
+        return max(left,right)+1;
+    }
+    
+    vector<pair<int, int>> getInorder(TreeNode *root, int lvl, int &rows){
+        if(root == nullptr){
+            vector<pair<int, int>> res;
+            if(lvl < rows) {
+                vector<pair<int, int>> left = getInorder(nullptr, lvl+1, rows);
+                vector<pair<int, int>> right = getInorder(nullptr, lvl+1, rows);
+                for(auto i:left) res.push_back({ i.first, i.second });
+                res.push_back({ -100, lvl });
+                for(auto i:right) res.push_back({ i.first, i.second });
+            }
+            return res;
+        }
+        
+        vector<pair<int, int>> res;
+        vector<pair<int, int>> left = getInorder(root->left, lvl+1, rows);
+        vector<pair<int, int>> right = getInorder(root->right, lvl+1, rows);
+        for(auto i:left) res.push_back({ i.first, i.second });
+        res.push_back({ root->val, lvl });
+        for(auto i:right) res.push_back({ i.first, i.second });
+        return res;
+    }
+public:
+    vector<vector<string>> printTree(TreeNode* root) {
+        int rows = levelTree(root);
+        int cols = pow(2, rows)-1;
+        
+        vector<vector<string>> res(rows, vector<string>(cols, ""));
+        vector<pair<int, int>> inorder = getInorder(root, 0, rows);
+        int sCol = 0;
+        
+        for(auto i:inorder) {
+            cout<<i.first<<" "; 
+            int ele = i.first, row = i.second, col = sCol;
+            if(ele == -100) res[row][col] = "";
+            else res[row][col] = to_string(ele);
+            sCol++;
+        }
+        
+        return res;
+    }
+};
