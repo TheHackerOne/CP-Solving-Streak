@@ -1,0 +1,44 @@
+class Solution {
+private:
+    int idx = 0;
+    bool possible = true;
+    
+    vector<int> getAll(string &preorder){
+        stringstream ss(preorder);
+        string word = "";
+        vector<int> res;
+        while(ss >> word){
+            if(word == "#") res.push_back(-1);
+            else res.push_back(stoi(word));
+        }
+        return res;
+    }
+    
+    void traverse(vector<int> &arr){
+        if(idx >= arr.size()){
+            possible = false;
+            return;
+        }
+        if(!possible) return;
+        if(arr[idx] == -1) {
+            idx += 1;
+            return;
+        }
+        
+        idx += 1;
+        traverse(arr);
+        traverse(arr);
+    }
+public:
+    bool isValidSerialization(string preorder) {
+        for(auto &i:preorder){
+            if(i == ',') i = ' ';
+        }
+        
+        vector<int> arr = getAll(preorder);
+        
+        traverse(arr);
+        
+        return possible and idx == arr.size();
+    }
+};
