@@ -1,0 +1,19 @@
+class Solution {
+private:
+    int traverse(TreeNode *root, int &sum){
+        if(root == nullptr) return 0;
+        
+        int left = traverse(root->left, sum);
+        int right = traverse(root->right, sum);
+        
+        int sumTree = left+right+root->val;
+        sum += abs(left-right);
+        return sumTree;
+    }
+public:
+    int findTilt(TreeNode* root) {
+        int sum = 0;
+        traverse(root, sum);
+        return sum;
+    }
+};
