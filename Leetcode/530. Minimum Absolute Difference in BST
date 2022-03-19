@@ -1,0 +1,21 @@
+
+class Solution {
+private:
+    void traverse(TreeNode *root, vector<int> &inorder){
+        if(root == nullptr) return;
+        
+        traverse(root->left, inorder);
+        inorder.push_back(root->val);
+        traverse(root->right, inorder);
+    }
+public:
+    int getMinimumDifference(TreeNode* root) {
+        vector<int> inorder;
+        traverse(root, inorder);
+        int cnt = INT_MAX;
+        for(int i=1;i<inorder.size();i++){
+            cnt = min(cnt, inorder[i]-inorder[i-1]);
+        }
+        return cnt;
+    }
+};
