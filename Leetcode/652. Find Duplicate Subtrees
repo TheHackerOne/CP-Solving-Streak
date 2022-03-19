@@ -1,0 +1,28 @@
+class Solution {
+private:
+    string traverse(TreeNode *root, unordered_map<string, int> &mp, vector<TreeNode*> &res){
+        if(root == nullptr) return "";
+        
+        // postorder
+        string left = traverse(root->left, mp, res)+"l";
+        string right = traverse(root->right, mp, res)+"r";
+        
+        string inorder = left+" "+to_string(root->val)+" "+right;
+        if(mp.find(inorder) != mp.end()){
+            if(mp[inorder] != 2){
+                mp[inorder] = 2;
+                res.push_back(root);
+            }
+        }else{
+            mp[inorder] = 1;
+        }
+        return inorder;
+    }
+public:
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        unordered_map<string, int> mp;
+        vector<TreeNode *> res;
+        traverse(root, mp, res);
+        return res;
+    }
+};
