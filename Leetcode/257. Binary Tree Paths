@@ -1,0 +1,22 @@
+
+class Solution {
+private:
+    void helper(TreeNode *root, string psf, vector<string> &res){
+        if(root == nullptr) return;
+        if(root->left == nullptr and root->right == nullptr){
+            psf += to_string(root->val);
+            res.push_back(psf);
+            return;
+        }
+        
+        helper(root->left, psf + to_string(root->val)+"->", res);
+        helper(root->right, psf + to_string(root->val)+"->", res);
+    }
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> res;
+        if(root == nullptr) return res;
+        helper(root, "", res);
+        return res;
+    }
+};
