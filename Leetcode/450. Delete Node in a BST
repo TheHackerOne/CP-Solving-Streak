@@ -1,0 +1,25 @@
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(root == nullptr) return nullptr;
+        
+        if(root->val == key){
+            if(!root->left and !root->right){
+                return nullptr;
+            }else if(root->left and root->right){
+                TreeNode *node = root->left;
+                while(node->right != nullptr) node = node->right;
+                root->val = node->val;
+                root->left = deleteNode(root->left, node->val);
+                return root;
+            }else{
+                if(root->left) return root->left;
+                else return root->right;
+            }
+        }
+        
+        root->left = deleteNode(root->left, key);
+        root->right = deleteNode(root->right, key);
+        return root;
+    }
+};
