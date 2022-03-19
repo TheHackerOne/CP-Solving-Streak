@@ -1,0 +1,38 @@
+
+class Solution {
+   private:
+    vector<ListNode*> midEle(ListNode *head){
+        ListNode *slow = head, *fast = head, *prev = nullptr;
+        while(fast->next != nullptr and fast->next->next != nullptr){
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return { prev, slow };
+    }
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        if(head == nullptr) return nullptr;
+        if(head->next == nullptr){
+            TreeNode *node = new TreeNode(head->val);
+            return node;
+        }
+        if(head->next->next == nullptr){
+            TreeNode *node = new TreeNode(head->val);
+            node->right = new TreeNode(head->next->val);
+            return node;
+        }
+        
+        vector<ListNode*> mid = midEle(head);
+        
+        ListNode *h1 = head, *h2 = mid[1]->next;
+        if(mid[0])
+            mid[0]->next = nullptr;
+        else h1->next = nullptr;
+        
+        TreeNode *node = new TreeNode(mid[1]->val);
+        node->left = sortedListToBST(h1);
+        node->right = sortedListToBST(h2);
+        return node;
+    }
+};
