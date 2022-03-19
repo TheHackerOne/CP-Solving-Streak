@@ -1,0 +1,19 @@
+
+class Solution {
+private:
+    bool traverse(TreeNode *root, int k, unordered_map<int, int> &mp){
+        if(root == nullptr) return false;
+        
+        int rem = k-root->val;
+        if(mp.find(rem) != mp.end()) return true;
+        mp[root->val] = 1;
+        int left = traverse(root->left, k, mp);
+        int right = traverse(root->right, k, mp);
+        return left or right;
+    }
+public:
+    bool findTarget(TreeNode* root, int k) {
+        unordered_map<int, int> mp;
+        return traverse(root, k, mp);
+    }
+};
