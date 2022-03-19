@@ -1,0 +1,24 @@
+class Solution {
+private:
+    TreeNode *px = nullptr, *py = nullptr;
+    int lx = 0, ly = 0;
+    
+    void traverse(TreeNode *root, int &x, int &y, TreeNode *par, int lvl){
+        if(root == nullptr) return;
+        
+        if(root->val == x){
+            lx = lvl, px = par;
+        }
+        if(root->val == y){
+            ly = lvl, py = par;
+        }
+        traverse(root->left, x, y, root, lvl+1);
+        traverse(root->right, x, y, root, lvl+1);
+    }
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+        traverse(root, x, y, nullptr, 0);
+        if(lx == ly and px != py) return true;
+        return false;
+    }
+};
