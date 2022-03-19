@@ -1,0 +1,35 @@
+class Solution {
+private:
+    int leftHeight(TreeNode *root){
+        int h = 0;
+        while(root->left != nullptr){
+            root = root->left;
+            h++;
+        }
+        return h;
+    }
+    
+    int rightHeight(TreeNode *root){
+        int h = 0;
+        while(root->right != nullptr){
+            root = root->right;
+            h++;
+        }
+        return h;
+    }
+    
+    int traverse(TreeNode *root){
+        if(root == nullptr) return 0;
+        
+        int lh = leftHeight(root);
+        int rh = rightHeight(root);
+        if(lh == rh){
+            return pow(2,lh+1)-1;
+        }
+        return traverse(root->left)+traverse(root->right)+1;
+    }
+public:
+    int countNodes(TreeNode* root) {
+        return traverse(root);
+    }
+};
