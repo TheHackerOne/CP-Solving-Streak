@@ -1,0 +1,21 @@
+class Solution {
+private:
+    void traverse(TreeNode *root, string &res){
+        if(root == nullptr) return;
+        
+        res += "("+to_string(root->val);
+        if(root->left)
+            traverse(root->left, res);
+        else if(root->right) res += "()";
+        if(root->right)
+            traverse(root->right, res);
+        res += ')';
+    }
+public:
+    string tree2str(TreeNode* root) {
+        string res = "";
+        traverse(root, res);
+        res = res.substr(1, res.length()-2);
+        return res;
+    }
+};
