@@ -1,0 +1,23 @@
+
+class Solution {
+private:
+    TreeNode *ans = nullptr;
+    void lcs(TreeNode *root, TreeNode *p, TreeNode *q){
+        if(root == nullptr) return;
+        
+        if(root->val >= p->val and root->val <= q->val){
+            ans = root;
+            return;
+        }
+        if(root->val > q->val)
+            lcs(root->left, p, q);
+        else
+            lcs(root->right, p, q);
+    }
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(p->val > q->val) swap(p, q);
+        lcs(root, p, q);
+        return ans;
+    }
+};
