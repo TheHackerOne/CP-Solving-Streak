@@ -1,0 +1,23 @@
+
+class Solution {
+private:
+    void traverse(TreeNode *root, priority_queue<int> &pq, unordered_map<int, int>&mp){
+        if(root == nullptr) return;
+        
+        traverse(root->left, pq, mp);
+        if(mp.find(root->val) == mp.end()){
+            pq.push(root->val);
+            if(pq.size() == 3) pq.pop();
+        }
+        mp[root->val] = 1;
+        traverse(root->right, pq, mp);
+    }
+public:
+    int findSecondMinimumValue(TreeNode* root) {
+        priority_queue<int> pq;
+        unordered_map<int, int> mp;
+        traverse(root, pq, mp);
+        if(pq.size() < 2) return -1;
+        return pq.top();
+    }
+};
