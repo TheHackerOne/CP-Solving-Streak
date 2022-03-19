@@ -1,0 +1,28 @@
+class Solution {
+private:
+    int maxCnt = INT_MIN;
+    
+    int traverse(TreeNode *root, unordered_map<int, int> &s){
+        if(root == nullptr) return 0;
+        
+        int left = traverse(root->left, s);
+        int right = traverse(root->right, s);
+        int sum = left+right+root->val;
+        s[sum]++;
+        maxCnt = max(maxCnt, s[sum]);
+        return sum;
+    }
+public:
+    vector<int> findFrequentTreeSum(TreeNode* root) {
+        unordered_map<int, int> sum; // sum -> cnt
+        traverse(root, sum);
+        
+        vector<int> res;
+        
+        for(auto [sum, cnt]:sum){
+            if(cnt == maxCnt) res.push_back(sum);
+        }
+        
+        return res;
+    }
+};
