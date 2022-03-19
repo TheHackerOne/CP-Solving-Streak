@@ -1,0 +1,27 @@
+
+class Solution {
+private:
+    pair<TreeNode*, TreeNode*> traverse(TreeNode *root){
+        if(root == nullptr ) return {nullptr, nullptr};
+        if(!root->left and !root->right){
+            return {root, root};
+        }
+        
+        pair<TreeNode*, TreeNode*> left = traverse(root->left);
+        pair<TreeNode*, TreeNode*> right = traverse(root->right);
+        root->left = nullptr;
+        if(left.first){
+            root->right = left.first;
+            left.second->right = right.first;
+        }
+        if(right.first){
+            right.second->right = nullptr;
+        }
+        return {root, right.first?right.second:left.second};
+    }
+    
+public:
+    void flatten(TreeNode* root) {
+        traverse(root);
+    }
+};
