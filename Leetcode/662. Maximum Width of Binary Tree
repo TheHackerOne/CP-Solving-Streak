@@ -1,0 +1,32 @@
+class Solution {
+private:
+    long long max(long long a, long long b){
+        if(a > b) return a;
+        else return b;
+    }
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        long long maxWidth = 0;
+        queue<pair<TreeNode *, long long int>> q;
+        q.push({root, 0});
+        
+        while(!q.empty()){
+            long long size = q.size();
+            int first = q.front().second;
+            long long mini = 0, maxi = 0;
+            for(int i=0;i<size;i++){
+                pair<TreeNode *, long long> p = q.front();
+                TreeNode *node = p.first;
+                long long lvl = p.second-first;
+                if(i == 0) mini = lvl;
+                if(i == size-1) maxi = lvl;
+                q.pop();
+                if(node->left) q.push({node->left, 1LL*2*lvl+1});
+                if(node->right) q.push({node->right, 1LL*2*lvl+2});
+            }
+            maxWidth = max(maxWidth, maxi-mini+1);
+        }
+        
+        return maxWidth;
+    }
+};
