@@ -1,0 +1,36 @@
+class Solution {
+private:
+    TreeNode *subRoot = nullptr;
+    
+    bool isPresent(TreeNode *root1, TreeNode *root2){
+        if(!root1 and !root2) return true;
+        if(!root1 or !root2) return false;
+        
+        bool left = isPresent(root1->left, root2->left);
+        bool right = isPresent(root1->right, root2->right);
+        if(left and right and root1->val == root2->val){
+            return true;
+        }
+        return false;
+    }
+    
+    void traverse(TreeNode *root, int &val, vector<TreeNode *> &allSub){
+        if(root == nullptr) return;
+        
+        if(root->val == val){
+            allSub.push_back(root);
+        }
+        traverse(root->left, val, allSub);
+        traverse(root->right, val, allSub);
+    }
+public:
+    bool isSubtree(TreeNode* root, TreeNode* root2) {
+        vector<TreeNode*> allSub;
+        traverse(root, root2->val, allSub);
+        bool res = false;
+        for(auto root:allSub){
+            res |= isPresent(root, root2);
+        }
+        return res;
+    }
+};
