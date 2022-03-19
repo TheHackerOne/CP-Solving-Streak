@@ -1,0 +1,41 @@
+
+class Solution {
+private:
+    int cnt = 0, prev = INT_MIN;
+    void traverse(TreeNode *root, vector<int> &modes, int &maxMode){
+        // base case
+        if(root == nullptr) return;
+        
+        // main logic
+        traverse(root->left, modes, maxMode);
+        
+        if(prev == INT_MIN) {
+            prev = root->val;
+            cnt = 1;
+        }else{
+            if(prev == root->val){
+                cnt++;
+            }else{
+                cnt = 1;
+                prev = root->val;
+            }
+        }
+        if(cnt > maxMode){
+            modes.clear();
+            modes.push_back(root->val);
+            maxMode = max(maxMode, cnt);
+        }else if(cnt == maxMode){
+            modes.push_back(root->val);
+        }
+        
+        traverse(root->right, modes, maxMode);
+    }    
+    
+public:
+    vector<int> findMode(TreeNode* root) {
+        vector<int> modes;
+        int maxMode = 0;
+        traverse(root, modes, maxMode);
+        return modes;
+    }
+};
