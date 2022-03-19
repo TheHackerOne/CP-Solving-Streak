@@ -1,0 +1,20 @@
+
+class Solution {
+private:
+    void helper(TreeNode *root, TreeNode *par, int &sum){
+        if(root == nullptr) return;
+        if(root->left == nullptr and root->right == nullptr){
+            if(par and par->left == root) sum += root->val;
+            return;
+        }
+        
+        helper(root->left, root, sum);
+        helper(root->right, root, sum);
+    }
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        int sum = 0;
+        helper(root, nullptr, sum);
+        return sum;
+    }
+};
