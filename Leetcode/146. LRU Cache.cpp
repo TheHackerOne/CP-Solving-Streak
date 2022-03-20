@@ -1,118 +1,77 @@
-class Node{
-public:
-   int key;
-   int data;
-   Node *prev;
-   Node *next;
-
-   Node(int key, int data){
-      this->key = key;
-      this->data = data;
-      prev = next = nullptr;
-   }
-};
-
 class LRUCache {
 private:
-   int size;
-   Node *head;
-   Node *tail;
-   unordered_map<int, Node*> mp;
+    class Node{
+        public:
+        int key;
+        int value;
+        Node *prev = nullptr;
+        Node *next = nullptr;
+        
+        Node(int key, int val){
+            this->key = key;
+            this->value = val;
+        }
+    };
+    
+    unordered_map<int, Node*> mp; // key --> LL Node address
+    Node *head = nullptr, *tail = nullptr;
+    int size = 0, cap = 0;
+    
+    void removeNode(Node *node){
+        Node *nodePrev = node->prev;
+        Node *nodeNext = node->next;
+        nodePrev->next = nodeNext;
+        nodeNext->prev = nodePrev;
+    }
+    
+    void addToMostRecent(Node *node){
+        Node *headNode = head;
+        Node *headNext = head->next;
+        headNode->next = node;
+        node->next = headNext;
+        headNext->prev = node;
+        node->prev = headNode;
+    }
+    
 public:
     LRUCache(int capacity) {
-      head = new Node(0, 0);
-      tail = new Node(0, 0);
-      head -> next = tail;
-      tail -> prev = head;
-      size = capacity;
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
+        head->next = tail;
+        tail->prev = head;
+        cap = capacity;
     }
     
     int get(int key) {
-        // if not present, return -1;
-        if(mp.find(key) == mp.end()) return -1;
-
-        // if present, make it most recently used and then update address of node in map too
-
-        // remove node
-        Node *node = mp[key];
-        Node *prevNode = node -> prev;
-        Node *nextNode = node -> next;
-        prevNode -> next = nextNode;
-        nextNode -> prev = prevNode;
-
-        // add to most recently used
-        Node *headNode = head;
-        Node *headNext = head -> next;
-        headNode -> next = node;
-        node -> next = headNext;
-        headNext -> prev = node;
-        node -> prev = headNode;
-
-        // return value
-        return mp[key]->data;
+        if(mp.find(key) != mp.end()){
+            Node *node = mp[key];
+            removeNode(node);
+            addToMostRecent(node);
+            return node->value;
+        }else{
+            return -1;
+        }
     }
     
     void put(int key, int value) {
-         // if key already present, update its value
-        
-         if(mp.find(key) != mp.end()){
-
+        if(mp.find(key) != mp.end()){
             Node *node = mp[key];
-            node -> data = value;
-
-            // remove node
-           Node *prevNode = node -> prev;
-           Node *nextNode = node -> next;
-           prevNode -> next = nextNode;
-           nextNode -> prev = prevNode;
-
-            // add to most recently used
-            Node *headNode = head;
-            Node *headNext = head -> next;
-            headNode -> next = node;
-            node -> next = headNext;
-            headNext -> prev = node;
-            node -> prev = headNode;
-         }
-
-         // if capacity is full, then remove LRU node and add new node
-
-         else if(size == mp.size()){
-            // remove lsu node
-             
-            Node *lru = tail -> prev;
-            mp.erase(lru -> key);
-            Node *prevNode = lru -> prev;
-            Node *tailNode = tail;
-            prevNode -> next = tailNode;
-            tailNode -> prev = prevNode;
-
-            // add new node
+            node->value = value;
+            removeNode(node);
+            addToMostRecent(node);
+        }else{
             Node *newNode = new Node(key, value);
-            Node *headNode = head;
-            Node *headNext = head -> next;
-            headNode -> next = newNode;
-            newNode -> next = headNext;
-            headNext ->prev = newNode;
-            newNode -> prev = headNode;
-
-            mp[key] = newNode;
-         }
-
-         // if not full, simply add 
-
-         else{
-            // add new node
-            Node *newNode = new Node(key, value);
-            Node *headNode = head;
-            Node *headNext = head -> next;
-            headNode -> next = newNode;
-            newNode -> next = headNext;
-            headNext ->prev = newNode;
-            newNode -> prev = headNode;
-
-            mp[key] = newNode;
-         }         
-
+            if(size == cap){
+                Node *leastUsedNode = tail->prev;
+                removeNode(leastUsedNode);
+                mp.erase(leastUsedNode->key);
+                addToMostRecent(newNode);
+                mp[key] = newNode;
+            }else{
+                addToMostRecent(newNode);
+                mp[key] = newNode;
+                size++;
+            }
+        }
     }
 };

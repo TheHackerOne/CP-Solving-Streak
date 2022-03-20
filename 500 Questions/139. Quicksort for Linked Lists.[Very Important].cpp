@@ -84,13 +84,17 @@ ListNode * *quickSort_(ListNode *head) {
     }
     int pivotIdx = lengthLL(head) / 2;
     ListNode * *ans = segregate(head, pivotIdx);
+    
     ListNode *LLsmall = ans[0];
     ListNode *LLlarge = ans[2];
     ListNode *pivotEle = ans[1];
+
     int lenSmall = lengthLL(LLsmall);
     int lenLarge = lengthLL(LLlarge);
+
     ListNode * *headTailsmall = quickSort_(LLsmall);
     ListNode * *headTaillarge = quickSort_(LLlarge);
+
     return mergeLL(headTailsmall, headTaillarge, pivotEle);
 }
 
