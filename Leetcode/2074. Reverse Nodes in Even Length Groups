@@ -1,0 +1,67 @@
+
+class Solution {
+private:
+    pair<ListNode*, ListNode*> rev(ListNode *head){
+        ListNode *prev = nullptr, *curr = head, *forw = nullptr;
+        ListNode *tail = head;
+        while(curr){
+            forw = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forw;
+        }
+        return {prev, tail};
+    }
+    
+    int lenLL(ListNode *head){
+        int cnt = 0;
+        while(head){
+            cnt++;
+            head = head->next;
+        }
+        return cnt;
+    }
+
+public:
+    ListNode* reverseEvenLengthGroups(ListNode* head) {
+        int len = lenLL(head);
+        int k = 1;
+        ListNode *dummy = new ListNode(-1);
+        ListNode *curr = head, *prev = dummy;
+        prev->next = head;
+        while(curr){
+            if(len >= k){
+                int part = k-1;
+                ListNode *forw = curr;
+                while(part--){
+                    forw = forw->next;
+                }
+                
+                ListNode *nextCurr = forw->next;
+                if(k%2==0){
+                    prev->next = nullptr;
+                    forw->next = nullptr;
+
+                    pair<ListNode*, ListNode*> p = rev(curr); // head, tail
+
+                    curr = p.first, forw = p.second;
+                    prev->next = curr;
+                    forw->next = nextCurr;
+                }
+                curr = nextCurr;
+                prev = forw;
+                len -= k;
+            }else{
+                if(len%2 == 0){
+                    prev->next = nullptr;
+                    pair<ListNode*, ListNode*> p = rev(curr);
+                    prev->next = p.first;
+                    p.second->next = nullptr; 
+                }
+                curr = nullptr;
+            }
+            k++;
+        }
+        return dummy->next;
+    }
+};
