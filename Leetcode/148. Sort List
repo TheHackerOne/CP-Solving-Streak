@@ -1,0 +1,56 @@
+class Solution {
+private:
+    int lengthLL(ListNode *head) {
+        int count = 0;
+        ListNode *temp = head;
+        while (temp != nullptr) {
+            count++;
+            temp = temp -> next;
+        }
+        return count;
+    }
+
+    ListNode *mid(ListNode *head) {
+        ListNode *slow = head, *fast = head;
+        while (fast -> next != nullptr && fast -> next -> next != nullptr) {
+            slow = slow -> next;
+            fast = fast -> next -> next;
+        }
+        return slow;
+    }
+
+    ListNode *mergeLL(ListNode *h1, ListNode *h2) {
+        ListNode *c1 = h1, *c2 = h2;
+        ListNode *dummy = new ListNode(-1);
+        ListNode *prev = dummy;
+        while (c1 != nullptr && c2 != nullptr) {
+            if (c1 -> val > c2 -> val) {
+                prev -> next = c2;
+                prev = c2;
+                c2 = c2 -> next;
+            } else {
+                prev -> next = c1;
+                prev = c1;
+                c1 = c1 -> next;
+            }
+        }
+        prev -> next = (c1 != nullptr ? c1 : c2);
+        return dummy -> next;
+    }
+
+    ListNode *mergeSortHelper(ListNode *head) {
+        ListNode *middle = mid(head);
+        if (middle -> next == nullptr) return middle;
+        ListNode *h1 = head, *h2 = middle -> next;
+        middle -> next = nullptr;
+
+        ListNode *x1 = mergeSortHelper(h1);
+        ListNode *x2 = mergeSortHelper(h2);
+        return mergeLL(x1, x2);
+    }
+public:
+    ListNode* sortList(ListNode* head) {
+        if(head == nullptr or head->next == nullptr) return head;
+        return mergeSortHelper(head);
+    }
+};
