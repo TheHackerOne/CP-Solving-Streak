@@ -1,0 +1,25 @@
+
+class Solution {
+private:
+    unordered_map<int, ListNode*> mp;
+public:
+    Solution(ListNode* head) {
+        ListNode *curr = head;
+        int i = 0;
+        while(curr){
+            mp[i++] = curr;
+            curr = curr->next;
+        }
+    }
+    
+    int getRandom() {
+        int n = mp.size();
+        return mp[rand()%n]->val;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(head);
+ * int param_1 = obj->getRandom();
+ */
