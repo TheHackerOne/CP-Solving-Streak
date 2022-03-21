@@ -1,0 +1,10 @@
+stars 3
+midStarIdx 1
+stars 5
+midStarIdx 2
+stars 1
+midStarIdx 1
+stars 0
+midStarIdx 0
+stars 5
+midStarIdx 6
