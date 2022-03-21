@@ -1,0 +1,40 @@
+class Solution {
+private:
+    ListNode *reverseLL(ListNode *head){
+        ListNode *curr = head, *prev = nullptr, *forw = nullptr;
+        while(curr){
+            forw = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forw;
+        }
+        return prev;
+    }
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode *st = head, *en = head;
+        int len = right-left;
+        
+        while(len--) en = en->next;
+        
+        ListNode *dummy = new ListNode(-1);
+        ListNode *prev = dummy;
+        prev->next = head;
+        left -= 1;
+        
+        while(left--){
+            prev = st;
+            st = st->next;
+            en = en->next;
+        }
+        
+        prev->next = nullptr;
+        ListNode *enNext = en->next;
+        en->next = nullptr;
+        en = st;
+        st = reverseLL(st);
+        prev->next = st;
+        en->next = enNext;
+        return dummy->next;
+    }
+};
