@@ -1,0 +1,22 @@
+class Solution {
+public:
+    ListNode* mergeNodes(ListNode* head) {
+        ListNode *curr = head, *forw = nullptr;
+        ListNode *dummy = new ListNode(-1);
+        ListNode *prev = dummy;
+        
+        while(curr->next != nullptr){
+            int sum = 0;
+            forw = curr->next;
+            while(forw->val != 0){
+                sum += forw->val;
+                forw = forw->next;
+            }
+            ListNode *node = new ListNode(sum);
+            prev->next = node;
+            prev = node;
+            curr = forw;
+        }
+        return dummy->next;
+    }
+};
