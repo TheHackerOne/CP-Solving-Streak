@@ -73,52 +73,49 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
-
+bool comp(int a, int b){
+  return a > b;
+}
 
 void solve() {
-  ll n;
+  int n;
   cin>>n;
-  string str;
-  cin>>str;
-  ll stars = 0;
-  for(auto &ch:str){
-    if(ch == '*') stars++;
+  vector<int> uni(n), skills(n);
+  unordered_map<int, vector<int>> mp;
+  for(int i=0;i<n;i++) cin>>uni[i];
+  for(int i=0;i<n;i++) cin>>skills[i];
+
+  for(int i=0;i<n;i++){
+    mp[uni[i]].push_back(skills[i]);
+  }
+  for(auto &i:mp){
+    sort(all(i.second), comp);
   }
 
-  ll midStarIdx = 0;
-  ll cnt = 0;
-  for(ll i=0;i<str.length();i++){
-    if(str[i] == '*'){
-      cnt++;
-      if(cnt == ((stars+1)/2)){
-        midStarIdx = i;
-        break;
-      }
+  for(auto &i:mp){
+    for(int j=1;j<i.second.size();j++){
+      i.second[j] += i.second[j-1];
     }
   }
-  debug(stars)
-  debug(midStarIdx)
 
-  ll left = 0, right = midStarIdx;
-  ll ans = 0;
-  while(left < right){
-    while(left < right and str[left] != '*') left++;
-    while(left < right and str[right] != '.') right--;
-    if(left >= right) break;
-    swap(str[left], str[right]);
-    ans += abs(right-left);
+  vector<int> res(n, 0);
+
+  for(int k=1;k<=n;k++){
+    int total = 0;
+    for(auto &i:mp){
+      int size = i.second.size();
+      int rem = size%k;
+      int netSize = size-rem;
+      total += netSize>0?i.second[netSize-1]:0;
+    }
+    res[k-1] = total;
   }
 
-  left = midStarIdx, right = str.length()-1;
-  while(left < right){
-    while(left < right and str[left] != '.') left++;
-    while(left < right and str[right] != '*') right--;
-    if(left >= right) break;
-    swap(str[left], str[right]);
-    ans += abs(right-left);
+  for(int i=0;i<n;i++){
+    if(i == n-1) cout<<res[i]<<endl;
+    else cout<<res[i]<<" ";
   }
 
-  cout<<ans<<endl;
 }
 
 int main() {
