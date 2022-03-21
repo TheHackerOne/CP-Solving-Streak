@@ -1,0 +1,31 @@
+
+class Solution {
+private:
+    ListNode *reverseLL(ListNode *head){
+        ListNode *curr = head, *prev = nullptr, *forw = nullptr;
+        while(curr != nullptr){
+            forw = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forw;
+        }
+        return prev;
+    }
+public:
+    vector<int> nextLargerNodes(ListNode* head) {
+        vector<int> res;
+        
+        head = reverseLL(head);
+        ListNode *curr = head;
+        stack<int> st;
+        while(curr){
+            while(!st.empty() and st.top() <= curr->val) st.pop();
+            if(st.empty()) res.push_back(0);
+            else res.push_back(st.top());
+            st.push(curr->val);
+            curr = curr->next;
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
