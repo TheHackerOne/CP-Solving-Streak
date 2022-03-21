@@ -1,0 +1,34 @@
+class Solution {
+private:
+    int lenLL(ListNode *head){
+        int len = 0;
+        while(head){
+            len++;
+            head = head->next;
+        }
+        return len;
+    }
+    
+    pair<ListNode *, ListNode *> midEle(ListNode *head){
+        ListNode *slow = head, *fast = head, *prev = nullptr;
+        while(fast->next and fast->next->next){
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        int len = lenLL(head);
+        if(len%2 == 0) return {prev?prev->next:head, slow->next};
+        return {prev, slow};
+    }
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        if(head == nullptr or head->next == nullptr) return nullptr;
+        
+        
+        pair<ListNode*, ListNode*> p = midEle(head);
+        ListNode *prev = p.first, *curr = p.second, *forw = curr->next;
+        curr->next = nullptr;
+        prev->next = forw;
+        return head;
+    }
+};
