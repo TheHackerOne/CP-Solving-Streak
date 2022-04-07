@@ -1,7 +1,1 @@
-aaaabba
-aaabba
-aabba
-abba
-ba
-a
-true
+abcd

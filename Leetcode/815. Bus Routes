@@ -13,10 +13,13 @@ public:
         
         queue<int> q;
         int level = 1;
+
         vector<bool> vbusStop(100005, 0);
         vector<bool> vbus(100005, 0);
+
         q.push(source); // store the source bus stop
         vbusStop[source] = 1;
+        
         while(!q.empty()){
             int size = q.size();
             while(size--){

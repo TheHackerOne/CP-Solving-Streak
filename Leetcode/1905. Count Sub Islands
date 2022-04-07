@@ -1,0 +1,47 @@
+class Solution {
+private:
+    vector<int>x = {-1, 0, 1, 0};
+    vector<int>y = {0, 1, 0,-1};
+    
+    bool isValid(int x, int y, int n, int m){
+        if(x >= 0 and x < n and y >= 0 and y < m) return true;
+        return false;
+    }
+    
+    bool dfs1(vector<vector<int>> &grid2, vector<vector<int>> &grid1, int i, int j){
+        int n = grid1.size(), m = grid1[0].size();
+        grid2[i][j] = -1;
+        bool res = true;
+        for(int u=0;u<4;u++){
+            int newx = i+x[u], newy = j+y[u];
+            if(isValid(newx, newy, n, m) and grid2[newx][newy] == 1 and grid1[newx][newy] == 1){
+                bool ans = dfs1(grid2, grid1, newx, newy);
+                if(!ans){
+                    res = false;
+                }
+            }else if(isValid(newx, newy, n, m) and grid2[newx][newy] == 1){
+                res = false;
+                bool ans = dfs1(grid2, grid1, newx, newy);
+            }
+        }
+        return res;
+    }
+public:
+    int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+        int n = grid1.size(), m = grid1[0].size();
+        int cnt = 0;
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid2[i][j] == 1 and grid1[i][j] == 1){
+                    bool res = dfs1(grid2, grid1, i, j);
+                    if(res){
+                        cout<<i<<" "<<j<<endl;
+                        cnt++;
+                    }
+                }
+            }
+        }
+        return cnt;
+    }
+};
