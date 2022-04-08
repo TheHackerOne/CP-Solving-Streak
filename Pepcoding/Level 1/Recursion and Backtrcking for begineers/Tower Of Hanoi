@@ -1,0 +1,23 @@
+#include<iostream>
+using namespace std;
+
+void toh(int n, int src, int dest, int hel){
+    if(n == 1){
+        cout<<n<<"["<<src<<" -> "<<dest<<"]"<<endl;
+        return;
+    }
+
+    toh(n-1, src, hel, dest);
+    cout<<n<<"["<<src<<" -> "<<dest<<"]"<<endl;
+    toh(n-1, hel, dest, src);
+}
+
+
+
+
+int  main() {
+
+    int n;cin>>n;
+    int n1,n2,n3;cin>>n1>>n2>>n3;
+    toh(n, n1, n2, n3);
+  }
