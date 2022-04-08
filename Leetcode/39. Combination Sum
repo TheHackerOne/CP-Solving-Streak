@@ -1,0 +1,30 @@
+class Solution {
+private:
+    void solve(int idx, int n, vector<int> &can, int target, vector<vector<int>> &res, vector<int> &com){
+        // base case
+        if(idx == n){
+            if(target == 0)
+                res.push_back(com);
+            return;
+        }
+        
+        
+        // main logic
+        if(can[idx] <= target){
+            com.push_back(can[idx]);
+            solve(idx, n, can, target-can[idx], res, com);
+            com.pop_back();
+            solve(idx+1, n, can, target, res, com);
+        }else{
+            solve(idx+1, n, can, target, res, com);
+        }
+    }
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> com;
+        solve(0, candidates.size(), candidates, target, res, com);
+        
+        return res;
+    }
+};
