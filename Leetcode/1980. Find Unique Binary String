@@ -1,0 +1,30 @@
+class Solution {
+private:
+    string ans = "";
+    
+    bool solve(int idx, int n, string asf, unordered_map<string, bool> &mp){
+        // base case
+        if(idx == n){
+            if(mp.find(asf) == mp.end()) {
+                ans = asf;
+                return true;
+            }
+            return false;
+        }
+        
+        // main logic
+        bool res1 = solve(idx+1, n, asf+'1', mp);
+        if(res1) return true;
+        bool res2 = solve(idx+1, n, asf+'0', mp);
+        if(res2) return true;
+        return false;
+    }
+public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        unordered_map<string, bool> mp;
+        for(auto &i:nums) mp[i] = 1;
+        
+        solve(0, nums.size(), "", mp);
+        return ans;
+    }
+};
