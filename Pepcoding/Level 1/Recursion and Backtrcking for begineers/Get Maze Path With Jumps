@@ -1,0 +1,68 @@
+#include<iostream>
+#include<vector>
+#include<string>
+
+using namespace std;
+
+vector<string> get_maze_paths(int sr, int sc, int dr, int dc) {
+    if(sr == dr and sc == dc){
+        vector<string> res;
+        res.push_back("");
+        return res;
+    }
+    vector<string> res;
+
+    // horizontal
+    for(int j=1;j<=dc-sc;j++){
+        if(sc+j <= dc){
+            vector<string> res1 = get_maze_paths(sr, sc+j, dr, dc);
+            for(auto str:res1){
+                res.push_back("h"+to_string(j)+str);
+            }
+        }
+    }
+    // vertical
+    for(int j=1;j<=dr-sr;j++){
+        if(sr+j <= dr){
+            vector<string> res1 = get_maze_paths(sr+j, sc, dr, dc);
+            for(auto str:res1){
+                res.push_back("v"+to_string(j)+str);
+            }
+        }
+    }
+    // diagonal
+    int cnt = 0;
+    int ssr = sr, ssc = sc;
+    while(ssr <= dr and ssc <= dc){
+        cnt++;
+        ssr++, ssc++;
+    }
+    for(int j=1;j<=cnt-1;j++){
+        if(sr+j <= dr and sc+j <= dc){
+            vector<string> res1 = get_maze_paths(sr+j, sc+j, dr, dc);
+            for(auto str:res1){
+                res.push_back("d"+to_string(j)+str);
+            }
+        }
+    }
+    return res;
+}
+    
+void display(vector<string>& arr){
+    cout << "[";
+    for(int i = 0;i < arr.size();i++){
+        cout << arr[i];
+        if(i < arr.size() -1) cout << ", ";
+    }
+    
+    cout << "]"<<endl;
+}
+
+
+int main() {
+    int n,m; cin >> n >> m;
+    vector<string> ans = get_maze_paths(0,0,n-1,m-1);
+    display(ans);
+
+    return 0;
+}
