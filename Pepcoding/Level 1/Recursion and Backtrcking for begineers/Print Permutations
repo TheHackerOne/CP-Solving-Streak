@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+void printPermutations(int idx, string str){
+    if(idx == str.length()){
+        cout<<str<<endl;
+        return;
+    }
+
+    for(int i=idx;i<str.length();i++){
+        swap(str[i], str[idx]);
+        printPermutations(idx+1, str);
+        swap(str[i], str[idx]);
+    }
+}
+
+int main(){
+    string str;
+    cin>>str;
+    printPermutations(0, str);
+    
+}
