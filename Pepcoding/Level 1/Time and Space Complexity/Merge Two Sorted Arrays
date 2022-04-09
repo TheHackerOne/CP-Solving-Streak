@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> mergeTwoSortedArrays(vector<int> &a, vector<int> &b)
+{
+    vector<int> res(a.size()+b.size());
+    int i = 0, j = 0, k = 0;
+    while(i < a.size() and j < b.size()){
+        if(a[i] < b[j]){
+            res[k++] = a[i++];
+        }else{
+            res[k++] = b[j++];
+        }
+    }
+
+    while(i < a.size()){
+        res[k++] = a[i++];
+    }
+    while(j < b.size()){
+        res[k++] = b[j++];
+    }
+    return res;
+}
+
+void input(vector<int> &arr)
+{
+    for (int i = 0; i < arr.size(); i++)
+    {
+        cin >> arr[i];
+    }
+}
+
+void output(vector<int> &arr)
+{
+    for (int i = 0; i < arr.size(); i++)
+    {
+        cout << arr[i] << endl;
+    }
+}
+
+int main()
+{
+    int n, m;
+    cin >> n;
+    vector<int> A(n, 0);
+    input(A);
+
+    cin >> m;
+    vector<int> B(m, 0);
+    input(B);
+
+    vector<int> ans = mergeTwoSortedArrays(A, B);
+    output(ans);
+    return 0;
+}
