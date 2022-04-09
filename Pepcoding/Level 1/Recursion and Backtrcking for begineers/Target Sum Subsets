@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void solve(int idx, int n, vector<int> &arr, int target, string asf){
+    if(idx == n){
+        if(target == 0){
+            string ans = asf + ".";
+            cout<<ans<<endl;
+        }
+        return;
+    }
+
+    if(arr[idx] <= target){
+        solve(idx+1, n, arr, target-arr[idx], asf+to_string(arr[idx])+", ");
+        solve(idx+1, n, arr, target, asf);
+    }else{
+        solve(idx+1, n, arr, target, asf);
+    }
+}
+
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int target;
+    cin>>target;
+    solve(0, n, arr, target, "");
+    return 0;
+}
