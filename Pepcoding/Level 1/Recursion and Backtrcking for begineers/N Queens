@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isValid(int r, int c, vector<vector<int>> &chess){
+    // vertical
+    int n = chess.size();
+    int nr = r-1, nc = c;
+    while(nr >= 0){
+        if(chess[nr][nc] == 1) return false;
+        nr--;
+    }
+
+    // forw diagonal
+    nr = r-1, nc = c+1;
+    while(nr >= 0 and nc < n){
+        if(chess[nr][nc] == 1) return false;
+        nr--, nc++;
+    }
+
+    // back diagonal
+    nr = r-1, nc = c-1;
+    while(nr >= 0 and nc >= 0){
+        if(chess[nr][nc] == 1) return false;
+        nr--, nc--;
+    }
+
+    return true;
+}
+
+void printNQueens(vector<vector<int>> &chess, string qsf, int row){
+    // base case
+    if(row == chess.size()){
+        string ans = qsf+".";
+        cout<<ans<<endl;
+        return;
+    }
+
+    // main logic
+    int n = chess.size();
+    for(int c=0;c<n;c++){
+        if(isValid(row, c, chess)){
+            chess[row][c] = 1;
+            string res = qsf + to_string(row)+"-"+to_string(c)+", ";
+            printNQueens(chess, res, row+1);
+            chess[row][c] = 0;
+        }
+    }
+}
+
+int main(){
+  int n;
+  cin >> n;
+  vector<vector<int>> chess(n , vector<int> (n, 0));
+    
+  printNQueens(chess,"",0);
+    
+}
