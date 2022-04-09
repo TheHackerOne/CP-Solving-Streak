@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+//function to display the 2-d array
+void display(vector<vector<int>> &chess){
+    for(int i=0;i<chess.size();i++){
+        for(int j=0;j<chess.size();j++){
+            cout << chess[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+vector<int> ro = {-2, -1, 1, 2, 2, 1, -1, -2};
+vector<int> co = {1, 2, 2, 1, -1, -2, -2, -1};
+
+bool isValid(int r,int c, int n, int m){
+    if(r >= 0 and r < n and c >= 0 and c < m) return true;
+    return false;
+}
+
+void printKnightsTour(vector<vector<int>> &chess,int n,int r,int c,int upcomingMove){
+    // base case
+    if(upcomingMove == n*n){
+        chess[r][c] = upcomingMove;
+        display(chess);
+        chess[r][c] = 0;
+        return;
+    }
+
+    // main logic
+    chess[r][c] = upcomingMove;
+    for(int i=0;i<8;i++){
+        int newr = r + ro[i], newc = c + co[i];
+        if(isValid(newr, newc, n, n) and chess[newr][newc] == 0){
+            printKnightsTour(chess, n, newr, newc, upcomingMove+1);
+        }
+    }
+    chess[r][c] = 0;
+}
+    
+int main(){
+    int n, r, c;
+    cin>>n>>r>>c;
+
+    vector<vector<int>> chess(n, vector<int> (n, 0));
+
+    printKnightsTour(chess, n, r, c, 1);
+}
