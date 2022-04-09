@@ -1,0 +1,48 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+vector<string> getMazePaths(int sr, int sc, int dr, int dc) {
+    // base case
+    if(sr == dr and sc == dc){
+        vector<string> res;
+        res.push_back("");
+        return res;
+    }
+
+    // main logic
+    vector<string> res;
+
+    vector<string> res1, res2;
+    if(sr+1 <= dr) res1 = getMazePaths(sr+1, sc, dr, dc);
+    if(sc+1 <= dc) res2 = getMazePaths(sr, sc+1, dr, dc);
+
+    for(int i=0;i<res2.size();i++){
+        res.push_back('h'+res2[i]);
+    }
+    for(int i=0;i<res1.size();i++){
+        res.push_back('v'+res1[i]);
+    }
+
+    return res;
+}
+
+void display(vector<string>& arr){
+    cout<<"[";
+    for(int i = 0;i < arr.size();i++){
+        cout<<arr[i];
+        if(i < arr.size()-1) cout<<", ";
+    }
+    
+    cout << "]"<<endl;
+}
+
+
+int main() {
+    int n,m; cin >> n >> m;
+    vector<string> ans = getMazePaths(0,0,n-1,m-1);
+    display(ans);
+
+    return 0;
+}
