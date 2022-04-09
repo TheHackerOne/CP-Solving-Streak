@@ -1,11 +1,3 @@
-rrrdd
-rrrdldr
-rrrdlldrr
-rrdrd
-rrddr
-rrdldrr
-rdrtrdd
-rdrrd
-rdrdr
-rddrttrdd
-rddrtrd
+2
+2 3
+3 3 1
