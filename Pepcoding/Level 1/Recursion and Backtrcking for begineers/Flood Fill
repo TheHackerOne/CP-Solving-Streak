@@ -1,0 +1,56 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+vector<int> ro = {-1, 0, 1, 0};
+vector<int> co = {0, 1, 0, -1};
+vector<char> dir = {'t','r','d','l'};
+
+bool isValid(int r, int c, int n, int m){
+    if(r >= 0 and r < n and c >= 0 and c < m) return true;
+    return false;
+}
+
+void solve(int sr, int sc, int dr, int dc, string asf, vector<vector<int>> &maze){
+    // base case
+    if(sr == dr and sc == dc){
+        cout<<asf<<endl;
+        return;
+    }
+
+    // main logic
+    maze[sr][sc] = -1; // visited marked
+    int r = maze.size(), c = maze[0].size();
+
+    for(int i=0;i<4;i++){
+        int newr = sr+ro[i], newc = sc+co[i];
+        if(isValid(newr, newc, r, c) and maze[newr][newc] == 0){
+            asf += dir[i];
+            solve(newr, newc, dr, dc, asf, maze);
+            asf.pop_back();
+        }
+    }
+
+    maze[sr][sc] = 0;
+}
+
+void floodfill(vector<vector<int>> &maze) {
+    int r = maze.size(), c = maze[0].size();
+
+    if(maze[0][0] == 1 or maze[r-1][c-1] == 1) return;
+
+    solve(0, 0, r-1, c-1, "", maze);
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>>arr(n, vector<int>(m));
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> arr[i][j];
+
+    floodfill(arr);
+}
