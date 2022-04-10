@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool ispossible(vector<int> &arr,int m,int mid){
+    int students = 1;
+    int pages = 0;
+    for(int i=0;i<arr.size();i++){
+        if(pages + arr[i] <= mid){
+            pages += arr[i];
+        }else{
+            students++;
+            pages = arr[i];
+        }
+    }
+    if(students <= m) return false;
+    return true;
+}
+int minimum_pages(vector<int> &arr,int m){
+    int lo = *max_element(arr.begin(), arr.end()), hi = accumulate(arr.begin(), arr.end(), 0);
+    int ans = -1;
+    while(lo <= hi){
+        int mid = (lo+hi)/2; // pages per student
+        // cout<<mid<<endl;
+        if(ispossible(arr, m, mid)){
+            ans = mid;
+            lo = mid+1;
+        }else{
+            hi = mid-1;
+        }
+    }
+    if(ans == -1) return *max_element(arr.begin(), arr.end());
+    return ans+1;
+}
+
+int main()
+{
+ int n;
+ cin>>n;
+ 
+ vector<int> arr(n);
+ for(int i=0;i<n;i++)
+ {
+     cin>>arr[i];
+ }
+ int m;
+ cin>>m;
+ int x=minimum_pages(arr,m);
+ cout<<x;
+}
