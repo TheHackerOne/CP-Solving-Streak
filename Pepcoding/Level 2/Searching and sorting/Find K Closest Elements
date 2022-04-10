@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+#include<iostream>
+
+using namespace std;
+
+vector<int> findClosest(vector<int> &arr, int k, int x){
+    priority_queue<pair<int, int>> pq;
+    int n = arr.size();
+    for(int i=0;i<n;i++){
+        int diff = abs(x-arr[i]);
+        pq.push({diff, arr[i]});
+        if(pq.size() > k){
+            pq.pop();
+        }
+    }
+    vector<int> ans;
+    while(!pq.empty()){
+        ans.push_back(pq.top().second);
+        pq.pop();
+    }
+    sort(ans.begin(), ans.end());
+    return ans;
+    
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> arr;
+    
+    for(int i=0; i<n; ++i){
+        int a;
+        cin>>a;
+        arr.push_back(a);
+    }
+    
+    int k, x;
+    cin>>k>>x;
+    
+    vector<int> ans=findClosest(arr, k, x);
+    
+    for(int ele: ans){
+        cout<<ele<<" ";
+    }
+    
+    return 0;
+}
