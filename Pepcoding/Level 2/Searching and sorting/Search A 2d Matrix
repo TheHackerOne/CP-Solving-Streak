@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+    
+bool search(vector<vector<int>> &matrix,int target) {
+    // num = 13
+    // col = num%c = 13%4 = 1
+    // row = num/r = 13/4 = 3
+    int r = matrix.size(), c = matrix[0].size();
+    int lo = 0, hi = r*c-1;
+    while(lo <= hi){
+        int mid = (lo+hi)/2;
+        int ro = mid/r, co = mid%c;
+        if(matrix[ro][co] == target){
+            return true;
+        }else if(matrix[ro][co] > target) hi = mid-1;
+        else lo = mid+1;
+    }
+    return false;
+}
+
+int main()
+{
+    int m;
+    cin>>m;
+    int n;
+    cin>>n;
+    
+    vector<vector<int>> matrix(m,vector<int>(n));
+    
+    for(int i=0; i < m;i++) {
+        for(int j=0; j < n;j++) {
+            cin>>matrix[i][j];
+        }
+    }
+        
+    int target;
+    cin>>target;
+    
+    bool isFound = search(matrix,target);
+
+    if(isFound == 0)
+    cout<<"false";
+    else if(isFound == 1)
+    cout<<"true";
+}
