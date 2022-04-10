@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int findSmallestDivisor(vector<int> &nums,int threshold) {
+    int lo = 1, hi = *max_element(nums.begin(), nums.end());
+        int ans = -1;
+        while(lo <= hi){
+            int mid = (lo+hi)/2;
+            int sum = 0;
+            for(int i=0;i<nums.size();i++){
+                sum += ceil(nums[i]/(float)mid);
+            }
+            if(sum <= threshold){
+                ans = mid;
+                hi = mid-1;
+            }else{
+                lo = mid+1;
+            }
+        }
+        return ans;
+}
+
+int main() {
+    int n = 0;
+    cin>>n;
+    vector<int> nums(n);
+
+    for(int i=0 ; i < n ; i++) {
+        cin>>nums[i];
+    }
+
+    int th = 0;
+    cin>>th;
+    int div = findSmallestDivisor(nums,th);
+    cout<<div;
+}
