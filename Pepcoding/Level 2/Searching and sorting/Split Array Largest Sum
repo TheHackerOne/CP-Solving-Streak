@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isPossible(vector<int> &arr, int mid, int m){
+    int subarrays = 1;
+    int ele = 0;
+    for(int i=0;i<arr.size();i++){
+        if(ele+arr[i] <= mid){
+            ele += arr[i];
+        }else{
+            subarrays++;
+            ele = arr[i];
+        }
+    }
+    if(subarrays <= m) return true;
+    return false;
+}
+
+int splitArray(vector<int>& arr, int m){
+    int lo = *max_element(arr.begin(), arr.end()), hi = accumulate(arr.begin(), arr.end(), 0);
+    int ans = -1;
+    while(lo <= hi){
+        int mid = (lo+hi)/2; //element per subarray
+        if(isPossible(arr, mid, m)){
+            ans = mid;
+            hi = mid-1;
+        }else{
+            lo = mid+1;
+        }
+    }
+    return ans;
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> arr(n,0);
+    for(int i=0; i<n; i++){
+        cin>>arr[i];
+    }
+    int m;
+    cin>>m;
+
+    int ans = splitArray(arr, m );
+    cout<<ans<<endl;
+}
