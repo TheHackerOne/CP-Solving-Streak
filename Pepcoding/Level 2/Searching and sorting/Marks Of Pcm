@@ -1,0 +1,65 @@
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+
+class Triple{
+    public:
+    int p;
+    int c;
+    int m;
+    Triple(int p, int c, int m){
+        this->p = p;
+        this->c = c;
+        this->m = m;
+    }
+};
+
+bool comp(Triple *a, Triple *b){
+    if(a->p != b->p) return a->p < b->p;
+    else{
+        if(a->c != b->c) return a->c > b->c;
+        else{
+            return a->m < b->m;
+        }
+    }
+}
+
+void customSort(vector<int> &phy, vector<int> &chem, vector<int> &math){
+    vector<Triple*> arr(phy.size());
+    for(int i=0;i<phy.size();i++){
+        Triple* t = new Triple(phy[i], chem[i], math[i]);
+        arr[i] = t;
+    }
+    sort(arr.begin(), arr.end(), comp);
+
+    for(int i=0;i<phy.size();i++){
+        phy[i] = arr[i]->p;
+        chem[i] = arr[i]->c;
+        math[i] = arr[i]->m;
+    }
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> phy(n,0), chem(n,0), math(n,0);
+    
+    for(int i=0; i<n; ++i){
+        cin>>phy[i];
+    }
+    for(int i=0; i<n; ++i){
+        cin>>chem[i];
+    }
+    for(int i=0; i<n; ++i){
+        cin>>math[i];
+    }
+    
+    customSort(phy, chem, math);
+    
+    for(int i=0; i<n; ++i){
+        cout<<phy[i]<<" "<<chem[i]<<" "<<math[i]<<endl;
+    }
+    
+    return 0;
+}
