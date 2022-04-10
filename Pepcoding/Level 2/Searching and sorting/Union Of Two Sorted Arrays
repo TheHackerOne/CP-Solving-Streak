@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void Union(vector<int> & a, vector<int>& b, vector<int>& ans){
+    int i = 0, j = 0;
+    while(i < a.size() and j < b.size()){
+        int n = ans.size();
+        if(a[i] == b[j]){
+            if(ans.size() == 0 or (ans.size() > 0 and ans[n-1] != a[i])){
+                ans.push_back(a[i]);
+            }
+            i++, j++;
+        }else if(a[i] < b[j]){
+            if(ans.size() == 0) ans.push_back(a[i]);
+            else if(ans[n-1] != a[i]) ans.push_back(a[i]);
+            i++;
+        }else{
+            if(ans.size() == 0) ans.push_back(b[j]);
+            else if(ans[n-1] != b[j]) ans.push_back(b[j]);
+            j++;
+        }
+    }
+    while(i < a.size()){
+        if(ans.size() == 0) ans.push_back(a[i++]);
+        else if(ans[ans.size()-1] != a[i]) ans.push_back(a[i++]);
+        else i++;
+    }
+
+    while(j < b.size()){
+        if(ans.size() == 0) ans.push_back(b[j++]);
+        else if(ans[ans.size()-1] != b[j]) ans.push_back(b[j++]);
+        else j++;
+    }
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> a(n,0);
+    for(int i=0; i<n; i++){
+        cin>>a[i];
+    }
+    int m;
+    cin>>m;
+    vector<int> b(m,0);
+    for(int i=0; i<m; i++){
+        cin>>b[i];
+    }
+    vector<int> ans;
+    Union(a,b,ans);
+    for(int i=0; i<ans.size(); i++){
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
+}
