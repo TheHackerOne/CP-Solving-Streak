@@ -74,52 +74,9 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
-bool res = true;
-
-void display(vector<vector<int>> &ans){
-  int n = ans.size();
-  for(int i=0;i<n;i++){
-    for(int j=0;j<=i;j++){
-      cout<<ans[i][j]<<" ";
-    }
-    cout<<endl;
-  }
-}
-
-void solve_(vector<vector<int>> &ans, int num, int cnt, int r, int c){
-  ans[r][c] = num;
-  // display(ans);
-  cnt--;
-  if(cnt == 0) return;
-  if(c-1 >= 0 and ans[r][c-1] == 0) solve_(ans, num, cnt, r, c-1);
-  else if(r+1 < ans.size() and ans[r+1][c] == 0) solve_(ans, num, cnt, r+1, c);
-  else res = false;
-}
 
 void solve() {
-  int n;
-  cin>>n;
-  res = true;
-  vector<int> arr(n);
-  for(int i=0;i<n;i++) cin>>arr[i];
 
-  vector<vector<int>> ans(n, vector<int> (n, 0));
-
-  for(int i=0;i<n;i++){
-    int num = arr[i];
-    solve_(ans, num, num, i, i);
-  }
-
-  if(!res) cout<<-1<<endl;
-  else{
-    for(int i=0;i<n;i++){
-      for(int j=0;j<=i;j++){
-        cout<<ans[i][j];
-        if(j != i) cout<<" ";
-      }
-      cout<<endl;
-    }
-  }
 }
 
 int main() {
@@ -128,8 +85,11 @@ int main() {
 #endif
 
   fastio();
-  solve();
-  
+  ll t;
+  cin >> t;
+  while (t--) {
+    solve();
+  }
 
   return 0;
 }
