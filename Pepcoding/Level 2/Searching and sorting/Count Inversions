@@ -13,7 +13,7 @@ void merge(int *a, int s, int e){
         if(a[i] <= a[j]){
             temp[k++] = a[i++];
         }else{
-            cnt += (e-mid);
+            cnt += (mid-i+1);
             temp[k++] = a[j++];
         }
     }
