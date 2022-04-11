@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <cmath>
+#include <bits/stdc++.h>
+using namespace std;
+  int findRadius(vector<int> &houses, vector<int> &heat) {
+    int ans = INT_MIN;
+        sort(heat.begin(), heat.end());
+        
+        for(int i=0;i<houses.size();i++){
+            int house = houses[i];
+            
+            int rhi = lower_bound(heat.begin(), heat.end(), house)-heat.begin();
+            // rhi = 0, 0, -1
+            if(rhi == heat.size()) rhi = -1;
+            int lhi = (rhi == -1 ? heat.size()-1 : (heat[rhi] == house ? rhi : ( rhi-1>=0 ? rhi-1 : -1)));
+            int diff = min((rhi == -1 ? INT_MAX : heat[rhi]-house), (lhi == -1 ? INT_MAX : house-heat[lhi]));
+            ans = max(ans, diff);
+        }
+        
+        return ans;
+  }
+
+  int main() {
+    //input work
+    int n = 0;
+    cin>>n;
+    vector<int> houses(n);
+
+    for (int i = 0; i < n; i++) {
+      cin>>houses[i];
+    }
+
+    int m = 0;
+    cin>>m;
+    vector<int> heaters(m);
+
+    for (int i = 0; i < m; i++) {
+      cin>>heaters[i];
+    }
+
+    cout<<findRadius(houses, heaters);
+    return 0;
+  }
