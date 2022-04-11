@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int no_of_t(vector<int> &arr){
+    int cnt = 0;
+    sort(arr.begin(), arr.end());
+    for(int i=arr.size()-1;i>=0;i--){
+        int num = arr[i];
+        int lo = 0, hi = i-1;
+        while(lo < hi){
+            int sum = arr[lo]+arr[hi];
+            if(sum > num){
+                cnt += (hi-lo);
+                hi--;
+            }else if(sum <= num){
+                lo++;
+            }
+        }
+    }
+    return cnt;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    
+      for (int j = 0; j < n; j++) {
+        cin>>arr[j];
+      }
+
+    int x=no_of_t(arr);
+    cout<<x;
+}
