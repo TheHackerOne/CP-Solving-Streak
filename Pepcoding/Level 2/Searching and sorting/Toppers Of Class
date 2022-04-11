@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void kToppers(vector<int> &marks, int k, vector<int>& ans){
+  auto compare = [](pair<int, int> lhs, pair<int, int> rhs)
+                {
+                  if(lhs.first == rhs.first) return lhs.second < rhs.second;
+                  return lhs.first > rhs.first;
+                };
+
+  priority_queue<pair<int, int>, std::vector<pair<int, int>>, decltype(compare)> q(compare);
+
+  int n = marks.size();
+  for(int i=0;i<n;i++){
+    q.push({ marks[i], i });
+    if(q.size() > k){
+      q.pop();
+    }
+  }
+
+  while(!q.empty()){
+    ans.push_back(q.top().second);
+    q.pop();
+  }
+  reverse(ans.begin(), ans.end());
+}
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> marks(n,0);
+    for(int i=0; i<n; i++){
+        cin>>marks[i];
+    }
+    int k;
+    cin>>k;
+    
+    vector<int> ans;
+    kToppers(marks,k, ans);
+    
+    for(int i=0; i<ans.size(); i++){
+        cout<<ans[i]<<" ";
+    }
+}
