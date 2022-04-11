@@ -13,15 +13,10 @@ public:
                 }
             }
             if(leftMax > num){
-                if(leftMaxIdx == 0){
-                    reverse(arr.begin(), arr.begin()+i+1);
-                    ans.push_back(i+1);
-                }else{
-                    reverse(arr.begin(), arr.begin()+leftMaxIdx+1);
-                    reverse(arr.begin(), arr.begin()+i+1);
-                    ans.push_back(leftMaxIdx+1);
-                    ans.push_back(i+1);
-                }
+                reverse(arr.begin(), arr.begin()+leftMaxIdx+1);
+                reverse(arr.begin(), arr.begin()+i+1);
+                ans.push_back(leftMaxIdx+1);
+                ans.push_back(i+1);
             }
         }
         
