@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int count(vector<int> &arr){
+  int prev = INT_MIN, next = INT_MAX;
+  int left = 0, right = arr.size()-1;
+  int cnt = 0;
+  while(left <= right){
+    while(left <= right and arr[left] == prev) left++;
+    while(left <= right and arr[right] == next) right--;
+    if(left > right) break;
+    if(abs(arr[left]) == abs(arr[right])){
+      cnt++;
+      prev = arr[left];
+      next = arr[right];
+      left++, right--;
+    }else if(abs(arr[left]) < abs(arr[right])){
+      next = arr[right];
+      cnt++;
+      right--;
+    }else{
+      prev = arr[left];
+      cnt++;
+      left++;
+    }
+  }
+  return cnt;
+}
+
+int main() {
+    // input work
+    int n;
+    cin >> n;
+    vector<int> arr(n, 0);
+    for(int i = 0; i < arr.size(); i++){
+        cin >> arr[i];
+    }
+    
+    cout << count(arr) << endl;
+    
+    return 0;
+}
