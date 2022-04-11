@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int static bad=0;
+bool isBad(int val)
+{
+      if(val>=bad)
+      return true;
+      else 
+      return false;
+}
+int fbv(int n)
+{
+   int lo = 1, hi = n;
+        int ans = -1;
+        while(lo <= hi){
+            long long mid = (1LL*lo+hi)/2;
+            if(isBad(mid)){
+                ans = mid;
+                hi = mid-1;
+            }else{
+                lo = mid+1;
+            }
+        }
+        return ans;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int p;
+    cin>>p;
+    bad=p;
+    
+    int x=fbv(n);
+    cout<<x;
+    
+}
