@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> findDuplicates(vector<int>& nums)
+{
+    vector<int> ans;
+    int n = nums.size();
+    for(int i=0;i<n;i++){
+        int num = abs(nums[i]);
+        if(nums[num-1] < 0 ) ans.push_back(num);
+        else nums[num-1] -= 2*nums[num-1];
+    }
+
+    return ans;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    
+    for(int i=0; i<n ;i++)
+    {
+        cin>>arr[i];
+    }
+    
+    
+    vector<int> r = findDuplicates(arr);
+    
+    if(r.size() == 0)
+    {
+        cout<<"Empty"<<endl;
+        return 0;
+    }
+    sort(r.begin(), r.end());
+    
+    for(int val : r)
+    {
+        cout<<val<<" ";
+    }
+    cout<<endl;
+}
