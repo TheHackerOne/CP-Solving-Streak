@@ -1,0 +1,89 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> twoSum(vector<int>& arr, int si, int ei, int target)
+{
+  vector<vector<int>> res;
+  int left = si;
+  int right = ei;
+  sort(arr.begin(),arr.end());
+  while (left < right) {
+    if (left != si && arr[left] == arr[left - 1]) {
+      left++;
+      continue;
+    }
+
+    int sum = arr[left] + arr[right];
+    if (sum == target) {
+      vector<int> list;
+      list.push_back(arr[left]);
+      list.push_back(arr[right]);
+      res.push_back(list);
+
+      left++;
+      right--;
+    } else if (sum > target) {
+      right--;
+    } else {
+      left++;
+    }
+  }
+
+  return res;
+}
+
+vector<vector<int>> threeSum(vector<int>& nums, int targ) {
+  sort(nums.begin(), nums.end());
+  int n = nums.size();
+  vector<vector<int>> res;
+
+  for(int i=0;i<n-2;i++){
+    if(i != 0 and nums[i-1] == nums[i]) continue;
+    int rem = targ-nums[i];
+    int lo = i+1, hi = n-1;
+    while(lo < hi){
+      int sum = nums[lo]+nums[hi];
+      if(sum == rem){
+        res.push_back({ nums[i], nums[lo++], nums[hi--] });
+        while(lo < n and nums[lo] == nums[lo-1]) lo++;
+        while(hi >= 0 and nums[hi] == nums[hi+1]) hi--;
+      }else if(sum > rem){
+        hi--;
+      }else lo++;
+    }
+  }
+
+  return res;
+}
+
+int main() {
+  int n = 0;
+  cin >> n;
+  vector<int> arr(n);
+  for (int i = 0; i < n; i++) {
+    cin >> arr[i];
+  }
+  int target = 0;
+  cin >> target;
+  vector<vector<int>> res = threeSum(arr, target);
+  vector<string> finalResult;
+  
+  for (int i = 0; i < res.size(); i++) {
+    vector<int> list = res[i];
+    sort(list.begin(), list.end());
+    string ans = "";
+    for (int i = 0; i < list.size(); i++) {
+      int val = list[i];
+      ans +=  to_string(val) ;
+      ans+=" ";
+    }
+    finalResult.push_back(ans);
+  }
+  sort(finalResult.begin(), finalResult.end());
+
+    for (int i=0;i<finalResult.size();i++){
+      cout<<finalResult[i]<<endl;
+    }
+
+  return 0;
+}
