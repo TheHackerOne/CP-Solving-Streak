@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+vector<vector<int>> fourSum(vector<int>& nums, int target) {
+  int n = nums.size();
+        sort(nums.begin(), nums.end());
+        
+        vector<vector<int>> ans;
+        
+        for(int i=0;i<n;i++){
+            if(i != 0 and nums[i] == nums[i-1]) continue;
+            for(int j=i+1;j<n;j++){
+                if(j != i+1 and nums[j] == nums[j-1]) continue;
+                int sum = nums[i]+nums[j]; // sum of two numbers i and j
+                int remSum = target - sum; // remaining 2 numbers sum is remSum
+                int left = j+1, right = n-1;
+                while(left < right){
+                    int sum = nums[left]+nums[right];
+                    if(sum < remSum) left++;
+                    else if(sum > remSum) right--;
+                    else{
+                        vector<int> res = { nums[i], nums[j], nums[left], nums[right] };
+                        left++, right--;
+                        while(left < right and nums[left] == nums[left-1]) left++;
+                        while(left < right and nums[right] == nums[right+1]) right--;
+                        ans.push_back(res);
+                    }
+                }
+            }
+        }
+        
+        return ans;
+}
+
+int main() {
+  int n = 0;
+  cin >> n;
+  vector<int> arr(n);
+  for (int i = 0; i < n; i++) {
+    cin >> arr[i];
+  }
+  int target = 0;
+  cin >> target;
+  vector<vector<int>> res = fourSum(arr, target);
+  vector<string> finalResult;
+  for (int i = 0; i < res.size(); i++) {
+    vector<int> list = res[i];
+    sort(list.begin(), list.end());
+    string ans = "";
+    for (int i = 0; i < list.size(); i++) {
+      int val = list[i];
+      ans +=  to_string(val) ;
+      ans+=" ";
+    }
+    finalResult.push_back(ans);
+  }
+  sort(finalResult.begin(), finalResult.end());
+  int t=finalResult.size();
+    for (int i=0;i<finalResult.size();i++){
+      cout<<finalResult[i]<<endl;
+    }
+
+  return 0;
+}
