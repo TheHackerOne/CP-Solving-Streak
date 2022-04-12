@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> twoSum(vector<int>& arr, int target)
+{
+  vector<vector<int>> res;
+  sort(arr.begin(), arr.end());
+
+  int n = arr.size();
+  int lo = 0, hi = arr.size()-1;
+
+  while(lo < hi){
+    int sum = arr[lo]+arr[hi];
+    if(sum == target){
+      res.push_back({ arr[lo++], arr[hi--] });
+      while(lo < n and arr[lo] == arr[lo-1]) lo++;
+      while(hi >= 0 and arr[hi] == arr[hi+1]) hi--;
+    }else if(sum < target){
+      lo++;
+    }else{
+      hi--;
+    }
+  }
+
+  return res;
+}
+
+
+int main() {
+  int n;
+  cin >> n;
+  vector<int> arr(n);
+  for (int i = 0; i < n; i++) {
+    cin >> arr[i];
+  }
+  int target;
+  cin >> target;
+  vector<vector<int>> res = twoSum(arr, target);
+  vector<string> finalResult;
+  for (int i = 0; i < res.size(); i++) {
+    vector<int> list = res[i];
+    sort(list.begin(), list.end());
+    string ans = "";
+    for (int j = 0; j < list.size(); j++) {
+      int val = list[j];
+      ans +=  to_string(val) ;
+      ans+=" ";
+    }
+    
+    finalResult.push_back(ans);
+  }
+  sort(finalResult.begin(), finalResult.end());
+
+    
+    for (int i=0;i<finalResult.size();i++){
+      cout<<finalResult[i]<<endl;
+    }
+
+  return 0;
+}
