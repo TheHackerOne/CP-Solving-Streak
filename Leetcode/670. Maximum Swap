@@ -1,0 +1,23 @@
+class Solution {
+private:
+    static bool comp(char a, char b){
+        return a > b;
+    }
+public:
+    int maximumSwap(int num) {
+        string no = to_string(num);
+        string aux = no;
+        sort(aux.begin(), aux.end(), comp);
+        
+        for(int i=0;i<no.length();i++){
+            if(no[i] != aux[i]){
+                int idx = no.length();
+                while(no[idx] != aux[i]) idx--;
+                swap(no[i], no[idx]);
+                break;
+            }
+        }
+        
+        return stoi(no);
+    }
+};
