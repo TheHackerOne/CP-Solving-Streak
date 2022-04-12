@@ -1,0 +1,35 @@
+class CombinationIterator {
+    vector<string> str;
+    int idx = 0;
+    
+    void generateCombination(int idx, int n, string ch, string asf, vector<bool> &taken, int u){
+        // base case
+        if(idx == n){
+            str.push_back(asf);
+            return;
+        }
+        
+        // main logic
+        for(int i=u+1;i<ch.length();i++){
+            if(!taken[i]){
+                taken[i] = true;
+                generateCombination(idx+1, n, ch, asf+ch[i], taken, i);
+                taken[i] = false;
+            }
+        }
+    }
+public:
+    CombinationIterator(string cha, int combinationLength) {
+        vector<bool> taken(cha.length(), false);
+        generateCombination(idx, combinationLength, cha, "", taken, -1);
+        sort(str.begin(), str.end());
+    }
+    
+    string next() {
+        return str[idx++];
+    }
+    
+    bool hasNext() {
+        return idx < str.size();
+    }
+};
