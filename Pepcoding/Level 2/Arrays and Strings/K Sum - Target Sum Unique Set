@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> twoSum(vector<int>& arr, int target)
+{
+  vector<vector<int>> res;
+  sort(arr.begin(), arr.end());
+
+  int n = arr.size();
+  int lo = 0, hi = arr.size()-1;
+
+  while(lo < hi){
+    int sum = arr[lo]+arr[hi];
+    if(sum == target){
+      res.push_back({ arr[lo++], arr[hi--] });
+      while(lo < n and arr[lo] == arr[lo-1]) lo++;
+      while(hi >= 0 and arr[hi] == arr[hi+1]) hi--;
+    }else if(sum < target){
+      lo++;
+    }else{
+      hi--;
+    }
+  }
+
+  return res;
+}
+
+vector<vector<int>> kSum(vector<int> &arr, int target, int k) {
+    // base case    
+    vector<vector<int>> res;
+    if(arr.size()-k < 0) return res;
+    if(k == 2){
+      res = twoSum(arr, target);
+      return res;
+    }
+
+    vector<vector<int>> ans;
+
+    // main logic
+    for(int i=0;i<arr.size();i++){
+      if(i != 0 and arr[i] == arr[i-1]) continue;
+
+      vector<int> newArr;
+      for(int k=i+1;k<arr.size();k++) newArr.push_back(arr[k]);
+
+      vector<vector<int>> res = kSum(newArr, target-arr[i], k-1);
+
+      for(int l=0;l<res.size();l++){
+        ans.push_back(res[l]);
+        ans[ans.size()-1].push_back(arr[i]);
+      }
+    }
+
+    return ans;
+}
+
+int main(){
+    int n, target, k;
+    cin>>n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+      cin>>arr[i];
+    }
+    cin>>target>>k;
+    sort(arr.begin(), arr.end());
+    vector<vector<int>> res=kSum(arr, target, k);
+    vector<string> finalResult;
+    
+    for (vector<int> list : res) {
+      sort(list.begin(), list.end());
+      string ans = "";
+      for (int val : list) {
+        ans += to_string(val) + " ";
+      }
+      finalResult.push_back(ans);
+    }
+    sort(finalResult.begin(), finalResult.end());
+    for (string str : finalResult) {
+      cout<<str<<endl;
+    }
+  }
