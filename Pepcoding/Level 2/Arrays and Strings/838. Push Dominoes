@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string pushDominoes(string dom) {
+        dom = 'L'+dom+'R';
+        
+        int lo = 0, hi = 1;
+        while(lo < dom.length()){
+            while(hi < dom.length() and dom[hi] == '.'){
+                hi++;
+            }
+            if(dom[lo] == 'L' and dom[hi] == 'L'){
+                int idx = lo+1;
+                while(dom[idx] == '.'){
+                    dom[idx++] = 'L';
+                }
+            }else if(dom[lo] == 'L' and dom[hi] == 'R'){
+                lo = hi;
+                hi += 1;
+                continue;
+            }else if(dom[lo] == 'R' and dom[hi] == 'L'){
+                int l = lo+1, h = hi-1;
+                while(l < h){
+                    dom[l++] = 'R';
+                    dom[h--] = 'L';
+                }
+            }else{
+                int idx = lo+1;
+                while(dom[idx] == '.'){
+                    dom[idx++] = 'R';
+                }
+            }
+            lo = hi;
+            hi +=1;
+        }
+        
+        return dom.substr(1,dom.length()-2);
+    }
+};
