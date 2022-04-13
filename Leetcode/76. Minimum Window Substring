@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string res = "";
+        unordered_map<char, int> mp1, mp2;
+        
+        for(auto i:t) mp1[i]++;
+        
+        int st = -1, en = -1;
+        int cnt = 0, dcnt = t.length();
+        while(true){
+            bool f1 = false, f2 = false;
+            
+            // acquire
+            while(en < (int)(s.length()-1) and  cnt != dcnt){
+                en++;
+                char ch = s[en];
+                mp2[ch]++;
+                if(mp1.find(ch) != mp1.end() and mp2[ch] <= mp1[ch]){
+                    cnt++;
+                }
+                f1 = true;
+            }
+            
+            // collect and release
+            while(st < en and cnt == dcnt){
+                string sub = s.substr(st+1, en-st);
+                if(res.length() == 0 or sub.length() < res.length()){
+                    res = sub;
+                }
+                st++;
+                char ch = s[st];
+                mp2[ch]--;
+                if(mp1.find(ch) != mp1.end() and mp2[ch] < mp1[ch]){
+                    cnt--;
+                }
+                f2 = true;
+            }
+            
+            if(!f1 or !f2) break;
+        }
+        
+        return res;
+    }
+};
