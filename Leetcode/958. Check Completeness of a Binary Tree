@@ -1,0 +1,35 @@
+
+class Solution {
+public:
+    bool isCompleteTree(TreeNode* root) {
+        queue<TreeNode *> q;
+        q.push(root);
+        int nodes = 1;
+        while(!q.empty()){
+            int size = q.size();
+            bool gap = false;
+            if(size != nodes) {
+                while(!q.empty()){
+                    TreeNode *node = q.front();
+                    q.pop();
+                    if(node->left or node->right) return false;
+                }
+                return true;
+            }
+            while(size--){
+                TreeNode *node = q.front();
+                q.pop();
+                
+                if(node->left and !gap) q.push(node->left);
+                else if(node->left and gap) return false;
+                else gap = true;
+                
+                if(node->right and !gap) q.push(node->right);
+                else if(node->right and gap) return false;
+                else gap = true;
+            }
+            nodes *= 2;
+        }
+        return true;
+    }
+};
