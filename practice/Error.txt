@@ -1,0 +1,3 @@
+islands [ 4 1 1 1 1 ]
+islands [ 4 ]
+islands [ 1 1 1 ]
