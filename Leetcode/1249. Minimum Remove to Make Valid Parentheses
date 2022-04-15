@@ -1,11 +1,12 @@
 class Solution {
 public:
     string minRemoveToMakeValid(string s) {
-        unordered_map<int, int> mp;
         stack<int> st;
-        for(int i=0;i<s.length();i++){
+        int n = s.length();
+        unordered_map<int, int> mp;
+        for(int i=0;i<n;i++){
             if(s[i] == '(') st.push(i);
-            else if(s[i] == ')'){
+            else if(s[i] == ')') {
                 if(st.empty()) mp[i] = 1;
                 else st.pop();
             }
@@ -14,12 +15,10 @@ public:
             mp[st.top()] = 1;
             st.pop();
         }
-        string ans = "";
-        for(int i=0;i<s.length();i++){
-            if(mp.find(i) == mp.end()){
-                ans += s[i];
-            }
+        string res = "";
+        for(int i=0;i<n;i++){
+            if(mp.find(i) == mp.end()) res += s[i];
         }
-        return ans;
+        return res;
     }
 };
