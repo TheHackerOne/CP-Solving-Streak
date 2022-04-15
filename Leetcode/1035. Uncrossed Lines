@@ -1,0 +1,38 @@
+class Solution {
+private:
+    int solve(int idx, int n1, int n2, vector<int> &nums1, int bound, unordered_map<int, vector<int>> &mp, map<pair<int, int>, int> &dp){
+        // base case
+        if(idx == n1 or bound >= n2-1){
+            return 0;
+        }
+        
+        // memoize
+        if(dp.find({idx, bound}) != dp.end()) return dp[{idx, bound}];
+        
+        // main logic
+        int res1 = solve(idx+1, n1, n2, nums1, bound, mp, dp);
+        int res2 = INT_MIN;
+        for(int i=0;i<mp[nums1[idx]].size();i++){
+            if(mp[nums1[idx]][i] != -1 and mp[nums1[idx]][i] > bound){
+                int num = mp[nums1[idx]][i];
+                mp[nums1[idx]][i] = -1;
+                int ans = 1+solve(idx+1, n1, n2, nums1, num, mp, dp);
+                res2 = max(res2, ans);
+                mp[nums1[idx]][i] = num;
+            }
+        }
+        return dp[{ idx, bound }] = max(res1, res2);
+    }
+public:
+    int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
+        int n1 = nums1.size(), n2 = nums2.size();
+        
+        unordered_map<int, vector<int>> mp;
+        
+        for(int i=0;i<n2;i++){
+            mp[nums2[i]].push_back(i);
+        }
+        map<pair<int, int>, int> dp;
+        return solve(0, n1, n2, nums1, -1, mp, dp);
+    }
+};
