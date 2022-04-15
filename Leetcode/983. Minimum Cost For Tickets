@@ -1,20 +1,27 @@
 class Solution {
 public:
-    int dp[400][400];
-    int recur(int idx, int n, vector<int> &days, vector<int> &costs, int covered){
-        if(idx == n){
-            return 0;
-        }
-        if(dp[idx][covered] != -1) return dp[idx][covered];
-        if(days[idx] <= covered) return recur(idx+1, n, days,costs, covered);
-        int op1 = recur(idx+1, n, days, costs, days[idx])+costs[0];
-        int op2 = recur(idx+1, n, days, costs, days[idx]+6)+costs[1];
-        int op3 = recur(idx+1, n, days, costs, days[idx]+29)+costs[2];
-        return dp[idx][covered] = min({op1, op2, op3});
-    }
-    
     int mincostTickets(vector<int>& days, vector<int>& costs) {
-        memset(dp, -1, sizeof dp);
-        return recur(0, days.size(), days, costs, 0);
+        vector<int> dp(365+30, 0);
+        long long n = dp.size();
+        
+        for(long long i=0;i<n;i++){
+            if(i >= days[days.size()-1]) dp[i] = 0;
+            else
+                dp[i] = min({costs[0], costs[1], costs[2]});
+        }
+        
+        for(long long i=days.size()-2;i>=0;i--){
+            long long day = days[i];
+            for(long long j=0;j<n;j++){ // j → dayCovered
+                if(day > j){
+                    long long op1 = costs[0]+dp[day];
+                    long long op2 = costs[1]+dp[day+6];
+                    long long op3 = costs[2]+dp[day+29];
+                    dp[j] = min({ op1, op2, op3 });
+                }
+            }
+        }
+        
+        return dp[0];
     }
 };
