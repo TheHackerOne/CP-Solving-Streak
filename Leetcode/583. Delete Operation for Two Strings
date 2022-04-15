@@ -1,0 +1,23 @@
+class Solution {
+private:
+    int solve(int i1, int i2, int n1, int n2, string &str1, string &str2, map<pair<int, int>, int> &dp){
+        // base case
+        if(i1 == n1 and i2 == n2) return 0;
+        if(i1 == n1) return n2-i2;
+        if(i2 == n2) return n1-i1;
+        
+        // memoize
+        if(dp.find({i1, i2}) != dp.end()) return dp[{i1, i2}];
+        
+        // main logic
+        if(str1[i1] == str2[i2]) return dp[{i1, i2}] = solve(i1+1, i2+1, n1, n2, str1, str2, dp);
+        int op1 = 1+solve(i1, i2+1, n1, n2, str1, str2, dp);
+        int op2 = 1+solve(i1+1, i2, n1, n2, str1, str2, dp);
+        return dp[{i1, i2}] = min(op1, op2);
+    }
+public:
+    int minDistance(string word1, string word2) {
+        map<pair<int, int>, int> dp;
+        return solve(0, 0, word1.length(), word2.length(), word1, word2, dp);
+    }
+};
