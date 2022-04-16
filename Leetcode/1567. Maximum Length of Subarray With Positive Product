@@ -1,0 +1,44 @@
+class Solution {
+private:
+    int helper(vector<int> &nums, int lo, int hi){
+        int cnt = 0;
+        int fidx = -1, sidx = -1;
+        int n = hi-lo+1;
+        for(int i=lo;i<=hi;i++){
+            if(nums[i] < 0) {
+                cnt++;
+                if(fidx < 0) fidx = i;
+                sidx = i;
+            }
+        }
+        if(cnt%2 == 0) return n;
+        return max(hi-fidx, sidx-lo);
+    }
+public:
+    int getMaxLen(vector<int>& nums) {
+        int st = 0, en = 0;
+        int n = nums.size();
+        while(st < n and nums[st] == 0) st++;
+        if(st == n) return 0;
+        
+        en = st;
+        int ans = 0;
+        while(en < n){
+            if(nums[en] != 0) en++;
+            else{
+                int res = helper(nums, st, en-1);
+                ans = max(ans, res);
+                st = en;
+                while(st < n and nums[st] == 0) st++;
+                if(st == n) return ans;
+
+                en = st;
+            }
+        }
+        if(st < n){
+            int res = helper(nums, st, en-1);
+            ans = max(ans, res);
+        }
+        return ans;
+    }
+};
