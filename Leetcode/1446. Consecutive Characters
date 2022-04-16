@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxPower(string s) {
+        int lo = 0, hi = 0;
+        int maxLen = 1;
+        
+        for(int i=1;i<s.length();i++){
+            hi++;
+            if(s[hi] != s[lo]){
+                while(s[hi] != s[lo]) lo++;
+            }
+            maxLen = max(maxLen, hi-lo+1);
+        }
+        
+        return maxLen;
+    }
+};
