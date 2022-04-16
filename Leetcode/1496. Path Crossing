@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isPathCrossing(string path) {
+        unordered_map<string, int> mp;
+        mp["0,0"] = 1;
+        int r = 0, c = 0;
+        for(int i=0;i<path.length();i++){
+            if(path[i] == 'N'){
+                r++;
+            }else if(path[i] == 'S'){
+                r--;
+            }else if(path[i] == 'E'){
+                c++;
+            }else{
+                c--;
+            }
+            string res = to_string(r)+","+to_string(c);
+            if(mp.find(res) != mp.end()) return true;
+            mp[res] = 1; 
+        }
+        return false;
+    }
+};
