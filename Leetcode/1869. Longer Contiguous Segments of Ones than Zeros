@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool checkZeroOnes(string s) {
+        int lo = 0, hi = 0;
+        int maxones = 0, maxzeros = 0;
+        for(int i=1;i<s.length();i++){
+            if(s[hi] != s[i]){
+                if(s[hi] == '1'){
+                    maxones = max(maxones, hi-lo+1);
+                }else{
+                    maxzeros = max(maxzeros, hi-lo+1);
+                }
+                lo = hi = i;
+            }else hi++;
+        }
+        if(s[lo] == '1'){
+            maxones = max(maxones, hi-lo+1);
+        }else{
+            maxzeros = max(maxzeros, hi-lo+1);
+        }
+        
+        
+        return maxones > maxzeros;
+    }
+};
