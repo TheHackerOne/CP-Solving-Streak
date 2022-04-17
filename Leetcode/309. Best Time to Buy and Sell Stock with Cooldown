@@ -1,0 +1,29 @@
+
+class Solution {
+private:
+    int recur(int idx, int n, vector<int> &arr, bool buy, map<pair<int, bool>, int> &dp){
+        // base case
+        if(idx >= n){
+            return 0;
+        }
+        
+        // memoize
+        if(dp.find({idx, buy}) != dp.end()) return dp[{idx, buy}];
+
+        // main logic
+        if(buy){
+            int res1 = arr[idx]+recur(idx+2, n, arr, false, dp);
+            int res2 = recur(idx+1, n, arr, buy, dp);
+            return dp[{idx, buy}] = max(res1, res2);
+        }else{
+            int res1 = recur(idx+1, n, arr, true, dp)-arr[idx];
+            int res2 = recur(idx+1, n, arr, false, dp);
+            return dp[{idx, buy}] = max(res1, res2);
+        }
+    }
+public:
+    int maxProfit(vector<int>& prices) {
+        map<pair<int, bool>, int> dp;
+        return recur(0, prices.size(), prices, false, dp);
+    }
+};
