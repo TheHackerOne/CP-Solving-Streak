@@ -1,0 +1,47 @@
+
+class Solution {
+private:
+    int recur(int idx, int n, vector<int> &arr, bool buy, map<pair<int, bool>, int> &dp, int trans){
+        // base case
+        if(trans == 2) return 0;
+        if(idx == n){
+            return 0;
+        }
+        
+        // memoize
+        if(dp.find({idx, buy}) != dp.end()) return dp[{idx, buy}];
+
+        // main logic
+        if(buy){
+            int res1 = arr[idx]+recur(idx+1, n, arr, false, dp, trans+1);
+            int res2 = recur(idx+1, n, arr, buy, dp, trans);
+            return dp[{idx, buy}] = max(res1, res2);
+        }else{
+            int res1 = recur(idx+1, n, arr, true, dp, trans)-arr[idx];
+            int res2 = recur(idx+1, n, arr, false, dp, trans);
+            return dp[{idx, buy}] = max(res1, res2);
+        }
+    }
+public:
+     int maxProfit(vector<int>& arr) {
+        int n = arr.size();
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>> (2, vector<int> (3, 0)));
+        
+        for(int idx=n-1;idx>=0;idx--){
+            for(int b=0;b<=1;b++){
+                for(int t=0;t<=1;t++){
+                    if(b){
+                        int res1 = arr[idx]+dp[idx+1][0][t+1];
+                        int res2 = dp[idx+1][b][t];
+                        dp[idx][b][t] = max(res1, res2);
+                    }else{
+                        int res1 = dp[idx+1][1][t]-arr[idx];
+                        int res2 = dp[idx+1][0][t];
+                        dp[idx][b][t] = max(res1, res2);
+                    }
+                }
+            }
+        }
+        return dp[0][0][0];
+    }
+};
