@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
+        priority_queue<pair<int, pair<int,int>>, vector<pair<int, pair<int,int>>>, greater<pair<int, pair<int,int>>>> pq;
+        for(int i=0;i<primes.size();i++){
+            pq.push({primes[i]*1, { 0, primes[i] }}); // value, idx, prime
+        }
+        
+        vector<int> ugly(1, 1);
+        
+        while(ugly.size() != n){
+            int minNum = pq.top().first;
+            ugly.push_back(minNum);
+            
+            while(pq.top().first == minNum){
+                pair<int, pair<int, int>> p = pq.top();
+                pq.pop();
+                p.second.first++;
+                p.first = 1LL*p.second.second*ugly[p.second.first];
+                pq.push(p);
+            }
+        }
+        return ugly.back();
+    }
+};
