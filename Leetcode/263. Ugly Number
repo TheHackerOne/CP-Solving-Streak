@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isUgly(int n) {
+        if(n == 0) return false;
+        if(n == 1) return true;
+        bool valid = true;
+        
+        for(int i=2;i<=5;i++){
+            if(n%i == 0){
+                while(n%i == 0){
+                    n /= i;
+                }
+                valid = true;
+            }
+        }
+        if(n != 1) return false;
+        return true;
+    }
+};
