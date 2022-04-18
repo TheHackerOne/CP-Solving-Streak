@@ -1,0 +1,52 @@
+class Solution {
+private:
+    int solve(int n, int k, map<pair<int, int>, int> &dp){
+        // base case
+        if(k == 1) return n;
+        if(n == 1 or n == 0) return n;
+        
+        // memoization
+        if(dp.find({n, k}) != dp.end()) return dp[{n, k}];
+        
+        // main logic
+        int ans = 1e6;
+        for(int l=1;l<=n;l++){
+            int res1 = 1+solve(l-1, k-1, dp); // egg broke
+            int res2 = 1+solve(n-l, k,dp); // egg did not break
+            
+            ans = min(ans, max(res1, res2));
+        }
+        return dp[{n, k}] = ans;
+    }
+public:
+    int superEggDrop(int k, int n) {
+        // map<pair<int, int>, int> dp;
+        vector<vector<int>> dp(n+1, vector<int> (k+1, 0));
+        
+        for(int i=0;i<=n;i++){
+            for(int j=1;j<=k;j++){
+                if(i == 0 or i == 1) dp[i][j] = i;
+                else if(j == 1) dp[i][j] = i;
+                else{
+                    int l=1,h=i,temp=0,ans=100000;
+                     while(l<=h)
+                     {
+                        int mid=(l+h)/2;
+                        int left= dp[mid-1][j-1]; //egg broken check for down floors of mid
+                        int right= dp[i-mid][j];  // not broken check for up floors of mid
+                        temp=1+max(left,right);          //store max of both 
+                        if(left<right){                 
+                          l=mid+1;                       
+                        }else{    
+                          h=mid-1;
+                        }
+                        ans=min(ans,temp);               //store minimum attempts
+                     }
+                     dp[i][j]=ans;
+                }
+            }
+        }
+        
+        return dp[n][k];
+    }
+};
