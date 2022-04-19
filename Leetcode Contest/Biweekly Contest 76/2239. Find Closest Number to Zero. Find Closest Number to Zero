@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int findClosestNumber(vector<int>& nums) {
+        
+        int maxNeg = INT_MIN, minPos = INT_MAX;
+        int n = nums.size();
+        for(int i=0;i<n;i++){
+            if(nums[i] == 0) return 0;
+            if(nums[i] < 0) maxNeg = max(maxNeg, nums[i]);
+            else if(nums[i] > 0) minPos = min(minPos, nums[i]);
+        }
+        
+        if(maxNeg == INT_MIN ) return minPos;
+        if(minPos == INT_MAX) return maxNeg;
+        if(abs(maxNeg) == abs(minPos)) return minPos;
+        else if(abs(maxNeg) < abs(minPos)) return maxNeg;
+        else return minPos;
+    }
+};

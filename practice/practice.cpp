@@ -75,29 +75,27 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
 
+class Node{
+public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int data){
+        this->data = data;
+        left = right = nullptr;
+    }
+};
+
 void solve() {
-    int n;
-    cin>>n;
-    vector<string> arr(n);
-    unordered_map<string, int> mp;
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
+    int v;
+    cin>>v;
+    int e = v-1;
+    for(int i=0;i<e;i++){
+        int u, v;
+        cin>>u>>v;
+        
     }
-
-    for(auto &str:arr){
-        sort(str.begin(), str.end());
-    }
-    sort(arr.begin(), arr.end());
-
-    int cnt = 0;
-    int ans = 0;
-    for(int i=0;i<n;i++){
-        mp[arr[i]]++;
-        ans = max(ans, mp[arr[i]]);
-    }
-
-    cout<<ans<<nline;
-
 }
 
 int main() {
@@ -106,7 +104,11 @@ int main() {
 #endif
 
     fastio();
-    solve();
+    ll t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
 
     return 0;
 }
