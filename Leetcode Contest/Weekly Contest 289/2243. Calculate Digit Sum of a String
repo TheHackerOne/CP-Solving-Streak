@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+class Solution {
+private:
+    int getNum(string &str){
+        int num = 0;
+        for(int i=0;i<str.length();i++){
+            num += (str[i]-'0');
+        }
+        return num;
+    }
+public:
+    string digitSum(string s, int k) {
+        // s = "111 112 222 23", k = 3
+        while(s.length() > k){
+            string str = "";
+            int idx = 0;
+            while(s.length()-idx >= k){
+                string st = s.substr(idx, k);
+                int num = getNum(st);
+                str += to_string(num);
+                idx += k;
+            }
+            if(s.length()-idx >= 1) {
+                string st = s.substr(idx);
+                int num = getNum(st);
+                str += to_string(num);
+            }
+            s = str;
+        }
+        
+        return s;
+    }
+};
