@@ -1,0 +1,58 @@
+class ATM {
+private:
+    unordered_map<long long, long long> mp;
+    vector<long long> notes; 
+public:
+    ATM() {
+        mp.clear();
+        notes = {20, 50, 100, 200, 500};
+    }
+    
+    void deposit(vector<int> banknotesCount) {
+        for(int i=0;i<5;i++){
+            mp[notes[i]] += banknotesCount[i];
+        }
+    }
+    
+    vector<int> withdraw(int amount) {
+        vector<int> ans(5, 0);
+        // for(int i=0;i<5;i++){
+        //     cout<<mp[notes[i]]<<" ";
+        // }
+        // cout<<endl;
+        
+        for(int i=4;i>=0;i--){
+            int note = notes[i];
+            if(note > amount) continue;
+            int cnt = amount/note;
+            if(mp[note] > 0 and mp[note] >= cnt){
+                amount -= cnt*note;
+                ans[i] = cnt;
+            }else if(mp[note] > 0 and mp[note] < cnt){
+                amount -= mp[note]*note;
+                ans[i] = mp[note];
+            }
+            if(amount == 0) break;
+        }
+        
+        
+        if(amount) return {-1};
+        
+        for(int i=0;i<5;i++){
+            mp[notes[i]] -= ans[i];
+        }
+        // for(int i=0;i<5;i++){
+        //     cout<<mp[notes[i]]<<" ";
+        // }
+        // cout<<endl;
+        
+        return ans;   
+    }
+};
+
+/**
+ * Your ATM object will be instantiated and called as such:
+ * ATM* obj = new ATM();
+ * obj->deposit(banknotesCount);
+ * vector<int> param_2 = obj->withdraw(amount);
+ */
