@@ -1,0 +1,15 @@
+class Solution {
+public:
+    long long waysToBuyPensPencils(int total, int cost1, int cost2) {
+        long long cnt = 0;
+        // pen, pencil
+        int penNum = total/cost1;
+        for(int i=0;i<=penNum;i++){
+            int moneyLeft = total - (cost1*i);
+            int pencilNum = moneyLeft/cost2;
+            cnt += (pencilNum+1);
+        }
+        
+        return cnt;
+    }
+};
