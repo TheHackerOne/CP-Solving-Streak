@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int maximumScore(vector<int>& scores, vector<vector<int>>& edges) {
+        unordered_map<int, vector<pair<int, int>>> mp;
+        for(int i=0;i<edges.size();i++){
+            int u = edges[i][0], v = edges[i][1];
+            mp[u].push_back({v, scores[v]});
+            mp[v].push_back({u, scores[u]});
+        }
+        
+        for(auto &[node, neigh]:mp){
+            sort(neigh.begin(), neigh.end(), [](pair<int, int> &a, pair<int, int> &b){
+                return a.second > b.second;
+            });
+        }
+        
+        int maxPoint = INT_MIN;
+            
+        for(int i=0;i<edges.size();i++){
+            int u = edges[i][0], v = edges[i][1];
+            int points = scores[u]+scores[v];
+            set<int> st;
+            
+            if(mp[u].size() == 1 or mp[v].size() == 1) continue;
+            st.insert({mp[u][0].first, mp[u][1].first, mp[v][0].first, mp[v][1].first});
+            if(mp[u].size() == 2 and mp[v].size() == 2 and st.size() == 3) continue;
+            
+            // find left max score node
+            int maxNodeLeft = mp[u][0].first == v ? mp[u][1].first : mp[u][0].first;
+            int maxScoreNodeLeft = mp[u][0].first == v ? mp[u][1].second : mp[u][0].second;
+            
+            // find right max score node
+            int maxNodeRight = mp[v][0].first == u ? mp[v][1].first : mp[v][0].first;
+            int maxScoreNodeRight = mp[v][0].first == u ? mp[v][1].second : mp[v][0].second;
+            
+            if(maxNodeLeft == maxNodeRight){
+                int sMaxLeft = 0, sMax = 0, sMaxRight = 0;
+                while(mp[u][sMaxLeft].first != maxNodeLeft) sMaxLeft++;
+                while(mp[v][sMaxRight].first != maxNodeRight) sMaxRight++;
+                
+                if(sMaxLeft+1 < mp[u].size() and mp[u][sMaxLeft+1].first == v) sMaxLeft++;
+                
+                if(sMaxRight+1 < mp[v].size() and mp[v][sMaxRight+1].first == u) sMaxRight++;
+                
+                sMax = max(sMaxLeft+1 == mp[u].size() ? INT_MIN : mp[u][sMaxLeft+1].second, sMaxRight+1 == mp[v].size() ? INT_MIN : mp[v][sMaxRight+1].second);
+                
+                if(sMax == INT_MIN) continue;
+                
+                int totalPoints = points + maxScoreNodeRight + sMax;
+                maxPoint = max(maxPoint, totalPoints);
+                continue;
+            }
+            
+            int totalPoints = points + maxScoreNodeLeft + maxScoreNodeRight;
+            
+            maxPoint = max(maxPoint, totalPoints);
+        }
+        
+        return (maxPoint == INT_MIN ? -1 : maxPoint);
+    }
+};
