@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string minimizeResult(string exp) {
+        // 999+999
+        // 0123456
+        int idx = 0;
+        string ans = "";
+        int minVal = INT_MAX;
+        while(exp[idx] != '+') idx++;
+        
+        for(int l=0;l<idx;l++){
+            string l1 = exp.substr(0, l); // , 9, 99
+            string l2 = exp.substr(l, idx-l); // 999, 99, 9
+            for(int r=idx+1;r<exp.length();r++){
+                string r1 = exp.substr(idx+1, r-idx); // 9, 99, 999
+                string r2 = exp.substr(r+1);// 99, 9, 
+                int ln1 = l1.length() == 0 ? 1 : stoi(l1), ln2 = l2.length() == 0 ? 1 : stoi(l2);
+                int rn1 = r1.length() == 0 ? 1 : stoi(r1), rn2 = r2.length() == 0 ? 1 :stoi(r2);
+                int eval = ln1*(ln2+rn1)*rn2;
+                if(eval < minVal){
+                    minVal = eval;
+                    ans = l1+"("+l2+"+"+r1+")"+r2;
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
