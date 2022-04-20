@@ -1,0 +1,34 @@
+class Solution {
+public:
+    static bool comp(int a, int b){
+        return a > b;
+    }
+    int largestInteger(int num) {
+        vector<int> even, odd;
+        vector<int> arr;
+        int n = num;
+        while(n != 0){
+            int dig = n%10;
+            arr.push_back(dig);
+            if(dig%2) odd.push_back(dig);
+            else even.push_back(dig);
+            n/=10;
+        }
+        reverse(arr.begin(), arr.end());
+        sort(even.begin(), even.end(), comp);
+        sort(odd.begin(), odd.end(), comp);
+        int e = 0, o = 0, k = 0;
+        while(k < arr.size()){
+            if(arr[k]%2){
+                arr[k++] = odd[o++];
+            }else{
+                arr[k++] = even[e++];
+            }
+        }
+        int ans = 0;
+        for(int i=0;i<arr.size();i++){
+            ans = ans*10+arr[i];
+        }
+        return ans;
+    }
+};
