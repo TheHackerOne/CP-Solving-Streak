@@ -1,0 +1,51 @@
+class Solution {
+private:
+    int dfs(int node, unordered_map<int, vector<int>> &g, vector<bool> &vis, int &maxPath){
+        vis[node] = 1;
+        int maxLen = 0, smaxLen = 0;
+        bool leaf = true;
+        for(auto neigh:g[node]){
+            if(!vis[neigh]){
+                leaf = false;
+                int res = dfs(neigh, g, vis, maxPath);
+                if(res > maxLen){
+                    smaxLen = maxLen;
+                    maxLen = res;
+                }else if(res > smaxLen){
+                    smaxLen = res;
+                }
+            }
+        }
+        
+        if(leaf) return 1;
+        
+        maxPath = max(maxPath, maxLen+smaxLen+1);
+        
+        return maxLen+1;
+    }
+public:
+    int longestPath(vector<int>& parent, string s) {
+        unordered_map<int, vector<int>> graph;
+        int n = parent.size();
+        
+        for(int i=1;i<n;i++){
+            int u = i, v = parent[i];
+            if(s[u] == s[v]) continue;
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+        }
+        
+        int ans = 1;
+        
+        vector<bool> visited(n, 0);
+        for(int i=0;i<n;i++){
+            if(!visited[i]){
+                int maxPath = 0;
+                int res = dfs(i, graph, visited, maxPath);
+                ans = max(ans, maxPath);
+            }
+        }
+        
+        return ans;
+    }
+};
