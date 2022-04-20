@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int mod = 1e9+7;
+    long long expo(long long a, long long b, long long mod) {long long res = 1; while (b > 0) {if (b & 1)res = (res * a) % mod; a = (a * a) % mod; b = b >> 1;} return res;}
+    long long mminvprime(long long a, long long b) {return expo(a, b - 2, b);}
+    long long mod_add(long long a, long long b, long long m) {a = a % m; b = b % m; return (((a + b) % m) + m) % m;}
+    long long mod_mul(long long a, long long b, long long m) {a = a % m; b = b % m; return (((a * b) % m) + m) % m;}
+    long long mod_sub(long long a, long long b, long long m) {a = a % m; b = b % m; return (((a - b) % m) + m) % m;}
+    long long mod_div(long long a, long long b, long long m) {a = a % m; b = b % m; return (mod_mul(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
+    int m = 1e9+7;
+    int maximumProduct(vector<int>& nums, int k) {
+        long long ans = 1;
+        
+        if(nums.size() == 1) return k+nums[0];
+        
+        sort(nums.begin(), nums.end());
+        
+        int i = 0;
+        while(i < nums.size() and nums[i] == 0){
+            if(k == 0) return 0;
+            nums[i] = 1;
+            i++;
+            k--;
+        }
+        
+        priority_queue<int, vector<int>, greater<int>> pq;
+        int n = nums.size();
+        for(int i=0;i<n;i++){
+            pq.push(nums[i]);
+            ans = mod_mul(ans, nums[i], m);
+        }
+        
+        while(k > 0){
+            int smol = pq.top();
+            int psmol = smol;
+            pq.pop();
+            int ssmol = pq.top();
+            pq.pop();
+            int diff = ssmol-smol;
+            if(k >= diff+1){
+                smol += diff+1;
+                ans = mod_mul(mod_div(ans, psmol, m), smol, m);
+                k -= (diff+1);
+                pq.push(smol);
+                pq.push(ssmol);
+            }else{
+                smol += k;
+                ans = mod_mul(mod_div(ans, psmol, m), smol, m);
+                break;
+            }
+        }
+        
+        return ans%m;
+    }
+};
