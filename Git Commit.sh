@@ -1,3 +1,4 @@
+
 while read -p "Enter Commit Name : " COMMIT
   do    
     git add .

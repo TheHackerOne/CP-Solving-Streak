@@ -1,0 +1,46 @@
+class Solution {
+public:
+    long long maximumBeauty(vector<int>& flowers, long long newFlowers, int target, int full, int partial) {
+        
+        sort(flowers.begin(), flowers.end());
+        long long n = flowers.size();
+        vector<long long> pre(n, 0);
+        for(long long i=1;i<n;i++){
+            pre[i] = (flowers[i]-flowers[i-1])*i + pre[i-1];
+        }
+
+        long long idx = n-1;
+        while(idx >= 0 and flowers[idx] >= target) idx--;
+
+        long long ans = 0;
+        
+        
+        for(long long i=idx+1;i>=0;i--){
+            long long res = (n-i)*full;
+            long long diff = target-(i<n?flowers[i]:target)> 0 ? target-flowers[i] : 0;
+            if(diff > newFlowers) break;
+            newFlowers -= diff;
+            if(i == 0){
+                ans = max(ans ,res);
+                continue;
+            }
+            long long uniformDistributionIdx = upper_bound(pre.begin(), pre.end(), newFlowers)-pre.begin();
+            uniformDistributionIdx--;
+            if(uniformDistributionIdx > i-1){
+                long long remFLowers = newFlowers - pre[i-1];
+                long long maxH = (flowers[i-1] + (remFLowers/(i))) > (target-1) ? (target-1) : (flowers[i-1] + (remFLowers/(i)));
+                res += partial*maxH;
+                ans = max(ans, res);
+                continue;
+            }
+            
+            long long remFLowers = newFlowers - pre[uniformDistributionIdx];
+            long long maxH = flowers[uniformDistributionIdx]+(remFLowers/(1+uniformDistributionIdx)) > (target-1) ? (target-1) : flowers[uniformDistributionIdx]+(remFLowers/(1+uniformDistributionIdx));
+            res += partial*(maxH);
+            ans = max(ans, res);
+        }
+
+
+        return ans;
+    }
+};

@@ -27,27 +27,18 @@ public:
         int n = nums.size();
         for(int i=0;i<n;i++){
             pq.push(nums[i]);
-            ans = mod_mul(ans, nums[i], m);
         }
         
         while(k > 0){
-            int smol = pq.top();
-            int psmol = smol;
+            int top = pq.top()+1;
             pq.pop();
-            int ssmol = pq.top();
+            pq.push(top);
+            k--;
+        }
+        
+        while(!pq.empty()){
+            ans = mod_mul(pq.top(), ans, m);
             pq.pop();
-            int diff = ssmol-smol;
-            if(k >= diff+1){
-                smol += diff+1;
-                ans = mod_mul(mod_div(ans, psmol, m), smol, m);
-                k -= (diff+1);
-                pq.push(smol);
-                pq.push(ssmol);
-            }else{
-                smol += k;
-                ans = mod_mul(mod_div(ans, psmol, m), smol, m);
-                break;
-            }
         }
         
         return ans%m;
