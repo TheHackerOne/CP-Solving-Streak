@@ -37,3 +37,4 @@ done
 
 # 👌 When the program passes all the test files
 echo "--------------Testing done-----------"
+read -p "error dekhle"

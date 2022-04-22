@@ -75,60 +75,69 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
 
-ll fact[200001], invfact[200001];
-
-void init(){
-    int p = 1e9+7;
-    fact[0] = 1;
-    int i;
-    for(i=1;i<100000;i++){
-        fact[i] = i*fact[i-1]%p;
-    }
-    i--;
-    invfact[i] = expo(fact[i], p-2, p);
-    for(i--;i>=0;i--){
-        invfact[i] = invfact[i+1]*(i+1)%p;
-    }
-}
-
-int ncr(int n, int r){
-    if(r > n || n < 0 || r < 0) return 0;
-    return fact[n]*invfact[r]%MOD*invfact[n-r]%MOD;
-}
-
 void solve() {
-    int n;
+    ll n;
     cin>>n;
-    vector<int> arr(n);
-    unordered_map<int,int> mp;
-    int minEle = INT_MAX;
-    for(int i=0;i<n;i++){
+    vector<ll> arr(n);
+    unordered_map<ll, ll> mp;
+
+    for(ll i=0;i<n;i++){
         cin>>arr[i];
-        minEle = min(minEle, arr[i]);
         mp[arr[i]]++;
     }
-    sort(all(arr));
 
-    int cnt = 0;
-
-    int cntMin = mp[minEle];
-    if(cntMin == 1) {
+    if(mp.size() == 1){
         cout<<0<<nline;
         return;
     }
-    for(int i=2;i<n;i++){
-        if((minEle&arr[i]) != minEle){
-            cout<<0<<nline;
-            return;
+
+    ll steps = 0;
+    for(ll i=0;i<n;i++){
+        ll minEle = INT_MAX, minIdx = -1;
+        for(ll j=0;j<n;j++){
+            if(arr[j] != -1 and arr[j] < minEle){
+                minEle = min(minEle, arr[j]);
+                minIdx = j;
+            }
         }
+
+        ll leftIdx = minIdx-1, rightIdx = minIdx+1;
+        ll left = INT_MAX, right = INT_MAX;
+
+        while(leftIdx >= 0 and arr[leftIdx] == -1) leftIdx--;
+        while(rightIdx < n and arr[rightIdx] == -1) rightIdx++;
+
+
+        left = leftIdx == -1 ? INT_MAX : arr[leftIdx];
+        right = rightIdx == n ? INT_MAX : arr[rightIdx];
+
+        debug(leftIdx)
+        debug(rightIdx)
+        
+        if(left < right){
+            mp[arr[leftIdx]]--;
+            if(mp[arr[leftIdx]] == 0) mp.erase(arr[leftIdx]);
+            arr[leftIdx] += arr[minIdx];
+            mp[arr[leftIdx]]++;
+        }else{
+            mp[arr[rightIdx]]--;
+            if(mp[arr[rightIdx]] == 0) mp.erase(arr[rightIdx]);
+            arr[rightIdx] += arr[minIdx];
+            mp[arr[rightIdx]]++;
+        }
+        mp[arr[minIdx]]--;
+        if(mp[arr[minIdx]] == 0) mp.erase(arr[minIdx]);
+
+        arr[minIdx] = -1;
+        debug(arr)
+        debug(mp)
+
+        steps++;
+        if(mp.size() == 1) break;
+
     }
+    cout<<steps<<nline;
 
-    int res1 = ncr(mp[minEle], 2)*2;
-    int res2 = fact[n-2];
-
-    cnt = mod_mul(res1, res2, MOD);
-
-    cout<<cnt<<nline;
 }
 
 int main() {
@@ -139,7 +148,6 @@ int main() {
     fastio();
     ll t;
     cin >> t;
-    init();
     while (t--) {
         solve();
     }
