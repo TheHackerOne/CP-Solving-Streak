@@ -1,0 +1,6 @@
+-x -5
+ans+points[node] -10
+-x -5
+ans+points[node] -10
+-x -5
+ans+points[node] -4
