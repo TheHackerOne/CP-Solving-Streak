@@ -1,0 +1,14 @@
+nidx 1
+nidx 2
+i 3
+nidx 4
+nidx 5
+i 14
+nidx 6
+i 7
+i 8
+i 9
+i 10
+i 11
+i 12
+i 13
