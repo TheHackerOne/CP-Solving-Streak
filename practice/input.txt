@@ -1,95 +1,49 @@
-47
-2
-0 0
-3
-0 0 0
-4
-0 0 0 0
-2
-1 0
-3
-1 0 0
-4
-0 1 0 0
-2
-1 1
-3
-1 0 1
-4
-0 1 1 0
-3
-1 1 1
-4
-1 0 1 1
-4
-1 1 1 1
-2
-2 0
-3
-2 0 0
-4
-0 2 0 0
-2
-2 1
-3
-1 2 0
-4
-1 2 0 0
-3
-1 1 2
-4
-1 1 0 2
-4
-1 1 1 2
-2
-2 2
-3
-0 2 2
-4
-0 2 2 0
-3
-1 2 2
-4
-2 0 1 2
-4
-2 1 1 2
-3
-2 2 2
-4
-2 0 2 2
-4
-2 2 1 2
-4
-2 2 2 2
-2
-0 3
-3
-0 0 3
-4
-3 0 0 0
-2
-3 1
-3
-0 3 1
-4
-0 3 0 1
-3
-1 3 1
-4
-1 1 3 0
-4
-1 1 3 1
-2
-3 2
-3
-2 3 0
-4
-0 2 3 0
-3
-3 1 2
-4
-2 1 0 3
-4
-1 3 2 1
-3
-3 2 2
+24
+10 2
+acabbbdaab
+eccbcbdaae
+10 5
+bdaadbacab
+deddcdcccb
+10 4
+cabbbbabaa
+baddeddcde
+10 4
+aaaaaaaaac
+acaabbbbcb
+10 1
+adaaacaaae
+babcadebba
+10 2
+abdabdacce
+deedeeaaea
+10 10
+acacbbacaa
+edaccbbcce
+10 10
+cabababaab
+cadbdaacbc
+10 9
+bdadaceada
+acecddbaeb
+10 9
+aebacaaaaa
+bdaeebcedb
+10 5
+ccabaadaaa
+accaaceade
+10 7
+acaaacabaa
+aacaeabadb
+10 1
+bbabaacbaa
+dcabeccbec
+10 2
+acbaaaaacd
+caddbaacad
+10 2
+aaaaabaaba
+bcbeccabba
+10 3
+cbbcaccbaa
+ceacbebccd

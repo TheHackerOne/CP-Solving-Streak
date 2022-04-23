@@ -1,6 +1,48 @@
-remSum 5
-sumNeeded -1
-remSum 7
-sumNeeded 0
-remSum 3
-sumNeeded 3
+str aaaabbbbcd
+tar aabbcccdee
+str aaaabbbcdd
+tar bccccdddde
+str aaaabbbbbc
+tar abcdddddee
+str aaaaaaaaac
+tar aaabbbbbcc
+str aaaaaaacde
+tar aaabbbbcde
+str aaabbccdde
+tar aaaddeeeee
+str aaaaabbccc
+tar abbccccdee
+str aaaaabbbbc
+tar aaabbcccdd
+str aaaabcddde
+tar aabbccddee
+str aaaaaaabce
+tar abbbcddeee
+str aaaaaabccd
+tar aaaacccdee
+str aaaaaaabcc
+tar aaaaabbcde
+str aaaaabbbbc
+tar abbccccdee
+str aaaaaabccd
+tar aaaabccddd
+str aaaaaaaabb
+tar aabbbbccce
+str aaabbbcccc
+tar abbccccdee
+str 
+tar 
+str 
+tar 
+str 
+tar 
+str 
+tar 
+str 
+tar 
+str 
+tar 
+str 
+tar 
+str 
+tar 

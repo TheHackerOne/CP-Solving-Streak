@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"1\n0\n3"
+			"No\nYes\nNo\nYes"
 		],
-		"test": "3\n3\n3 2 2\n4\n2 2 3 2\n3\n0 3 0\n"
+		"test": "4\n3 3\nabc\nbcd\n4 2\nabba\nazza\n2 1\nzz\naa\n6 2\naaabba\nddddcc\n"
 	}
 ]
