@@ -1,48 +1,151 @@
-str aaaabbbbcd
-tar aabbcccdee
-str aaaabbbcdd
-tar bccccdddde
-str aaaabbbbbc
-tar abcdddddee
-str aaaaaaaaac
-tar aaabbbbbcc
-str aaaaaaacde
-tar aaabbbbcde
-str aaabbccdde
-tar aaaddeeeee
-str aaaaabbccc
-tar abbccccdee
-str aaaaabbbbc
-tar aaabbcccdd
-str aaaabcddde
-tar aabbccddee
-str aaaaaaabce
-tar abbbcddeee
-str aaaaaabccd
-tar aaaacccdee
-str aaaaaaabcc
-tar aaaaabbcde
-str aaaaabbbbc
-tar abbccccdee
-str aaaaaabccd
-tar aaaabccddd
-str aaaaaaaabb
-tar aabbbbccce
-str aaabbbcccc
-tar abbccccdee
-str 
-tar 
-str 
-tar 
-str 
-tar 
-str 
-tar 
-str 
-tar 
-str 
-tar 
-str 
-tar 
-str 
-tar 
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+mid 500000000
+p {500000000,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 250000000
+p {250000000,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 125000000
+p {125000000,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 62500000
+p {62500000,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 31250000
+p {31250000,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 15625000
+p {15625000,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 7812500
+p {7812500,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 3906250
+p {3906250,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 1953125
+p {1953125,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 976562
+p {976562,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 488281
+p {488281,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 244140
+p {244140,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 122070
+p {122070,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 61035
+p {61035,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 30517
+p {30517,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 15258
+p {15258,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 7629
+p {7629,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 3814
+p {3814,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 1907
+p {1907,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 953
+p {953,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 476
+p {476,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 238
+p {238,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 119
+p {119,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 5
+"true" true
+mid 59
+p {59,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 1
+"false" false
+mid 89
+p {89,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 4
+"true" true
+mid 74
+p {74,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 4
+"true" true
+mid 66
+p {66,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 2
+"true" true
+mid 62
+p {62,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 1
+"false" false
+mid 64
+p {64,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 2
+"true" true
+mid 63
+p {63,-2147483648}
+arr [ {5,82} {63,45} {69,32} {70,19} {94,12} ]
+idx 2
+"true" true

@@ -1,11 +1,22 @@
-#include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
-int main(){int t;cin>>t;while(t--){
-    int n,a[3000],val,s=0,ss=0;cin>>n;val=n;for(int i=0;i<n;i++)cin>>a[i],s+=a[i];
-    for(int idx=0;idx<n;idx++){
-        ss+=a[idx];if(!(s%ss)){
-            int lav=1,l=idx+1,sss=0;while(l<n){
-                sss+=a[l++];
-                if(sss==ss)sss=0,lav++;}
-            if(!sss)val=min(val,n-lav);}}
-cout<<val<<endl;}return 0;}
+pair <int,int> a[200001];
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        int k=0,sum=0;
+        for(k=1;k<=n;k++)cin>>a[k].first;
+        for(k=1;k<=n;k++)cin>>a[k].second;
+        sort(a+1,a+n+1);
+        k=n;
+        while(sum<=a[k].first&&k>=1){
+            sum+=a[k].second;
+            k--;
+        }
+        cout<<min(a[k+1].first,sum)<<endl;
+    }
+    return 0;
+}

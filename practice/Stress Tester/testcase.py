@@ -54,9 +54,9 @@ if __name__ == "__main__":
     t = 10
     print(t)
     for __ in range(t):
-        num_lim = 10
+        num_lim = 100
         # while n != 1:
-        n = rand.integer(1, 10)
+        n = rand.integer(1, 12)
         # x = rand.integer(1, num_lim)
         # p = rand.integer(1, n)
         # k = rand.integer(1, n)
@@ -67,6 +67,9 @@ if __name__ == "__main__":
         # print(k, end=" ")
         print()
 
+        for ele in rand.array(n, 1, num_lim):
+            print(ele, end=" ")
+        print()
         for ele in rand.array(n, 1, num_lim):
             print(ele, end=" ")
         print()

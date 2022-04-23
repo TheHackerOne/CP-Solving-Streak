@@ -74,70 +74,76 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
+int upperBound(vector<pair<int, int>> &arr, pair<int, int> &p){
+    int lo = 0, hi = arr.size()-1;
+    int ans = -1;
+    while(lo <= hi){
+        int mid = (lo+hi)/2;
+        if(p.first == 83){
+            debug(mid)
+        }
+        if(arr[mid].first > p.first and arr[mid].second > p.second){
+            ans = mid;
+            hi = mid-1;
+        }else{
+            lo = mid+1;
+        }
+    }
+    return lo;
+}
+
+bool isPossible(vector<pair<int, int>> &arr, int timelimit){
+    pair<int, int> p = { timelimit, INT_MIN };
+    int idx = upperBound(arr, p);
+    if(timelimit){
+        debug(p)
+        debug(arr)
+        debug(idx)
+    }
+    idx--;
+    int time = 0;
+    for(int i=idx+1;i<arr.size();i++){
+        time += arr[i].second;
+        if(time > timelimit) return false;
+    }
+
+    return true;
+}
 
 void solve() {
-    ll n;
+    int n;
     cin>>n;
-    vector<ll> arr(n);
-    unordered_map<ll, ll> mp;
-
-    for(ll i=0;i<n;i++){
-        cin>>arr[i];
-        mp[arr[i]]++;
+    vector<pair<int, int>> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i].first;
+    }
+    for(int i=0;i<n;i++){
+        cin>>arr[i].second;
     }
 
-    if(mp.size() == 1){
-        cout<<0<<nline;
-        return;
-    }
+    sort(all(arr), [](pair<int, int> &a, pair<int, int> &b){
+        if(a.first == b.first) return a.second < b.second;
+        return a.first < b.first;
+    });
 
-    ll steps = 0;
-    for(ll i=0;i<n;i++){
-        ll minEle = INT_MAX, minIdx = -1;
-        for(ll j=0;j<n;j++){
-            if(arr[j] != -1 and arr[j] < minEle){
-                minEle = min(minEle, arr[j]);
-                minIdx = j;
-            }
-        }
+    debug(arr)
 
-        ll leftIdx = minIdx-1, rightIdx = minIdx+1;
-        ll left = INT_MAX, right = INT_MAX;
-
-        while(leftIdx >= 0 and arr[leftIdx] == -1) leftIdx--;
-        while(rightIdx < n and arr[rightIdx] == -1) rightIdx++;
-
-
-        left = leftIdx == -1 ? INT_MAX : arr[leftIdx];
-        right = rightIdx == n ? INT_MAX : arr[rightIdx];
-
-        debug(leftIdx)
-        debug(rightIdx)
-        
-        if(left < right){
-            mp[arr[leftIdx]]--;
-            if(mp[arr[leftIdx]] == 0) mp.erase(arr[leftIdx]);
-            arr[leftIdx] += arr[minIdx];
-            mp[arr[leftIdx]]++;
+    int lo = 1, hi = 1e9;
+    int ans = -1;
+    while(lo <= hi){
+        int mid = (lo+hi)/2; // timeLimit
+        debug(mid)
+        if(isPossible(arr, mid)){
+            debug("true")
+            ans = mid;
+            hi = mid-1;
         }else{
-            mp[arr[rightIdx]]--;
-            if(mp[arr[rightIdx]] == 0) mp.erase(arr[rightIdx]);
-            arr[rightIdx] += arr[minIdx];
-            mp[arr[rightIdx]]++;
+            lo = mid+1;
+            debug("false")
         }
-        mp[arr[minIdx]]--;
-        if(mp[arr[minIdx]] == 0) mp.erase(arr[minIdx]);
-
-        arr[minIdx] = -1;
-        debug(arr)
-        debug(mp)
-
-        steps++;
-        if(mp.size() == 1) break;
-
     }
-    cout<<steps<<nline;
 
+    cout<<ans<<nline;
 }
 
 int main() {
