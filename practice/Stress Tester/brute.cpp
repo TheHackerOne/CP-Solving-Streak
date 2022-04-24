@@ -74,76 +74,45 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
-int upperBound(vector<pair<int, int>> &arr, pair<int, int> &p){
-    int lo = 0, hi = arr.size()-1;
-    int ans = -1;
-    while(lo <= hi){
-        int mid = (lo+hi)/2;
-        if(p.first == 83){
-            debug(mid)
-        }
-        if(arr[mid].first > p.first and arr[mid].second > p.second){
-            ans = mid;
-            hi = mid-1;
-        }else{
-            lo = mid+1;
-        }
-    }
-    return lo;
-}
-
-bool isPossible(vector<pair<int, int>> &arr, int timelimit){
-    pair<int, int> p = { timelimit, INT_MIN };
-    int idx = upperBound(arr, p);
-    if(timelimit){
-        debug(p)
-        debug(arr)
-        debug(idx)
-    }
-    idx--;
-    int time = 0;
-    for(int i=idx+1;i<arr.size();i++){
-        time += arr[i].second;
-        if(time > timelimit) return false;
-    }
-
-    return true;
-}
 
 void solve() {
-    int n;
-    cin>>n;
-    vector<pair<int, int>> arr(n);
-    for(int i=0;i<n;i++){
-        cin>>arr[i].first;
+    ll n, a, b;
+    cin>>n>>a>>b;
+    // a location change
+    // b conquer
+
+    vector<ll> arr(n+1, 0);
+    for(ll i=1;i<=n;i++){
+        cin>>arr[i];
     }
-    for(int i=0;i<n;i++){
-        cin>>arr[i].second;
-    }
 
-    sort(all(arr), [](pair<int, int> &a, pair<int, int> &b){
-        if(a.first == b.first) return a.second < b.second;
-        return a.first < b.first;
-    });
+    ll capital = 0, capitalIdx = 0;
+    ll res = 0;
 
-    debug(arr)
-
-    int lo = 1, hi = 1e9;
-    int ans = -1;
-    while(lo <= hi){
-        int mid = (lo+hi)/2; // timeLimit
-        debug(mid)
-        if(isPossible(arr, mid)){
-            debug("true")
-            ans = mid;
-            hi = mid-1;
-        }else{
-            lo = mid+1;
-            debug("false")
+    for(ll i=1;i<=n;i++){
+        ll minCost = INT_MAX;
+        ll minCostIdx = -1;
+        ll numLine = arr[i];
+        for(ll j=capitalIdx;j<i;j++){
+            ll faydaInFuture = (n-i)*(arr[j]-capital)*b;
+            ll cost = a*(arr[j]-arr[capitalIdx]) + b*(arr[i]-arr[j]) - faydaInFuture;
+            if(cost <= minCost){
+                minCost = a*(arr[j]-arr[capitalIdx]) + b*(arr[i]-arr[j]);
+                minCostIdx = j;
+            }
         }
+        debug(numLine)
+        debug(minCostIdx)
+        debug(minCost)
+        debug(capital)
+        res += minCost;
+        capital = arr[minCostIdx];
+        capitalIdx = minCostIdx;    
+        debug(res)
+        debug("-----------")
     }
 
-    cout<<ans<<nline;
+    cout<<res<<nline;
 }
 
 int main() {

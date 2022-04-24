@@ -54,22 +54,26 @@ if __name__ == "__main__":
     t = 10
     print(t)
     for __ in range(t):
-        num_lim = 100
+        num_lim = 20
         # while n != 1:
-        n = rand.integer(1, 12)
-        # x = rand.integer(1, num_lim)
-        # p = rand.integer(1, n)
+        n = rand.integer(1, 100)
+        x = rand.integer(1, num_lim)
+        p = rand.integer(1, num_lim)
         # k = rand.integer(1, n)
 
         print(n, end=" ")
-        # print(x, end=" ")
-        # print(p, end=" ")
+        print(x, end=" ")
+        print(p, end=" ")
         # print(k, end=" ")
         print()
 
-        for ele in rand.array(n, 1, num_lim):
-            print(ele, end=" ")
-        print()
-        for ele in rand.array(n, 1, num_lim):
-            print(ele, end=" ")
+        arr = []
+
+        for ele in rand.array(n, 1, 200):
+            arr.append(ele)
+
+        arr.sort()
+
+        for e in arr:
+            print(e, end=" ")
         print()

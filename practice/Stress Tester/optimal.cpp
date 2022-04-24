@@ -1,22 +1,25 @@
-#include <bits/stdc++.h>
+#include<cstdio>
+#include<iostream>
 using namespace std;
-pair <int,int> a[200001];
-int main(){
-    int t;
-    cin>>t;
-    while(t--){
-        int n;
-        cin>>n;
-        int k=0,sum=0;
-        for(k=1;k<=n;k++)cin>>a[k].first;
-        for(k=1;k<=n;k++)cin>>a[k].second;
-        sort(a+1,a+n+1);
-        k=n;
-        while(sum<=a[k].first&&k>=1){
-            sum+=a[k].second;
-            k--;
+int main()
+{
+    long long t,i,n,a,b,x,cur,s;
+    scanf("%lld",&t);
+    while(t--)
+    {
+        scanf("%lld%lld%lld",&n,&a,&b);
+        cur=0;
+        s=0;
+        for(i=1;i<=n;i++)
+        {
+            scanf("%lld",&x);
+            s+=b*(x-cur);
+            if((n-i)*b>=a)
+            {
+                s+=a*(x-cur);
+                cur=x;
+            }
         }
-        cout<<min(a[k+1].first,sum)<<endl;
+        printf("%lld\n",s);
     }
-    return 0;
 }
