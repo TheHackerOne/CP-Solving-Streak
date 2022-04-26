@@ -1,25 +1,26 @@
-#include<cstdio>
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
-int main()
-{
-    long long t,i,n,a,b,x,cur,s;
-    scanf("%lld",&t);
-    while(t--)
-    {
-        scanf("%lld%lld%lld",&n,&a,&b);
-        cur=0;
-        s=0;
-        for(i=1;i<=n;i++)
-        {
-            scanf("%lld",&x);
-            s+=b*(x-cur);
-            if((n-i)*b>=a)
-            {
-                s+=a*(x-cur);
-                cur=x;
-            }
-        }
-        printf("%lld\n",s);
+#define mod 998244353
+long long t,n,m=0,s=1,b,ans=1;
+void se(){
+    map<int,int> a;
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>b;
+        a[b]++;
+        ans=ans*i%mod;
+        if(b>m) m=b;
     }
+    if(a[m]>1) cout<<ans<<endl;
+    else{
+        for(int i=1;i<=n;i++)
+            if(i!=a[m-1]+1) s=s*i%mod;
+        cout<<(ans-s+mod)%mod<<endl;    
+    }
+    m=0,s=1,ans=1;
+}
+int main(){
+    cin>>t;
+    while(t--) se();
+    return 0;
 }

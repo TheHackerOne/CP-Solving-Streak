@@ -1,0 +1,6 @@
+res 1
+res 1
+fact[n] 2
+res 12
+res 180
+fact[n] 720
