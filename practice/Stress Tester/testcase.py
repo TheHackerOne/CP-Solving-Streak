@@ -61,19 +61,19 @@ if __name__ == "__main__":
         # p = rand.integer(1, num_lim)
         # k = rand.integer(1, n)
 
-        print(n, end=" ")
+        # print(n, end=" ")
         # print(x, end=" ")
         # print(p, end=" ")
         # print(k, end=" ")
-        print()
+        # print()
 
         # arr = []
-
-        for ele in rand.array(n, 1, num_lim):
-            print(ele, end=" ")
+        print(random.randint(1, 1000000))
+        # for ele in rand.array(n, 1, num_lim):
+        #     print(ele, end=" ")
 
         # arr.sort()
 
         # for e in arr:
         #     print(e, end=" ")
-        print()
+        # print()

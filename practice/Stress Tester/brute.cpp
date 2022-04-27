@@ -74,68 +74,30 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
-ll fact[200001], invfact[200001];
-
-void init(){
-    int p = MOD1;
-    fact[0] = 1;
-    int i;
-    for(i=1;i<=200000;i++){
-        fact[i] = mod_mul(i, fact[i-1], p);
-    }
-    i--;
-    invfact[i] = expo(fact[i], p-2, p);
-    for(i--;i>=0;i--){
-        invfact[i] = mod_mul(invfact[i+1], (i+1), p);
-    }
-}
-
-int ncr(int n, int r){
-    if(r > n || n < 0 || r < 0) return 0;
-    return mod_mul(mod_mul(fact[n], invfact[r], MOD1), invfact[n-r], MOD1);
-}
 
 void solve() {
     int n;
     cin>>n;
-    vector<int> arr(n);
 
-    unordered_map<int, int> mp;
-    int maxElement = INT_MIN, smaxElement = INT_MIN;
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-        mp[arr[i]]++;
-
-        if(arr[i] > maxElement){
-            smaxElement = maxElement;
-            maxElement = arr[i];
-        }else if(arr[i] > smaxElement){
-            smaxElement = arr[i];
-        }
+    if(n == 1){
+        cout<<1<<nline;
+        return;
     }
-
-    if(mp.size() == 1 or mp[maxElement] > 1){
-        cout<<fact[n]<<nline;
+    if(n == 2){
+        cout<<1<<nline;
+        return;
+    }
+    if(n == 3){
+        cout<<3<<nline;
         return;
     }
 
-    if(maxElement - smaxElement > 1){
-        cout<<0<<nline;
-        return;
-    }
+    ll res = 1;
+    ll even = 2;
+    res += (1LL*(n-2)*(n-1));
 
-    int smaxCnt = mp[smaxElement];
-    ll res = mod_mul(fact[n-smaxCnt-1], fact[smaxCnt], MOD1);
-    ll ans = 0;
-    for(int i=smaxCnt;i<n;i++){
-        ll ncrVal = ncr(i, smaxCnt);
-        ans = mod_add(ans, ncrVal , MOD1);
-    }
-    res = mod_mul(res, ans, MOD1);
-
-    cout<<fact[n]-res<<nline;
+    cout<<res<<nline;
 }
-
 
 int main() {
 #ifndef ONLINE_JUDGE
@@ -143,7 +105,6 @@ int main() {
 #endif
 
     fastio();
-    init();
     ll t;
     cin >> t;
     while (t--) {
