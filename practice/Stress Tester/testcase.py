@@ -68,7 +68,8 @@ if __name__ == "__main__":
         # print()
 
         # arr = []
-        print(random.randint(1, 1000000))
+        print(random.randint(1, 100), end=" ")
+        print(random.randint(1, 100))
         # for ele in rand.array(n, 1, num_lim):
         #     print(ele, end=" ")
 

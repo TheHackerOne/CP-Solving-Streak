@@ -76,27 +76,51 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    int n;
-    cin>>n;
+    ll n, b;
+    cin>>n>>b;
 
-    if(n == 1){
-        cout<<1<<nline;
-        return;
-    }
-    if(n == 2){
-        cout<<1<<nline;
-        return;
-    }
-    if(n == 3){
-        cout<<3<<nline;
+
+    // for(int i=1;i<=n;i++){
+    //     int res = ((n-i)/(b))*i;
+    //     cout<<i<<" -> "<<res<<nline;
+    // }
+
+    if(n <= b){
+        cout<<0<<nline;
         return;
     }
 
-    ll res = 1;
-    ll even = 2;
-    res += (1LL*(n-2)*(n-1));
+    ll lo = 1, hi = n;
+    ll res = -1; 
+    while(hi-lo+1 >= 4){
+        ll mid1 = (lo+(hi-lo)/3), mid2 = (hi-(hi-lo)/3);
+        ll midVal1 = ((n-mid1)/b)*mid1;
+        ll midVal2 = ((n-mid2)/b)*mid2;
+        debug(lo)
+        debug(hi)
+        debug(mid1)
+        debug(mid2)
+        debug(midVal1)
+        debug(midVal2)
+        debug("---")
+        // 18997133232
 
-    cout<<res<<nline;
+        if(midVal1 >= midVal2){
+            hi = mid2;
+        }else{
+            lo = mid1;
+        }
+    }
+    ll maxVal = INT_MIN;
+    debug(lo)
+    debug(hi)
+    for(ll i=lo;i<=hi;i++){
+        ll u = ((n-i)/b)*i;
+        debug(u)
+        maxVal = max(maxVal, ((n-i)/b)*i);
+    }
+
+    cout<<(ll)maxVal<<nline;
 }
 
 int main() {
@@ -113,3 +137,20 @@ int main() {
 
     return 0;
 }
+
+// 15
+// 60 56
+// 37 98
+// 100 9
+// 44 7
+// 82 74
+// 53 10
+// 67 86
+// 60 65
+// 44 95
+// 7 54
+// 18 21
+// 44 52
+// 79 35
+// 34 1
+// 49 41
