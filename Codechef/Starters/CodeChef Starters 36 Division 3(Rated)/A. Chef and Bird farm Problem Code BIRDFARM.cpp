@@ -76,28 +76,23 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    ll x;
-    cin>>x;
+    int x, y, z;
+    cin>>x>>y>>z;
+    
 
-
-    if(x%2){
-        cout<<-1<<nline;
+    if(z%x == 0 and z%y == 0){
+        cout<<"ANY"<<nline;
         return;
-    }else{
-        int c1 = x/2;
-        int c2 = (x-2)/2;
-        debug(c1)
-        debug(c2)
-        if(c1%2){
-            cout<<0<<" "<<1<<" "<<c1<<nline;
-            return;
-        }else if(c2%2 == 0){
-            cout<<0<<" "<<1<<" "<<c2<<nline;
-            return;
-        }else{
-            cout<<-1<<nline;
-        }
     }
+    if(z%x and z%y){
+        cout<<"NONE"<<nline;
+        return;
+    }
+    if(z%x == 0){
+        cout<<"CHICKEN"<<nline;
+        return;
+    }
+    cout<<"DUCK"<<nline;
 }
 
 int main() {
