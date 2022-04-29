@@ -76,7 +76,7 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 ll counter;
 
-void mergeSort(vector<ll> a, ll l, ll h) {
+void mergeSort(vector<ll> &a, ll l, ll h) {
     ll mid = (l + h) / 2;
     ll ele = h - l + 1;
     ll temp[ele];
@@ -102,7 +102,7 @@ void mergeSort(vector<ll> a, ll l, ll h) {
     }
 }
 
-void merge(vector<ll> a, ll  l, ll  h) {
+void merge(vector<ll> &a, ll  l, ll  h) {
     if (l >= h) return;
     ll mid = (l + h) / 2;
     merge(a, l, mid);
@@ -135,15 +135,10 @@ void solve() {
             super[i].push_back(j);
     }
 
-    debug(inversion)
-
     vector<int> eachEleInversion(n);
 
     for(int i=0;i<n;i++){
         int res = inversionCount(super[i], n+1);
-        debug(super[i])
-        debug(res)
-        res -= inversion;
         eachEleInversion[i] = res;
     }
 
@@ -151,7 +146,7 @@ void solve() {
     res += (k*(k-1))/2;
     ll summation = accumulate(all(eachEleInversion), 0);
     res *= summation;
-    res += n*(summation*k);
+    res += (inversion*k);
 
     debug(eachEleInversion)
     debug(res);

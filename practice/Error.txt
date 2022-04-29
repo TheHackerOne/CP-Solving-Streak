@@ -1,0 +1,11 @@
+inversion 2
+super[i] [ 99 99 2 1000 24 ]
+res 3
+super[i] [ 2 99 2 1000 24 ]
+res 2
+super[i] [ 1000 99 2 1000 24 ]
+res 4
+super[i] [ 24 99 2 1000 24 ]
+res 3
+eachEleInversion [ 1 0 2 1 ]
+res 21400
