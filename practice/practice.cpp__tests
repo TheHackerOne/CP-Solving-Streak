@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"WinterIsComing\nWhoDoesntLoveChefBook\nTheseViolentDelightsHaveViolentEnds\nComeAtTheKingBestNotMiss"
+			"16"
 		],
-		"test": "2 4\n1 2\n1 1 WhoDoesntLoveChefBook\n2 2 WinterIsComing\n3 10 TheseViolentDelightsHaveViolentEnds\n4 3 ComeAtTheKingBestNotMiss\n"
+		"test": "4 4 9\n1 4\n2 1\n2 2\n2 3\n4 3\n4 1\n4 2\n3 1\n3 3\n"
 	}
 ]

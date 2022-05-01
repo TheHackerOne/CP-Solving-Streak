@@ -1,3 +1,2 @@
-mp1 [ {2,1} {1,1} ]
-arr [ {1,{1,WhoDoesntLoveChefBook}} {2,{2,WinterIsComing}} {10,{3,TheseViolentDelightsHaveViolentEnds}} {3,{4,ComeAtTheKingBestNotMiss}} ]
-arr [ {1,{1,WhoDoesntLoveChefBook}} {2,{2,WinterIsComing}} {10,{3,TheseViolentDelightsHaveViolentEnds}} {3,{4,ComeAtTheKingBestNotMiss}} ]
+res 4
+res 16
