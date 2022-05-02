@@ -1,9 +1,1 @@
-[
-	{
-		"correct_answers":
-		[
-			"0\n7\n9"
-		],
-		"test": "10 3\n0324152397\n1\n4\n7\n"
-	}
-]
+[{"test":"≤\n","correct_answers":["-1"]}]
