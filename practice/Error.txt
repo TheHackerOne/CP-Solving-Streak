@@ -1,7 +1,0 @@
-stems 2
-stems 2
-stems 0
-stems 2
-stems 4
-stems 2
-"----" ----
