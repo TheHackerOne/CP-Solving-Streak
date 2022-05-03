@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"YES\nNO\nYES\nYES"
+			"≤ 3000"
 		],
-		"test": "4\naaa\nabc\nabdbca\nabba\n"
+		"test": "1 ≤\n"
 	}
 ]
