@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"1"
+			"SEBI\nFATHER"
 		],
-		"test": "1\n2\n1 2\n"
+		"test": "2\n100 180 200 20 60\n130 131 132 1 72\n"
 	}
 ]
