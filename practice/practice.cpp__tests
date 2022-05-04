@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"0\n10\n270"
+			"2\n-1"
 		],
-		"test": "3\n1\n3\n5\n"
+		"test": "2\n2\n7 2\n3\n2 2 4\n"
 	}
 ]
