@@ -1,1 +1,9 @@
-[{"test":"3\n16 17\n16 17\n973360 973432\n","correct_answers":["9\n27\n79"]}]
+[
+	{
+		"correct_answers":
+		[
+			"18"
+		],
+		"test": "bobseesanna\n"
+	}
+]
