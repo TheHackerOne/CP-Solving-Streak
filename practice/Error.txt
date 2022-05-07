@@ -1,0 +1,10 @@
+preXor [ 0 2 0 ]
+first 0
+second 0
+preXor [ 2 1 0 10 ]
+first 2
+second 8
+first 1
+second 11
+first 0
+second 10
