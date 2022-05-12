@@ -2,8 +2,29 @@
 	{
 		"correct_answers":
 		[
-			"202\n13\n19"
+			"3"
 		],
-		"test": "3\n2\n13 88\n3\n2 3 1\n5\n4 3 2 1 4\n"
+		"test": "5 3\nabbbc\nabc\n"
+	},
+	{
+		"correct_answers":
+		[
+			"4"
+		],
+		"test": "5 2\naaaaa\naa\n"
+	},
+	{
+		"correct_answers":
+		[
+			"1"
+		],
+		"test": "5 5\nabcdf\nabcdf\n"
+	},
+	{
+		"correct_answers":
+		[
+			"1"
+		],
+		"test": "2 2\nab\nab\n"
 	}
 ]
