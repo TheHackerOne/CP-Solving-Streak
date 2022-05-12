@@ -76,52 +76,121 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    ll n, b;
-    cin>>n>>b;
+    int n, l, r;
+    cin>>n>>l>>r;
 
-
-    // for(int i=1;i<=n;i++){
-    //     int res = ((n-i)/(b))*i;
-    //     cout<<i<<" -> "<<res<<nline;
-    // }
-
-    if(n <= b){
-        cout<<0<<nline;
-        return;
+    unordered_map<int, int> leftColor, rightColor, all;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+        all[arr[i]] = 1;
     }
 
-    ll lo = 1, hi = n;
-    ll res = -1; 
-    while(hi-lo+1 >= 4){
-        ll mid1 = (lo+(hi-lo)/3), mid2 = (hi-(hi-lo)/3);
-        ll midVal1 = ((n-mid1)/b)*mid1;
-        ll midVal2 = ((n-mid2)/b)*mid2;
-        debug(lo)
-        debug(hi)
-        debug(mid1)
-        debug(mid2)
-        debug(midVal1)
-        debug(midVal2)
-        debug("---")
-        // 18997133232
 
-        if(midVal1 >= midVal2){
-            hi = mid2;
-        }else{
-            lo = mid1;
+    for(int i=0;i<l;i++){
+        leftColor[arr[i]]++;
+    }   
+    for(int i=l;i<n;i++){
+        rightColor[arr[i]]++;
+    }
+
+    // pairing of colors
+    for(auto i:all){
+        int color = i.first;
+        int colLeft = leftColor[color], colRight = rightColor[color];
+        int minColor = min(colLeft, colRight);
+        leftColor[color] -= minColor;
+        rightColor[color] -= minColor;
+        if(leftColor[color] == 0) leftColor.erase(color);
+        if(rightColor[color] == 0) rightColor.erase(color);
+    }
+
+    vector<int> colorsRem;
+
+
+    int newLeft = 0, newRight = 0;
+
+    for(auto i:leftColor){
+        if(i.second != 0){
+            newLeft += i.second;
+            for(int j=0;j<i.second;j++){
+                colorsRem.push_back(i.first);
+            }
         }
     }
-    ll maxVal = INT_MIN;
-    debug(lo)
-    debug(hi)
-    for(ll i=lo;i<=hi;i++){
-        ll u = ((n-i)/b)*i;
-        debug(u)
-        maxVal = max(maxVal, ((n-i)/b)*i);
+
+    for(auto i:rightColor){
+        if(i.second != 0){
+            newRight += i.second;
+            for(int j=0;j<i.second;j++){
+                colorsRem.push_back(i.first);
+            }
+        }
+    }
+    debug(colorsRem)
+
+    priority_queue<pair<int, int>> pq; // count, color maxHeap
+
+
+    if(l < r){
+        for(auto i:rightColor){
+            int color = i.first;
+            pq.push({ rightColor[color], color });
+        }
+    }else{
+        for(auto i:leftColor){
+            int color = i.first;
+            pq.push({ leftColor[color], color });
+        }
     }
 
-    cout<<(ll)maxVal<<nline;
-}
+    int left = newLeft, right = newRight;
+
+    int cost = 0;
+
+    while(left != right){
+        if(left < right){
+            int rightToLeftColor = pq.top().second;
+            int cnt = pq.top().first;
+            left++;
+            right--;
+            leftColor[rightToLeftColor]++;
+            rightColor[rightToLeftColor]--;
+            pq.pop();
+            if(cnt != 1)
+                pq.push({ cnt-1, rightToLeftColor });
+            cost++; 
+        }else if(left > right){
+            int leftToRightColor = pq.top().second;
+            int cnt = pq.top().first;
+            right++;
+            left--;
+            rightColor[leftToRightColor]++;
+            leftColor[leftToRightColor]--;
+            pq.pop();
+            if(cnt != 1)
+                pq.push({ cnt-1, leftToRightColor });
+            cost++; 
+        }
+    }
+
+    // pairing of colors
+    for(auto i:all){
+        int color = i.first;
+        int colLeft = leftColor[color], colRight = rightColor[color];
+        int minColor = min(colLeft, colRight);
+        leftColor[color] -= minColor;
+        rightColor[color] -= minColor;
+        if(leftColor[color] == 0) leftColor.erase(color);
+        if(rightColor[color] == 0) rightColor.erase(color);
+    }
+
+    for(auto i:leftColor){
+        if(i.second > 0) cost += i.second;
+    }
+
+    cout<<cost<<nline;
+}   
 
 int main() {
 #ifndef ONLINE_JUDGE
@@ -137,20 +206,3 @@ int main() {
 
     return 0;
 }
-
-// 15
-// 60 56
-// 37 98
-// 100 9
-// 44 7
-// 82 74
-// 53 10
-// 67 86
-// 60 65
-// 44 95
-// 7 54
-// 18 21
-// 44 52
-// 79 35
-// 34 1
-// 49 41

@@ -51,30 +51,30 @@ if __name__ == "__main__":
     rand = RandomGenerator()
     lops = ListOperation()
 
-    t = 15
+    t = 2
     print(t)
     for __ in range(t):
-        num_lim = 100000
+        num_lim = 20
         # while n != 1:
-        n = rand.integer(2, 200)
-        # x = rand.integer(1, num_lim)
-        # p = rand.integer(1, num_lim)
+        n = rand.integer(5, 15)
+        x = rand.integer(1, n-1)
+        # p = rand.integer(1, 150)
         # k = rand.integer(1, n)
 
-        # print(n, end=" ")
-        # print(x, end=" ")
-        # print(p, end=" ")
+        print(n, end=" ")
+        print(x, end=" ")
+        print(n-x, end=" ")
         # print(k, end=" ")
-        # print()
+        print()
 
         # arr = []
-        print(random.randint(1, 100), end=" ")
-        print(random.randint(1, 100))
-        # for ele in rand.array(n, 1, num_lim):
-        #     print(ele, end=" ")
+        # print(random.randint(1, 100), end=" ")
+        # print(random.randint(1, 100))
+        for ele in rand.array(n, 1, num_lim):
+            print(ele, end=" ")
 
         # arr.sort()
 
         # for e in arr:
         #     print(e, end=" ")
-        # print()
+        print()
