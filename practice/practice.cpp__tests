@@ -2,8 +2,8 @@
 	{
 		"correct_answers":
 		[
-			"14 4 4 15"
+			"3\n3\n2\n0\n2\n7"
 		],
-		"test": "4\n19 32764 10240 49\n"
+		"test": "6\naabbdabdccc\nzyx\naaababbb\naabbcc\noaoaaaoo\nbmefbmuyw\n"
 	}
 ]
