@@ -23,9 +23,12 @@ public:
         for(long long i=0;i<n;i++){
             long long leftNum = prefix[i];
             long long remNum = x - leftNum;
+            long long leftLen = i+1;
             
             if(suf.find(remNum) != suf.end()){
-                combined = min(combined, i+1 + suf[remNum]+1);
+                long long rightLen = suf[remNum] + 1;
+                if(leftLen + rightLen <= n)
+                    combined = min(combined, leftLen + rightLen);
             }
         }
         long long res = min({ onlyLeft, onlyRight, combined });
