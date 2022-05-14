@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int minSteps(string s, string t) {
+        int cnt = 0;
+        unordered_map<char, int> mp1, mp2;
+        
+        for(int i=0;i<s.length();i++){
+            mp1[s[i]]++;
+        }
+        for(int i=0;i<t.length();i++){
+            mp2[t[i]]++;
+        }
+        
+        for(auto i:mp1){
+            char ch = i.first;
+            if(mp2.find(ch) != mp2.end()){
+                if(mp2[ch] > mp1[ch]) continue;
+                else cnt += mp1[ch] - mp2[ch];
+            }else{
+                cnt += mp1[ch];
+            }
+        }
+        
+        for(auto i:mp2){
+            char ch = i.first;
+            if(mp1.find(ch) != mp1.end()){
+                if(mp1[ch] > mp2[ch]) continue;
+                else cnt += mp2[ch] - mp1[ch];
+            }else{
+                cnt += mp2[ch];
+            }
+        }
+        
+        return cnt;
+    }
+};
