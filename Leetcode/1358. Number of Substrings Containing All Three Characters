@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int res = 0;
+        
+        int st = -1, en = -1, n = s.length();
+        unordered_map<char, int> mp;
+        while(true){
+            bool f1 = false, f2 = false;
+            
+            // acquire until it becomes valid
+            while(en < n-1){
+                en++;
+                f1 = true;
+                char ch = s[en];
+                mp[ch]++;
+                if(mp.size() == 3) break;
+            }
+            
+            // release until its valid
+            while(st+1 < en and mp.size() == 3){
+                res += n-en;
+                st++;
+                f2 = true;
+                char ch = s[st];
+                mp[ch]--;
+                if(mp[ch] == 0) mp.erase(ch);
+                if(mp.size() != 3) break;
+            }
+            
+            if(!f1 and !f2) break;
+        }
+        
+        return res;
+    }
+};
