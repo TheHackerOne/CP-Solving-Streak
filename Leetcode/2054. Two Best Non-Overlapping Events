@@ -28,23 +28,22 @@ public:
         for(long long i=0;i<n;i++){
             long long sum = events[i][2];
             long long lo = i+1, hi = n-1;
-            long long res = -1;
+            long long ans = -1;
             while(lo <= hi){
                 long long mid = (lo + hi)/2;
                 if(events[mid][0] > events[i][1]){
-                    res = mid;
+                    ans = mid;
                     hi = mid-1;
                 }else{
                     lo = mid+1;
                 }
             }
-            if(res != -1){
-                long long maxVal = sufMax[res];
-                sum += maxVal;
-                res = max(res, maxVal);
+            if(ans != -1){
+                sum += sufMax[ans];
+                res = max(res, sum);
             }
         }
         
-        return maxVal;
+        return res;
     }
 };
