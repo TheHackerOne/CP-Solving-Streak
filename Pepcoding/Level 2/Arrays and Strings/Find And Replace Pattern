@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+vector<string> findPattern(string pattern, vector<string> &str){
+    vector<string> res;
+    for(int i=0;i<str.size();i++){
+        unordered_map<char, char> mp;
+        unordered_map<char, int> vis;
+        bool flag = true;
+        for(int j=0;j<pattern.length();j++){
+            if(mp.find(pattern[j]) != mp.end()){
+                if(str[i][j] != mp[pattern[j]]){
+                    flag = false;
+                    break;
+                }
+            }else{
+                if(vis.find(str[i][j]) != vis.end()){
+                    flag = false;
+                    break;
+                }
+                mp[pattern[j]] = str[i][j];
+                vis[str[i][j]] = 1;
+            }
+        }
+        if(flag) res.push_back(str[i]);
+    }
+
+
+    return res;
+}
+
+int main(){
+    string pattern;
+    cin>>pattern;
+
+    int n;
+    cin>>n;
+
+    vector<string> str(n);
+    for(int i=0;i<n;i++){
+        cin>>str[i];
+    }
+
+    vector<string> res = findPattern(pattern, str);
+    sort(res.begin(), res.end());
+
+    if(res.size() == 0){
+        cout<<"Empty"<<endl;
+        return 0;
+    }
+
+    for(int i=0;i<res.size();i++){
+        cout<<res[i]<<" ";
+    }
+
+    return 0;
+}
