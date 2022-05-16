@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int minFlips(string target) {
+bool allZeros = true;
+
+    int cnt = 0;
+    for(int i=0;i<target.length();i++){
+        if(allZeros){
+            if(target[i] != '0'){
+                allZeros = false;
+                cnt++;
+            }
+        }else{
+            if(target[i] != '1'){
+                allZeros = true;
+                cnt++;
+            }
+        }
+    }
+    return cnt;
+}
+
+int main(){
+    string target;
+    cin>>target;
+    cout<<minFlips(target);
+}
