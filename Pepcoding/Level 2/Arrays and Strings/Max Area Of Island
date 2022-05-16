@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+vector<int> ro = { -1, 0, 1, 0 };
+vector<int> co = { 0, 1, 0, -1 };
+
+bool isValid(int i, int j, int n, int m){
+    if(i >= 0 and i < n and j >= 0 and j < m) return true;
+    return false;
+}
+
+void dfs(int i, int j, vector<vector<int>> &arr, int &cnt){
+    int n = arr.size(), m = arr[0].size();
+    arr[i][j] = 0;
+    cnt++;
+    
+    for(int x=0;x<4;x++){
+        int newr = i+ro[x], newc = j+co[x];
+
+        if(isValid(newr, newc, n, m) and arr[newr][newc] == 1){
+            dfs(newr, newc, arr, cnt);
+        }
+    }
+}
+
+int maxAreaOfIsland(vector<vector<int>>& arr) {
+    int n = arr.size(), m = arr[0].size();
+    int maxans = 0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(arr[i][j] == 1){
+                int cnt = 0;
+                dfs(i, j, arr, cnt);
+                maxans = max(maxans, cnt);
+            }
+        }
+    }
+
+    return maxans;
+}
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+    vector<vector<int>> arr(n,vector<int>(m));
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+          cin>>arr[i][j];
+        }
+    }
+    int maxArea=maxAreaOfIsland(arr);
+    cout<<maxArea;
+    return 0;
+}
