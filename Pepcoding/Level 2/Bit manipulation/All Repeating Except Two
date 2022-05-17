@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void solution(vector<int>&arr){
+    int xorall = 0;
+    int n = arr.size();
+    for(int i=0;i<n;i++){
+        xorall ^= arr[i];
+    }          
+    int bit = 0;
+    for(int i=0;i<32;i++){
+        if((xorall>>i)&1){
+            bit = i;
+            break;
+        }
+    }
+
+    int xora = 0, xorb = 0;
+
+    for(int i=0;i<n;i++){
+        if((arr[i]>>bit)&1) xora ^= arr[i];
+        else xorb ^= arr[i];
+    }
+    if(xora < xorb)
+        cout<<xora<<endl<<xorb;
+    else
+        cout<<xorb<<endl<<xora;
+}
+
+int main(){
+    int n;
+    cin>>n;
+    
+    vector<int>arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    
+    solution(arr);
+}
