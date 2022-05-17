@@ -1,0 +1,52 @@
+#include<iostream>
+ #include<bits/stdc++.h>
+ using namespace std;
+ 
+ vector<string> grayCode(int n) {
+ 	// base case
+    if(n == 1){
+         vector<string> res = {"0", "1"};
+         return res;
+    }
+
+    // main logic
+    vector<string> res = grayCode(n-1);
+
+    vector<string>ans;
+    for(int i=0;i<res.size();i++){
+        ans.push_back("0"+res[i]);
+    }
+    for(int i=0;i<res.size();i++){
+        ans.push_back("1"+res[i]);
+    }
+    return ans;
+ }
+
+void displayNum(string str){
+    int num = 0;
+    for(int i=str.length()-1;i>=0;i--){
+        int counter = str.length()-i-1;
+        if(str[i] == '1'){
+            num += pow(2, counter);
+        }
+    }
+    cout<<num;
+}  
+ 
+ int main(int argc, char** argv){
+     int n;
+     cin>>n;
+     if(n == 0){
+         cout<<"[0]";
+         return 0;
+     }
+     vector<string> res = grayCode(n);
+     cout<<"[";
+     for(int i=0; i<res.size(); i++){
+         displayNum(res[i]);
+         if(i != res.size() - 1){
+             cout<<", ";
+         }
+     }
+     cout<<"]";
+ }
