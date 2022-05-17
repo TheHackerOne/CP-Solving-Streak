@@ -1,0 +1,46 @@
+
+class Solution {
+private:
+    ListNode *mergeTwoSortedList(ListNode *h1, ListNode *h2){
+        ListNode *dummy = new ListNode(-1);
+        ListNode *prev = dummy;
+        ListNode *curr1 = h1, *curr2 = h2;
+        
+        while(curr1 and curr2){
+            if(curr1->val < curr2->val){
+                prev->next = curr1;
+                prev = curr1;
+                curr1 = curr1->next;
+            }else{
+                prev->next = curr2;
+                prev = curr2;
+                curr2 = curr2->next;
+            }
+        }
+        if(!curr1) prev->next = curr2;
+        if(!curr2) prev->next = curr1;
+        
+        return dummy->next;
+    }
+    
+    ListNode* mergeKListsHelper(vector<ListNode*> &lists, int st, int en){
+        // base case
+        if(st == en){
+            ListNode *res = lists[st];
+            return res;
+        }
+        
+        // main logic
+        int mid = (st+en)/2;        
+        ListNode *first = mergeKListsHelper(lists, st, mid);
+        ListNode *second = mergeKListsHelper(lists, mid+1, en);
+        
+        return mergeTwoSortedList(first, second);
+    }
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        // divide and conquer algorithm
+        if(lists.size() == 0) return nullptr;
+        return mergeKListsHelper(lists, 0, lists.size()-1);        
+    }
+};
