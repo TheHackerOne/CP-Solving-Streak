@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+void decToBinary(int x)
+{
+    int a = x;
+    int b = ~x + 1;
+    int res = a&b;
+    bool firstOne = false;
+    for(int i=31;i>=0;i--){
+        if(x&(1<<i)){
+            cout<<1;
+            firstOne = true;
+        }else{
+            if(firstOne)
+                cout<<0;
+        }
+    }
+}
+
+
+int main(){
+    
+    
+    int n;
+    cin>>n;
+    char buffer[33];
+    int k=(n&((~n)+1));
+    decToBinary(k);
+    
+}
