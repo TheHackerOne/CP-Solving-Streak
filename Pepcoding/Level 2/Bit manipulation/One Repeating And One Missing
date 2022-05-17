@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+void solution(vector<int> &arr)
+{
+    int xorall = 0;
+    int v = arr.size();
+    for(int i=1;i<=v;i++) arr.push_back(i);
+    int n = arr.size();
+    for(int i=0;i<n;i++){
+        xorall ^= arr[i];
+    }          
+    int bit = 0;
+    for(int i=0;i<32;i++){
+        if((xorall>>i)&1){
+            bit = i;
+            break;
+        }
+    }
+
+    int xora = 0, xorb = 0;
+
+    for(int i=0;i<n;i++){
+        if((arr[i]>>bit)&1) xora ^= arr[i];
+        else xorb ^= arr[i];
+    }
+    for(int i=0;i<n;i++){
+        if(arr[i] == xora){
+            cout<<"Missing Number -> "<<xorb<<endl;
+            cout<<"Repeating Number -> "<<xora<<endl;
+            break;
+        }else if(arr[i] == xorb){
+            cout<<"Missing Number -> "<<xora<<endl;
+            cout<<"Repeating Number -> "<<xorb<<endl;
+            break;
+        }
+    }
+}
+int main()
+{
+    int n;cin>>n;
+    vector<int> v1(n);
+    for(int i=0;i<n;++i) cin>>v1[i];
+    solution(v1);
+    return 0;
+}
