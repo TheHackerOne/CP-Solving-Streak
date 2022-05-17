@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int solution(vector<int>& arr){
+    vector<int> bits(32, 0);
+
+    for(int i=0;i<arr.size();i++){
+        int num = arr[i];
+
+        for(int j=0;j<=31;j++){
+            if(num&(1<<j)) bits[j]++;
+        }
+    }
+
+    int res = 0;
+
+    for(int i=0;i<=31;i++){
+        if(bits[i]%3){
+            res = res|(1<<i);
+        }
+    }
+    return res;
+}
+
+
+int main(){
+    int n;
+    cin>>n;
+    
+    vector<int>arr(n);
+    
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    
+    cout<<solution(arr);
+}
