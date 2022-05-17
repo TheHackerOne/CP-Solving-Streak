@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+void solution(vector<int> &arr){
+    int n = arr.size();
+    int cnt = 0;
+    for(int i=0;i<n;i++){
+        int xorAll = arr[i];
+        int j = i+1;
+        for(j=i+1;j<n;j++){
+            xorAll ^= arr[j];
+            if(xorAll == 0) {
+                cnt += j-i;
+            }
+        }
+    }
+    cout<<cnt<<endl;
+}
+
+int main() {
+	int n = 0;
+	cin>>n;
+    vector<int> arr(n);
+    for(int i = 0 ; i < arr.size(); i++){
+        cin>>arr[i];
+    }
+    solution(arr);
+    return 0;
+}
