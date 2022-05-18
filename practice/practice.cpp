@@ -1,8 +1,41 @@
-midOfLL(Node *head){
-    Node *slow = head, *fast = head;
-    while(fast->next != nullptr and fast->next->next != nullptr){
-        slow = slow -> next;
-        fast = fast -> next -> next;
+
+class Solution {
+private:
+    ListNode* reverseLL(ListNode *head){
+        ListNode *prev = nullptr, *curr = head, *forw = nullptr;
+
+        while(curr){
+            forw = curr -> next;
+            curr -> next = prev;
+            prev = curr;
+            curr = forw;
+        }
+        return prev;
     }
-    return slow;
-}
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode *dummy = new ListNode(-1);
+        dummy -> next = head;
+        ListNode *curr = dummy;
+        
+        ListNode *first = curr, *second = curr, *third = curr, *fourth = curr;
+        
+        while(left--){
+            first = second;
+            second = second->next;
+        }
+
+        while(right--){
+            third = third->next;
+        }
+        fourth = third->next;
+
+        first->next = third->next = nullptr;
+        third = reverseLL(second);
+
+        first -> next = third;
+        second -> next = fourth;
+
+        return first->next;
+    }
+};
