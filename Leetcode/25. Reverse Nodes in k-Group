@@ -1,0 +1,56 @@
+
+class Solution {
+private:
+    ListNode *th = nullptr, *tt = nullptr;
+    
+    int lengthOfLL(ListNode *head){
+        int len = 0;
+        
+        while(head != nullptr){
+            len++;
+            head = head->next;
+        }
+        
+        return len;
+    }
+    
+    void addNode(ListNode *node){
+        if(th == nullptr){
+            th = tt = node;
+        }else{
+            node->next = th;
+            th = node;
+        }
+    }
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(head == nullptr or head->next == nullptr or k == 1) return head;
+        int len = lengthOfLL(head);
+        
+        ListNode *oh = nullptr, *ot = nullptr;
+        ListNode *curr = head, *forw = nullptr;
+        
+        while(len >= k){
+            int steps = k;
+            while(steps--){
+                forw = curr->next;
+                curr -> next = nullptr;
+                addNode(curr);
+                curr = forw;
+            }
+            
+            if(oh == nullptr){
+                oh = th, ot = tt;
+            }else{
+                ot -> next = th;
+                ot = tt;
+            }
+            tt = th = nullptr;
+            
+            len -= k;
+        }
+        ot -> next = curr;
+        
+        return oh;
+    }
+};
