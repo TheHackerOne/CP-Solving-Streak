@@ -1,0 +1,28 @@
+
+class Solution {
+int maxPath = 0;
+    int helper(TreeNode *root){
+        if(root == nullptr) return 0;
+        if(root->left == nullptr and root->right == nullptr) return 1;
+
+        int left = helper(root->left);
+        int right = helper(root->right);
+
+        int leftMaxPath = 1 + (!root->left ? 0 : (root->left->val == root->val ? left : 0) );
+        int rightmaxPath = 1 + (!root->right ? 0 : (root->right->val == root->val ? right : 0) ); 
+        int len = INT_MIN;
+        if(root->left and root->right and root->left->val == root->val and root->right->val == root->val){
+        len = left + right + 1;
+        }
+
+        maxPath = max({ maxPath, leftMaxPath, rightmaxPath, len });
+
+        return max(leftMaxPath, rightmaxPath);
+    }
+    public:
+    int longestUnivaluePath(TreeNode* root) {
+        if(root == nullptr or (!root->left and !root->right)) return 0;
+        helper(root);
+        return maxPath-1;
+    }
+};
