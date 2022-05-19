@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getRev(int n){
+    int rev = 0;
+
+    while(n != 0){
+        if(n&1){
+            rev |= 1;
+        }
+        rev <<= 1;
+        n >>= 1;
+    }
+
+    rev >>= 1;
+
+    return rev;
+}
+
+int NthPalindromicBinary(int n)
+{
+    int len, num = 0;
+    int counter = 1;
+    while(num < n){
+        num += (pow(2, (counter-1)/2));
+        counter++;
+    }
+    counter--;
+
+    int offset = n-(num-pow(2, (counter-1)/2))-1;
+    len = counter + 1;
+
+    int ans = 1<<(counter-1);
+    ans |= (offset<<(counter/2));
+    int rev = ans>>(counter/2);
+
+    int ul = getRev(rev);
+    ans |= ul;
+
+    return ans;
+
+}
+
+int main()
+{
+    int n;cin>>n;
+    int ans=NthPalindromicBinary(n);
+    cout<<ans<<"\n";
+    return 0;
+}
