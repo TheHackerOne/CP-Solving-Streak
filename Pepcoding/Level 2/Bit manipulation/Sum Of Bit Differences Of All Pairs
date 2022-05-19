@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+long solution(vector<int>&arr){
+    vector<long> one(32, 0), zero(32, 0);
+
+    for(long i=0;i<arr.size();i++){
+        long num = arr[i];
+
+        for(long j=0;j<=31;j++){
+            if(num&(1<<j)) one[j]++;
+            else zero[j]++;
+        }
+    }
+
+    long ans = 0;
+
+    for(long i=0;i<=31;i++){
+        ans += (one[i]*zero[i]*2);
+    }
+
+    return ans;
+}
+int main (){
+    int n;
+    cin>>n;
+    vector<int>arr;
+    for(int i = 0 ; i <n; i++){
+        int x;
+        cin>>x;
+        arr.push_back(x);
+    }
+    cout<<solution(arr)<<endl;
+}
