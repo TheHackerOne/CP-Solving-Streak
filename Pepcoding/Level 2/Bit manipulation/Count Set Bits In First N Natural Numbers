@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int solution(int n){
+  if(n == 0) return 0;
+  // if(n == 1 or n == 2) return 1;
+  int num = 1, counter = 0;
+  while(num <= n){
+    num *= 2;
+    counter++;
+  }
+  counter--;
+  num /= 2;
+
+  long ans = 0;
+  // cout<<counter<<" "<<num<<endl;
+  ans += counter*(num/2);
+  ans += (n-num+1);
+  ans += solution(n-num);
+
+  return ans;
+}
+int main(){
+  int n;
+  cin>>n;
+  cout<<solution(n);
+  return 0;
+}
