@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;cin>>n;
+
+    int om = 0x55555555;
+    int em = 0xAAAAAAAA;
+
+    int odds = n&om;
+    int evens = n&em;
+
+    odds <<= 1;
+    evens >>= 1;
+
+    cout<<(odds|evens);
+    
+    return 0;
+}
