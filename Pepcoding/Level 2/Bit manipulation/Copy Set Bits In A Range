@@ -1,0 +1,15 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+  int a, b, left, right;
+  cin>>a>>b>>left>>right;
+  
+
+  int aux = 1;
+  aux <<= (right-left+1);
+  aux -= 1;
+  aux <<= left-1;
+
+  aux &= a;
+  cout<<(b|aux);
+}
