@@ -1,6 +1,5 @@
-aboveyz -> 1
-abrodyz -> 1
-abslute -> 3
-absoryz -> 2
-actresz -> 4
-gaswxyz -> 0
+a 7 0
+b 7 1
+c 7 -3
+d 7 2
+d b

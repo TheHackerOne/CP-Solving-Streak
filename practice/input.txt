@@ -1,4 +1,13 @@
-7
-aaaa asas able ability actt actor access 
-6
-aboveyz abrodyz abslute absoryz actresz gaswxyz
+1
+a 3 vs. 0 b
+a 0 vs. 0 c
+a 0 vs. 0 d
+b 0 vs. 0 a
+b 4 vs. 0 c
+b 0 vs. 0 d
+c 0 vs. 0 a
+c 0 vs. 0 b
+c 1 vs. 0 d
+d 3 vs. 0 a
+d 0 vs. 0 b
+d 0 vs. 0 c
