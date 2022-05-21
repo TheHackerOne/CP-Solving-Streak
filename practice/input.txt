@@ -1,13 +1,5 @@
-1
-a 3 vs. 0 b
-a 0 vs. 0 c
-a 0 vs. 0 d
-b 0 vs. 0 a
-b 4 vs. 0 c
-b 0 vs. 0 d
-c 0 vs. 0 a
-c 0 vs. 0 b
-c 1 vs. 0 d
-d 3 vs. 0 a
-d 0 vs. 0 b
-d 0 vs. 0 c
+4
+15 15 50
+15 15 18
+43 88 200
+2013 2013 2013
