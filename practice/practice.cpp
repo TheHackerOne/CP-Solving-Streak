@@ -74,20 +74,54 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 void precision(int a) {cout << setprecision(a) << fixed;}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 
+ll fact[200001], invfact[200001];
+
+void init(){
+    ll p = MOD;
+    fact[0] = 1;
+    ll i;
+    for(i=1;i<=200000;i++){
+        fact[i] = mod_mul(i, fact[i-1], p);
+    }
+    i--;
+    invfact[i] = expo(fact[i], p-2, p);
+    for(i--;i>=0;i--){
+        invfact[i] = mod_mul(invfact[i+1], (i+1), p);
+    }
+}
 
 void solve() {
-    double ds, dt, d;
-    cin>>ds>>dt>>d;
-    precision(6);
-    if(d > ds+dt){
-        cout<<d-(ds+dt)<<nline;
-    }else if(ds > d+dt){
-        cout<<ds-(d+dt)<<nline;
-    }else if(dt > ds+d){
-        cout<<dt-(d+ds)<<nline;
-    }else{
-        cout<<0<<nline;
+    ll n, k;
+    cin>>n>>k;
+
+    vector<ll> arr(n);
+    unordered_map<ll, ll> mp;
+    for(ll i=0;i<n;i++){
+        cin>>arr[i];
+        mp[arr[i]]++;
     }
+
+    sort(all(arr));
+    ll lastEle = arr[k-1];
+    ll lastEle1stIdx;
+    debug(arr)
+    debug(lastEle)
+    for(ll i=0;i<n;i++){
+        if(arr[i] == lastEle) {
+            lastEle1stIdx = i;
+            break;
+        }
+    }
+    debug(lastEle1stIdx)
+    ll cntReq = k-lastEle1stIdx;
+    ll actualCnt = mp[lastEle];
+    debug(cntReq)
+    debug(actualCnt)
+
+    ll res = combination(actualCnt, cntReq, MOD, fact, invfact);
+
+    cout<<res<<nline;
+
 }
 
 int main() {
@@ -96,6 +130,7 @@ int main() {
 #endif
 
     fastio();
+    init();
     ll t;
     cin >> t;
     while (t--) {

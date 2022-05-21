@@ -1,0 +1,5 @@
+arr [ 1 2 3 4 ]
+lastEle 2
+lastEle1stIdx 1
+cntReq 1
+actualCnt 1
