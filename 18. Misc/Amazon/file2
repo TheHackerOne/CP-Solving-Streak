@@ -1,0 +1,81 @@
+Question: Given a m*n 2D matrix which consist of only 1's and 0's, 
+where 1 represents land and 0 water find number of islands present. 
+A group of neighbouring 1's form an island.
+
+Sample input:
+1 1 1 0 0
+1 0 0 0 0
+0 0 1 1 0
+0 0 0 0 0
+1 0 0 1 0
+
+
+vector<int> rowConfig = { -1, 0, 1, 0 };
+vector<int> colConfig = { 0, 1, 0, -1 };
+
+// this function will return true, if the given cell is inside the matrix, else it will return false
+bool isValid(int row, int col, int totalRows, int totalCols){
+    if(row >= 0 and row < totalRows and col >= 0 and col < totalCols) return true;
+    return false;
+}
+
+
+0 0 0 0 0
+0 0 0 0 0
+0 0 1 1 0
+0 0 0 0 0
+1 0 0 1 0
+
+vector<int> rowConfig = { -1, 0, 1, 0 };
+vector<int> colConfig = { 0, 1, 0, -1 };
+// this function explores all the neighbouring lands which has "1" in it
+void exploreIsland(vector<vector<int>> &matrix, int row, int col){
+    // number of rows and columns
+    // 1, 0
+    int rows = matrix.size(), columns = matrix[0].size();
+    // to mark a particular cell as visited
+    matrix[row][col] = 0; // marks as visited
+    
+    
+    for(int i=0;i<4;i++){
+        int newRow = row + rowConfig[i], newCol = col + colConfig[i];
+        // newRow = 0 + 1 = 1, newCol = 0 + 0 = 0
+        if(isValid(newRow, newCol, rows, columns) and matrix[newRow][newCol] == 1){
+            exploreIsland(matrix, newRow, newCol);
+        }
+    }
+}
+
+
+int numberOfIslands(vector<vector<int>> &matrix){
+    // number of rows and columns
+    int rows = matrix.size(), columns = matrix[0].size();
+    
+    // initial count of total number of islands
+    int islandCount = 0;
+    
+    1 1 1 0 0
+    1 0 0 0 0
+    0 0 1 1 0
+    0 0 0 0 0
+    1 0 0 1 0
+    
+    // first loop is for row wise traversal
+    for(int row=0;row<rows;row++){
+        // second loop is for column wise traversal
+        for(int col=0;col<columns;col++){
+            // specific cell in the matrix which we need to explore
+            int cellRow = row, cellCol = col;
+            
+            // if a particular cell has "1" in it, then it must contribute in island count, else don't do anything
+            if(matrix[cellRow][cellCol] == 1){
+                // exploreIsland function will visit all the neighbouring cells which make it an island
+                exploreIsland(matrix, cellRow, cellCol);
+                // increment the island count by "1"
+                islandCount += 1;
+            }
+        }
+    }
+    
+    return islandCount;
+}
