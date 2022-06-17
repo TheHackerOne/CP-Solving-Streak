@@ -4,59 +4,29 @@ using namespace std;
 void solve() {
     int n;
     cin>>n;
-    vector<int> arr1(n);
+
+    vector<int> arr(n);
+
     for(int i=0;i<n;i++){
-        cin>>arr1[i];
+        cin>>arr[i];
     }
 
-    int m;
-    cin>>m;
-    vector<int> arr2(m);
-    for(int i=0;i<m;i++){
-        cin>>arr2[i];
-    }
-
-    vector<int>ans;
-
-    int i = 0, j = 0;
-    while(i != n and j != m){
-        if(arr1[i] == arr2[j]){
-            if(ans.empty()){
-                ans.push_back(arr1[i]);
-            }else{
-                if(ans.back() != arr1[i]){
-                    ans.push_back(arr1[i]);
-                }
-            }
-            i++, j++;
-        }else{
-            int smaller = arr1[i] < arr2[j] ? arr1[i] : arr2[j]; 
-            if(ans.empty()){
-                ans.push_back(smaller);
-                if(arr1[i] == smaller) i++;
-                else j++;
-            }else{
-                if(ans.back() == smaller){
-                }else{
-                    ans.push_back(smaller);
-                }
-                if(arr1[i] == smaller) i++;
-                else j++;
-            }
+    // find pivot index using binary search
+    int low = 0, high = n-1;
+    int ans = -1;
+    while(low <= high){
+        int mid = (low + high)/2;
+        if(arr[mid] < arr[mid-1] and arr[mid] < arr[mid+1]){
+            ans = mid;
+            break;
+        }else if(arr[mid] > arr[n-1]){
+            low = mid+1;
+        }else if(arr[mid] < arr[0]){
+            high = mid-1;
         }
     }
 
-    while(i != n){
-        if(arr1[i] != ans.back()) ans.push_back(arr1[i]);
-        i++;
-    }
-    while(j != m){
-        if(arr2[j] != ans.back()) ans.push_back(arr2[j]);
-        j++;
-    }
-
-
-    for(auto i:ans) cout<<i<<" ";
+    cout<<ans<<endl;
 }
 
 int main() {
