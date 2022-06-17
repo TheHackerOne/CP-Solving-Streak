@@ -1,44 +1,72 @@
 #include<bits/stdc++.h>
-
 using namespace std;
 
-int main(){
+void solve() {
+    int n;
+    cin>>n;
+    vector<int> arr1(n);
+    for(int i=0;i<n;i++){
+        cin>>arr1[i];
+    }
 
-    int t;
-    cin>>t;
+    int m;
+    cin>>m;
+    vector<int> arr2(m);
+    for(int i=0;i<m;i++){
+        cin>>arr2[i];
+    }
 
-    while(t--){
-        int n;
-        cin>>n;
-        vector<int>arr(n);
+    vector<int>ans;
 
-        for(int i=0;i<n;i++){
-            cin>>arr[i];
-        }
-
-        vector<int> maxArr(n);
-        int maxTillNow = INT_MIN;
-        int maxIdx = -1;
-        for(int i=n-1;i>=0;i--){
-            if(arr[i] > maxTillNow){
-                maxTillNow = arr[i];
-                maxArr[i] = maxTillNow;
-                maxIdx = i;
+    int i = 0, j = 0;
+    while(i != n and j != m){
+        if(arr1[i] == arr2[j]){
+            if(ans.empty()){
+                ans.push_back(arr1[i]);
             }else{
-                maxArr[i] = maxIdx;
+                if(ans.back() != arr1[i]){
+                    ans.push_back(arr1[i]);
+                }
+            }
+            i++, j++;
+        }else{
+            int smaller = arr1[i] < arr2[j] ? arr1[i] : arr2[j]; 
+            if(ans.empty()){
+                ans.push_back(smaller);
+                if(arr1[i] == smaller) i++;
+                else j++;
+            }else{
+                if(ans.back() == smaller){
+                }else{
+                    ans.push_back(smaller);
+                }
+                if(arr1[i] == smaller) i++;
+                else j++;
             }
         }
+    }
 
-        for(int i=0;i<n-1;i++){
-            int maxIdx = maxArr[i+1];   
-            if(arr[maxIdx] > arr[i]){
-                swap(arr[maxIdx], arr[i]);
-                break;
-            }
-        }
+    while(i != n){
+        if(arr1[i] != ans.back()) ans.push_back(arr1[i]);
+        i++;
+    }
+    while(j != m){
+        if(arr2[j] != ans.back()) ans.push_back(arr2[j]);
+        j++;
+    }
 
-        for(auto i:arr) cout<<i<<" ";
-            cout<<endl;
+
+    for(auto i:ans) cout<<i<<" ";
+}
+
+int main() {
+#ifndef ONLINE_JUDGE  
+    freopen("Error.txt", "w", stderr);
+#endif
+
+    int t = 1;
+    while (t--) {
+        solve();
     }
 
     return 0;
