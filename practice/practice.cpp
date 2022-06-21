@@ -1,32 +1,54 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+void merge(vector<int> &arr, int lo, int hi, int &cnt){
+    int mid = (lo + hi)/2;
+    vector<int> temp(hi-lo+1);
+
+    int i = lo, j = mid+1, k = 0;
+    while(i <= mid and j <= hi){
+        if(arr[i] <= arr[j]){
+            temp[k++] = arr[i++];
+        }else{
+            temp[k++] = arr[j++];
+            cnt += (mid-i+1);
+        }
+    }
+
+    while(i <= mid){
+        temp[k++] = arr[i++];
+    }
+    while(j <= hi){
+        temp[k++] = arr[j++];
+    }
+
+    for(int i=lo;i<=hi;i++){
+        arr[i] = temp[i-lo];
+    }
+}
+
+void mergeSort(vector<int> &arr, int lo, int hi, int &cnt){
+    int mid = (lo + hi)/2;
+    // base case    
+    if(lo >= hi) return;
+
+    // main logic
+    mergeSort(arr, lo, mid, cnt);
+    mergeSort(arr, mid+1, hi, cnt);
+    merge(arr, lo, hi, cnt);
+}
+
 void solve() {
     int n;
     cin>>n;
-
     vector<int> arr(n);
 
     for(int i=0;i<n;i++){
         cin>>arr[i];
     }
-
-    // find pivot index using binary search
-    int low = 0, high = n-1;
-    int ans = -1;
-    while(low <= high){
-        int mid = (low + high)/2;
-        if(arr[mid] < arr[mid-1] and arr[mid] < arr[mid+1]){
-            ans = mid;
-            break;
-        }else if(arr[mid] > arr[n-1]){
-            low = mid+1;
-        }else if(arr[mid] < arr[0]){
-            high = mid-1;
-        }
-    }
-
-    cout<<ans<<endl;
+    int cnt = 0;
+    mergeSort(arr, 0, n-1, cnt);
+    cout<<cnt<<endl;
 }
 
 int main() {

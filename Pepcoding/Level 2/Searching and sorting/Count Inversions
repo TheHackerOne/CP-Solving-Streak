@@ -1,50 +1,65 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int cnt = 0;
+void merge(vector<int> &arr, int lo, int hi, int &cnt){
+    int mid = (lo + hi)/2;
+    vector<int> temp(hi-lo+1);
 
-void merge(int *a, int s, int e){
-    int temp[10000];
-    int mid = (s + e)/2;
-    int i = s;
-    int j = mid+1;
-    int k = s;
-    while(i <= mid && j <= e){
-        if(a[i] <= a[j]){
-            temp[k++] = a[i++];
+    int i = lo, j = mid+1, k = 0;
+    while(i <= mid and j <= hi){
+        if(arr[i] <= arr[j]){
+            temp[k++] = arr[i++];
         }else{
+            temp[k++] = arr[j++];
             cnt += (mid-i+1);
-            temp[k++] = a[j++];
         }
     }
-    while(i<=mid){
-        temp[k++] = a[i++];
+
+    while(i <= mid){
+        temp[k++] = arr[i++];
     }
-    while(j<=e){
-        temp[k++] = a[j++];
+    while(j <= hi){
+        temp[k++] = arr[j++];
     }
-    for(int i=s;i<=e;i++){
-        a[i] = temp[i];
+
+    for(int i=lo;i<=hi;i++){
+        arr[i] = temp[i-lo];
     }
 }
 
-void mergeSort(int *a, int s, int e){
-    if(s>=e)
-        return;
-    int mid = (s + e)/2;
-    mergeSort(a, s, mid);    
-    mergeSort(a, mid+1, e);
+void mergeSort(vector<int> &arr, int lo, int hi, int &cnt){
+    int mid = (lo + hi)/2;
+    // base case    
+    if(lo >= hi) return;
 
-    merge(a, s, e);    
+    // main logic
+    mergeSort(arr, lo, mid, cnt);
+    mergeSort(arr, mid+1, hi, cnt);
+    merge(arr, lo, hi, cnt);
+}
+
+void solve() {
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int cnt = 0;
+    mergeSort(arr, 0, n-1, cnt);
+    cout<<cnt<<endl;
 }
 
 int main() {
-    int n;
-    cin>>n;
-    int arr[n];
-    for(int i=0;i<n;i++) cin>>arr[i];
-    mergeSort(arr, 0, n-1);
+#ifndef ONLINE_JUDGE  
+    freopen("Error.txt", "w", stderr);
+#endif
 
-    cout<<cnt<<endl;
+    int t = 1;
+    while (t--) {
+        solve();
+    }
 
+    return 0;
 }
