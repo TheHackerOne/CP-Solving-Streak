@@ -1,40 +1,23 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int maximise(vector<int>& arr)
-{
-  int ans = INT_MIN;
-
-  int sum = accumulate(arr.begin(), arr.end(), 0);
-  int s0 = 0, n = arr.size();
-  for(int i=0;i<n;i++){
-    s0 += (arr[i]*i);
-    ans = max(ans, s0);
-  }
-
-  int prev = s0;
-  
-  for(int i=1;i<n;i++){
-    int si = prev+sum-(n*arr[n-i]);
-    prev = si;
-    ans = max(ans, si);
-  }
-
-  return ans;
-}
-
-int main()
-{
+int main(){
     int n;
     cin>>n;
-    
-    vector<int> arr(n,0);
-    for(int i =0;i<n;i++)
-    {
+    vector<int> arr(n);
+    int initSum = 0, totalSum = 0;
+    for(int i=0;i<n;i++){
         cin>>arr[i];
+        totalSum += arr[i];
+        initSum += (i*arr[i]);
     }
-    
-    int ans = maximise(arr);
-    cout<<ans;
-    
+    int maxSum = initSum;
+    for(int i=n-1;i>=0;i--){
+        initSum += totalSum - (arr[i]*(n));
+        maxSum = max(maxSum, initSum);
+    }
+
+    cout<<maxSum<<endl;
+
+    return 0;
 }
