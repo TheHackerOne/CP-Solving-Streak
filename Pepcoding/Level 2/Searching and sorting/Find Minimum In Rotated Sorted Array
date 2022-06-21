@@ -1,31 +1,46 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int solution(vector<int> & arr){
-    int mid;
-        int n = arr.size();
-        if(arr[0] < arr[n-1]) return arr[0];
-        int lo = 0, hi = n-1;
-        while(lo <= hi){
-            mid = (lo+hi)/2;
-            if(mid != 0 and mid != arr.size()-1 and arr[mid] < arr[mid-1] and arr[mid] < arr[mid+1]){
-                return arr[mid];
-            }else if(arr[mid] < arr[0]){
-                hi = mid-1;
-            }else{
-                lo = mid+1;
-            }
+int findPivot(vector<int> &arr){
+    int n = arr.size();
+    // base case
+    if(arr[0] < arr[n-1]) return 0;
+    // main logic
+    int lo = 0, hi = arr.size()-1;
+    while(lo <= hi){
+        int mid = (lo + hi)/2;
+        if(arr[mid] < arr[mid-1] and arr[mid] < arr[mid+1]){
+            return mid;
+        }else if(arr[mid] > arr[0]){
+            lo = mid;
+        }else if(arr[mid] < arr[n-1]){
+            hi = mid;
         }
-        return arr[mid];
+    }
+    return -1;
 }
 
-int main(){
+void solve() {
     int n;
     cin>>n;
-    vector<int> arr(n,0);
-    for(int i=0; i<n; i++){
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
         cin>>arr[i];
     }
-    int ans = solution(arr);
-    cout<<ans<<endl;
+
+    int pivotIdx = findPivot(arr);
+    cout<<arr[pivotIdx]<<endl;
+}
+
+int main() {
+#ifndef ONLINE_JUDGE  
+    freopen("Error.txt", "w", stderr);
+#endif
+
+    int t = 1;
+    while (t--) {
+        solve();
+    }
+
+    return 0;
 }

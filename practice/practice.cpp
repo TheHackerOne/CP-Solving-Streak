@@ -1,6 +1,25 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int findPivot(vector<int> &arr){
+    int n = arr.size();
+    // base case
+    if(arr[0] < arr[n-1]) return 0;
+    // main logic
+    int lo = 0, hi = arr.size()-1;
+    while(lo <= hi){
+        int mid = (lo + hi)/2;
+        if(arr[mid] < arr[mid-1] and arr[mid] < arr[mid+1]){
+            return mid;
+        }else if(arr[mid] > arr[0]){
+            lo = mid;
+        }else if(arr[mid] < arr[n-1]){
+            hi = mid;
+        }
+    }
+    return -1;
+}
+
 void solve() {
     int n;
     cin>>n;
@@ -9,32 +28,8 @@ void solve() {
         cin>>arr[i];
     }
 
-    int target;
-    cin>>target;
-
-    int lo = 0, hi = n-1;
-    int res = -1;
-    while(lo <= hi){
-        int mid = (lo + hi)/2;
-        if(arr[mid] == target){
-            res = mid;
-            break;
-        }else if(arr[mid] > arr[0]){
-            if(target >= arr[0] and target <= arr[mid]){
-                hi = mid;
-            }else{
-                lo = mid+1;
-            }
-        }else if(arr[mid] < arr[n-1]){
-            if(target >= arr[mid] and target <= arr[n-1]){
-                lo = mid;
-            }else{
-                hi = mid-1;
-            }
-        }
-    }
-
-    cout<<res<<endl;
+    int pivotIdx = findPivot(arr);
+    cout<<arr[pivotIdx]<<endl;
 }
 
 int main() {
