@@ -1,65 +1,62 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void merge(vector<int> &arr, int lo, int hi, int &cnt){
-    int mid = (lo + hi)/2;
-    vector<int> temp(hi-lo+1);
-
-    int i = lo, j = mid+1, k = 0;
-    while(i <= mid and j <= hi){
-        if(arr[i] <= arr[j]){
-            temp[k++] = arr[i++];
+int lowerBound(vector<int> &arr, int target){
+    int lo = 0, hi = arr.size()-1;
+    int res = -1;
+    while(lo <= hi){
+        int mid = (lo + hi)/2;
+        if(arr[mid] == target){
+            if(mid-1 >= 0 and arr[mid-1] == target) {
+                hi = mid-1;
+            }else{
+                return mid;
+            }
+        }else if(arr[mid] > target){
+            hi = mid-1;
         }else{
-            temp[k++] = arr[j++];
-            cnt += (mid-i+1);
+            lo = mid+1;
         }
     }
 
-    while(i <= mid){
-        temp[k++] = arr[i++];
-    }
-    while(j <= hi){
-        temp[k++] = arr[j++];
-    }
-
-    for(int i=lo;i<=hi;i++){
-        arr[i] = temp[i-lo];
-    }
+    return res;
 }
 
-void mergeSort(vector<int> &arr, int lo, int hi, int &cnt){
-    int mid = (lo + hi)/2;
-    // base case    
-    if(lo >= hi) return;
+int upperBound(vector<int> &arr, int target){
+    int lo = 0, hi = arr.size()-1;
+    int n = arr.size();
+    int res = -1;
+    while(lo <= hi){
+        int mid = (lo + hi)/2;
+        if(arr[mid] == target){
+            if(mid+1 < n and arr[mid+1] == target) {
+                lo = mid+1;
+            }else{
+                return mid;
+            }
+        }else if(arr[mid] > target){
+            hi = mid-1;
+        }else{
+            lo = mid+1;
+        }
+    }
 
-    // main logic
-    mergeSort(arr, lo, mid, cnt);
-    mergeSort(arr, mid+1, hi, cnt);
-    merge(arr, lo, hi, cnt);
+    return res;
 }
 
-void solve() {
+int main(){
     int n;
     cin>>n;
     vector<int> arr(n);
-
     for(int i=0;i<n;i++){
         cin>>arr[i];
     }
-    int cnt = 0;
-    mergeSort(arr, 0, n-1, cnt);
-    cout<<cnt<<endl;
-}
+    int target;
+    cin>>target;
 
-int main() {
-#ifndef ONLINE_JUDGE  
-    freopen("Error.txt", "w", stderr);
-#endif
-
-    int t = 1;
-    while (t--) {
-        solve();
-    }
+    int lo = lowerBound(arr, target);
+    int hi = upperBound(arr, target);
+    cout<<lo<<" "<<hi<<endl;
 
     return 0;
 }
