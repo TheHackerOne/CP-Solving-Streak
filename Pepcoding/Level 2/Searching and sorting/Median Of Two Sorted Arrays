@@ -1,62 +1,60 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-float find(vector<float> &nums1,vector<float> &nums2) {
-    if(nums2.size() < nums1.size()) return find(nums2, nums1);
-        int n1 = nums1.size(), n2 = nums2.size();
-        int l = 0, h = nums1.size(), half = (n1+n2+1)/2;
-        double ans;
-        while(l <= h){
-            int partitionIdx = (l+h)/2;
-            int eleInNum1 = partitionIdx, eleInNum2 = half - eleInNum1;
-            
-            int l1 = eleInNum1-1>=0?nums1[eleInNum1-1]:INT_MIN, 
-            l2 = eleInNum2-1>=0?nums2[eleInNum2-1]:INT_MIN, 
-            r1 = eleInNum1==nums1.size()?INT_MAX:nums1[eleInNum1], 
-            r2 = eleInNum2==nums2.size()?INT_MAX:nums2[eleInNum2];
-            if(l1>r2){
-                h = partitionIdx-1;
-            }else if(l2>r1){
-                l = partitionIdx+1;
+float solve(vector<float> &a, vector<float> &b){
+    int n = a.size(), m = b.size();
+    int totalElements = n + m;
+
+    if(n > m) return solve(b, a);
+
+    int lo = 0, hi = a.size();
+    while(lo <= hi){
+        int elementsFromArr1 = (lo + hi)/2;
+        int elementsFromArr2 = ((totalElements+1)/2) - elementsFromArr1;
+        // cout<<"e1 -> "<<elementsFromArr1<<endl;
+        // cout<<"e2 -> "<<elementsFromArr2<<endl;
+
+        float left1 = elementsFromArr1 > 0 ? a[elementsFromArr1-1] : INT_MIN;
+        float left2 = elementsFromArr2 > 0 ? b[elementsFromArr2-1] : INT_MIN;
+        float right1 = elementsFromArr1 < n ? a[elementsFromArr1] : INT_MAX;
+        float right2 = elementsFromArr2 < m ? b[elementsFromArr2] : INT_MAX;
+        // cout<<elementsFromArr1<<endl;            
+        // cout<<left1<<" "<<left2<<" "<<right1<<" "<<right2<<endl;
+        if(left1 > right2){
+            hi = elementsFromArr1-1;
+        }else if(left2 > right1){
+            lo = elementsFromArr1+1;
+        }else{
+            if(totalElements%2) {
+                return max(left1, left2);
             }else{
-                if((nums1.size()+nums2.size())%2 == 0)
-                    return (max(l1,l2)+min(r1,r2))/(double)2;
-                else return max(l1,l2);
+                // cout<<left1<<" "<<left2<<" "<<right1<<" "<<right2<<endl;
+                return (max(left1, left2)*1.0 + min(right1, right2)*1.0)/2.0;
             }
         }
-        return ans;
+    }
+    return 0;
 }
 
 int main(){
-    int n1, n2;
-    //input work
-    cin>>n1;
-    vector<int> a(n1);
+    int n;
+    cin>>n;
+    vector<float> arr1(n);
 
-    for(int i=0; i<n1; i++){
-        cin>>a[i];
-    }
-    vector<float>a1(n1);
-    for(int i=0;i<n1;i++){
-        a1[i]=(float)(a[i]);
-    }
+    for(int i=0;i<n;i++) cin>>arr1[i];
 
-    cin>>n2;
-    vector<int> b(n2);
+    int m;
+    cin>>m;
+    vector<float> arr2(m);
 
-    for(int i=0; i<n2; i++){
-        cin>>b[i];
-    }
-    vector<float>b2(n2);
-    for(int i=0;i<n2;i++){
-        b2[i]=(float)(b[i]);
-    }
-    float median = find(a1,b2);
+    for(int i=0;i<m;i++) cin>>arr2[i];
+
+    int median = solve(arr1, arr2);
     int ab=median*10;
     string ans=to_string(ab);
     int k=ans.length();
     if(ans[k-1]=='0') cout<<median<<".0";
     else cout<<median;
-    
+
     return 0;
 }
