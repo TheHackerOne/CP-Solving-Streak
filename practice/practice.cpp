@@ -76,19 +76,29 @@ void precision(int a) {cout << setprecision(a) << fixed;}
 
 
 void solve() {
-    int n, m;
-    cin>>n>>m;
+    int n, energy;
+    cin>>n>>energy;
 
-    ll res = 0;
-    for(int i=1;i<=m;i++){
-        res += i;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+
+    int totalNeeded = accumulate(all(arr), 0);
+    int distTraveled = 0;
+    for(int i=0;i<n;i++){
+        int energyNeeded = arr[i];
+        if(energy >= energyNeeded){
+            energy -= energyNeeded;
+            distTraveled += energyNeeded;
+        }else{
+            distTraveled += energy;
+            energy = 0;
+        }
+        if(energy == 0){
+            cout<<totalNeeded - distTraveled<<endl;
+            return;
+        }
     }
-    int top = m;
-    for(int i=1;i<n;i++){
-        top += m;
-        res += top;
-    }
-    cout<<res<<nline;
+    cout<<0<<nline;
 }
 
 int main() {
